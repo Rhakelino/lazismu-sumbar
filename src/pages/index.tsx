@@ -145,7 +145,7 @@ const Home: React.FC = () => {
         <div className="flex flex-wrap justify-center items-center gap-8">
           {['partner-1.png', 'partner-2.png', 'partner-3.png', 'partner-4.png', 'partner-5.png'].map((partner, index) => (
             <div key={index} className="grayscale hover:grayscale-0 transition-all duration-300">
-              <img src={`/images/${partner}`} alt={`Partner ${index + 1}`} className="h-16" />
+              <Image src={`/images/${partner}`} alt={`Partner ${index + 1}`} width={100} height={100} />
             </div>
           ))}
         </div>

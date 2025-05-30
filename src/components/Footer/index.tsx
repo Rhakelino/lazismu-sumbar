@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className=''>
                 <div className="flex flex-col justify-center gap-3 mb-3">
-              <Image src="/images/logo-zis.png" width={80} height={80} className="w-16 md:w-20 filter drop-shadow-md" alt="Logo ZIS" />
+             <Image src="/images/logo-zis.png" alt="Logo" width={100} height={100} />
                     <span className="font-bold text-lg tracking-wide text-white">LAZISMU Sumbar</span>
                 <p className="text-sm mb-4">Lembaga Amil Zakat Nasional terpercaya di Sumatera Barat.</p>
                 </div>
