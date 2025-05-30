@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import MobileDropdown from "../MobileDropdown"; // Adjust the import path as necessary
 import DropdownTrigger from "../DropDownTrigger";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -52,7 +53,7 @@ const Navbar: React.FC = () => {
                     {/* Logo */}
                     <div className="flex items-center justify-start ml-4 lg:ml-0">
                         <Link href="/">
-                            <img className="h-12 w-auto object-contain" src="/images/logo.png" alt="Logo" />
+                            <Image className="h-12 w-auto object-contain" src="/images/logo.png" alt="Logo" />
                         </Link>
                     </div>
 
