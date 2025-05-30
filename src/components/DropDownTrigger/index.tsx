@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 type DropdownItem = {
     href: string;
@@ -69,13 +70,13 @@ const DropdownTrigger: React.FC<DropdownTriggerProps> = ({
                     >
                         <div className="py-1">
                             {dropdownMenus[dropdownKey].map((item, index) => (
-                                <a
+                                <Link
                                     key={index}
                                     href={item.href}
                                     className={`block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors`}
                                 >
                                     {item.label}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </motion.div>

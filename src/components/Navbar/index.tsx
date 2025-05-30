@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import MobileDropdown from "../MobileDropdown"; // Adjust the import path as necessary
 import DropdownTrigger from "../DropDownTrigger";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,25 +51,25 @@ const Navbar: React.FC = () => {
 
                     {/* Logo */}
                     <div className="flex items-center justify-start ml-4 lg:ml-0">
-                        <a href="/">
+                        <Link href="/">
                             <img className="h-12 w-auto object-contain" src="/images/logo.png" alt="Logo" />
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex flex-1 justify-center space-x-8">
-                        <a href="/" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Beranda</a>
+                        <Link href="/" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Beranda</Link>
                         <DropdownTrigger dropdownKey="tentang" textColor={textColor}>Tentang Kami</DropdownTrigger>
-                        <a href="/program" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Program</a>
-                        <a href="/contact" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Kontak Kami</a>
+                        <Link href="/program" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Program</Link>
+                        <Link href="/contact" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Kontak Kami</Link>
                         <DropdownTrigger dropdownKey="info" textColor={textColor}>Info</DropdownTrigger>
-                        <a href="/rekening" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Daftar Rekening</a>
+                        <Link href="/rekening" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Daftar Rekening</Link>
                     </div>
 
                     {/* Social Media Icons */}
                     <div className="ml-3 hidden lg:flex gap-4">
                         {["instagram", "facebook", "youtube"].map((platform) => (
-                            <a 
+                            <Link 
                                 key={platform} 
                                 href={`https://www.${platform}.com`} 
                                 target="_blank" 
@@ -76,7 +77,7 @@ const Navbar: React.FC = () => {
                                 className="text-gray-700 hover:text-orange-600 transition-colors"
                             >
                                 <i className={`fa-brands fa-${platform} text-2xl`}></i>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -93,15 +94,15 @@ const Navbar: React.FC = () => {
                         className="lg:hidden"
                     >
                         <div className="flex flex-col bg-white px-4 py-4 space-y-2 shadow-lg rounded-b-lg">
-                            <a href="/" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Beranda</a>
+                            <Link href="/" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Beranda</Link>
                             <MobileDropdown dropdownKey="tentang" textColor="gray-900">Tentang Kami</MobileDropdown>
-                            <a href="/program" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Program</a>
-                            <a href="/contact" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Kontak Kami</a>
+                            <Link href="/program" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Program</Link>
+                            <Link href="/contact" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Kontak Kami</Link>
                             <MobileDropdown dropdownKey="info" textColor="gray-900">Info</MobileDropdown>
-                            <a href="/rekening" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Daftar Rekening</a>
+                            <Link href="/rekening" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Daftar Rekening</Link>
                             <div className="flex gap-3 py-2">
                                 {["instagram", "facebook", "youtube"].map((platform) => (
-                                    <a 
+                                    <Link 
                                         key={platform} 
                                         href={`https://www.${platform}.com`} 
                                         target="_blank" 
@@ -109,7 +110,7 @@ const Navbar: React.FC = () => {
                                         className="text-gray-700 hover:text-orange-600 transition-colors"
                                     >
                                         <i className={`fa-brands fa-${platform} text-2xl`}></i>
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         </div>

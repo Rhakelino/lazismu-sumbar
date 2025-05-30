@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 type DropdownItem = {
     href: string;
@@ -65,13 +66,13 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({
                         className="mt-2 pl-4 space-y-1 border-l-2 border-orange-300"
                     >
                         {dropdownMenus[dropdownKey].map((item, index) => (
-                            <a
+                            <Link
                                 key={index}
                                 href={item.href}
                                 className="block text-sm font-semibold text-gray-700 hover:text-orange-600 transition-colors"
                             >
                                 {item.label}
-                            </a>
+                            </Link>
                         ))}
                     </motion.div>
                 )}
