@@ -1,0 +1,123 @@
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import MobileDropdown from "../MobileDropdown"; // Adjust the import path as necessary
+import DropdownTrigger from "../DropDownTrigger";
+
+const Navbar: React.FC = () => {
+    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [bgColor, setBgColor] = useState('transparent');
+    const [textColor, setTextColor] = useState('white'); // Initial text color is white
+
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            setBgColor('white');
+            setTextColor('black'); // Change text color to black on scroll
+        } else {
+            setBgColor('transparent');
+            setTextColor('white'); // Keep text color white at the top
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    return (
+        <nav className={`fixed top-0 w-full z-50 transition-colors duration-300 bg-${bgColor}`}>
+            <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                    {/* Mobile Hamburger Button */}
+                    <div className="flex items-center lg:hidden">
+                        <button
+                            onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-expanded={isMobileMenuOpen}
+                            className="rounded-md p-2 text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        >
+                            {isMobileMenuOpen ? (
+                                <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            ) : (
+                                <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+
+                    {/* Logo */}
+                    <div className="flex items-center justify-start ml-4 lg:ml-0">
+                        <a href="/">
+                            <img className="h-12 w-auto object-contain" src="/images/logo.png" alt="Logo" />
+                        </a>
+                    </div>
+
+                    {/* Desktop Navigation */}
+                    <div className="hidden lg:flex flex-1 justify-center space-x-8">
+                        <a href="/" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Beranda</a>
+                        <DropdownTrigger dropdownKey="tentang" textColor={textColor}>Tentang Kami</DropdownTrigger>
+                        <a href="/program" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Program</a>
+                        <a href="/contact" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Kontak Kami</a>
+                        <DropdownTrigger dropdownKey="info" textColor={textColor}>Info</DropdownTrigger>
+                        <a href="/rekening" className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}>Daftar Rekening</a>
+                    </div>
+
+                    {/* Social Media Icons */}
+                    <div className="ml-3 hidden lg:flex gap-4">
+                        {["instagram", "facebook", "youtube"].map((platform) => (
+                            <a 
+                                key={platform} 
+                                href={`https://www.${platform}.com`} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-gray-700 hover:text-orange-600 transition-colors"
+                            >
+                                <i className={`fa-brands fa-${platform} text-2xl`}></i>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Navigation */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="lg:hidden"
+                    >
+                        <div className="flex flex-col bg-white px-4 py-4 space-y-2 shadow-lg rounded-b-lg">
+                            <a href="/" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Beranda</a>
+                            <MobileDropdown dropdownKey="tentang" textColor="gray-900">Tentang Kami</MobileDropdown>
+                            <a href="/program" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Program</a>
+                            <a href="/contact" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Kontak Kami</a>
+                            <MobileDropdown dropdownKey="info" textColor="gray-900">Info</MobileDropdown>
+                            <a href="/rekening" className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2">Daftar Rekening</a>
+                            <div className="flex gap-3 py-2">
+                                {["instagram", "facebook", "youtube"].map((platform) => (
+                                    <a 
+                                        key={platform} 
+                                        href={`https://www.${platform}.com`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="text-gray-700 hover:text-orange-600 transition-colors"
+                                    >
+                                        <i className={`fa-brands fa-${platform} text-2xl`}></i>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </nav>
+    );
+};
+
+export default Navbar;
