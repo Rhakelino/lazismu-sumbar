@@ -42,7 +42,7 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
         <Image
-          src="/slider-1.jpg" // Replace with your actual background image URL
+          src="/slider-1.jpg" // Ganti dengan URL gambar latar belakang yang sebenarnya
           alt="Hero Background"
           layout="fill"
           objectFit="cover"
@@ -63,49 +63,57 @@ const Home: React.FC = () => {
 
       {/* Spacing for Info Box */}
       <div className="h-20"></div>
+      
       {/* Program Section */}
       <section className="py-16">
-        <div className="container mx-auto px-4 text-center" data-aos="fade-up">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Program Unggulan</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {programs.map((program, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:-translate-y-2 duration-300" data-aos="zoom-in">
-                <div className="relative">
-                  <img src={program.imageUrl} alt={program.title} className="w-full h-56 object-cover" />
-                  <div className={`absolute top-4 left-4 text-xs font-bold text-white px-2 py-1 rounded ${program.category === 'Pendidikan' ? 'bg-orange-500' : program.category === 'Kesehatan' ? 'bg-red-500' : 'bg-green-500'}`}>
-                    {program.category}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{program.title}</h3>
-                  <p className="text-gray-600 mb-4">{program.description}</p>
-                  {/* Progress Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 relative">
-                    <div
-                      className={`bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-500 h-2.5 rounded-full`}
-                      style={{ width: `${program.progress}%` }}>
-                    </div>
-                  </div>
-                  <div className="flex justify-between text-sm mb-4">
-                    <span className="text-gray-600">Terkumpul: {program.totalRaised}</span>
-                    <span className="font-medium">{program.progress}%</span>
-                  </div>
-                  <Link href="#" className={`inline-block bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-600 transition-colors`}>Donasi Sekarang</Link>
-                </div>
-              </div>
-            ))}
+  <div className="container mx-auto px-4 text-center" data-aos="fade-up">
+    <h2 className="text-3xl font-bold text-gray-800 mb-6">Program Unggulan</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {programs.map((program, index) => (
+        <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:-translate-y-2 duration-300" data-aos="zoom-in">
+          <div className="relative h-56"> {/* Mengatur tinggi kontainer */}
+            <Image
+              src={program.imageUrl}
+              alt={program.title}
+              layout="fill" // Mengatur gambar untuk mengisi kontainer
+              objectFit="cover" // Memastikan gambar akan mencakup kontainer
+              className="absolute inset-0"
+            />
+            <div className={`absolute top-4 left-4 text-xs font-bold text-white px-2 py-1 rounded ${program.category === 'Pendidikan' ? 'bg-orange-500' : program.category === 'Kesehatan' ? 'bg-red-500' : 'bg-green-500'}`}>
+              {program.category}
+            </div>
           </div>
-
-          <div className="text-center mt-10" data-aos="fade-up">
-            <Link href="/program" className="inline-flex items-center px-5 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
-              Lihat Semua Program
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
+          <div className="p-6">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">{program.title}</h3>
+            <p className="text-gray-600 mb-4">{program.description}</p>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 relative">
+              <div
+                className={`bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-500 h-2.5 rounded-full`}
+                style={{ width: `${program.progress}%` }}
+              ></div>
+            </div>
+            <div className="flex justify-between text-sm mb-4">
+              <span className="text-gray-600">Terkumpul: {program.totalRaised}</span>
+              <span className="font-medium">{program.progress}%</span>
+            </div>
+            <Link href="#" className={`inline-block bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-600 transition-colors`}>
+              Donasi Sekarang
             </Link>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+
+    <div className="text-center mt-10" data-aos="fade-up">
+      <Link href="/program" className="inline-flex items-center px-5 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
+        Lihat Semua Program
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* Testimonials Section */}
       <section className="py-16" data-aos="fade-up">
