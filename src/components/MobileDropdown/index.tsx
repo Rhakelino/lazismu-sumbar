@@ -71,7 +71,7 @@ const MobileDropdown: React.FC<MobileDropdownProps> = ({
       </button>
 
       {isOpen && (
-        <div className="mt-2 pl-4 space-y-1 border-l-2 border-orange-300">
+        <div className="mt-2 pl-4 space-y-3 border-l-2 border-orange-300">
           {dropdownMenus[dropdownKey].map((item, index) => (
             <Link
               key={index}
