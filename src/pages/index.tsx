@@ -42,7 +42,7 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
         <Image
-          src="/slider-1.jpg" // Ganti dengan URL gambar latar belakang yang sebenarnya
+          src="/images/slider-1.jpg" // Ganti dengan URL gambar latar belakang yang sebenarnya
           alt="Hero Background"
           layout="fill"
           objectFit="cover"
