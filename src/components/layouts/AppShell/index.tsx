@@ -27,8 +27,9 @@ const AppShell = (props: AppShellProps) => {
   // Initialize AOS
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Animation duration
-      once: true, // Whether animation should happen only once 
+      once: true,
+      duration: 600,
+      easing: 'ease-out-cubic',
     });
   }, []);
   return (
