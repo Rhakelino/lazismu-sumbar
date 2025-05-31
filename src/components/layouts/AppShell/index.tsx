@@ -5,11 +5,7 @@ import AOS from 'aos'; // Import AOS
 import 'aos/dist/aos.css'; // Import AOS styles
 
 // Loading Spinner Component
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center h-screen">
-    <div className="animate-spin rounded-full border-t-2 border-b-2 border-orange-500 h-12 w-12"></div>
-  </div>
-);
+
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -35,11 +31,6 @@ const AppShell = (props: AppShellProps) => {
       once: true, // Whether animation should happen only once 
     });
   }, []);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <main className='h-full'>
       <Navbar />
