@@ -26,7 +26,7 @@ const VisiMisi = () => {
       <div className="relative bg-gradient-to-br from-yellow-400 to-orange-600 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-10"></div>
         <motion.div
-          variants={fadeUp}
+          variants={fadeRight}
           initial="initial"
           whileInView="animate"
           transition={{ duration: 0.8 }}
