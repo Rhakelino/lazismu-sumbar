@@ -44,7 +44,7 @@ const Footer = () => {
             </div>
         </div>
         <div className="mt-10 pt-5 text-center text-xs">
-            © 2025 LAZISMU Sumbar. All rights reserved.
+            2025 LAZISMU Sumbar. All rights reserved.
         </div>
     </footer>
 
