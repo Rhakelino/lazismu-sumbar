@@ -12,7 +12,6 @@
     "@types/node": "22.15.24",
     "@types/react": "19.1.6",
     "@types/react-dom": "19.1.5",
-    "aos": "^2.3.4",
     "eslint": "9.27.0",
     "eslint-config-next": "15.3.2",
     "framer-motion": "^12.15.0",
