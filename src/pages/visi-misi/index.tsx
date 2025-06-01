@@ -9,16 +9,6 @@ const fadeUp = {
   animate: { opacity: 1, y: 0 },
 };
 
-const fadeLeft = {
-  initial: { opacity: 0, x: 40 },
-  animate: { opacity: 1, x: 0 },
-};
-
-const fadeRight = {
-  initial: { opacity: 0, x: -40 },
-  animate: { opacity: 1, x: 0 },
-};
-
 const VisiMisi = () => {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -52,7 +42,7 @@ const VisiMisi = () => {
         {/* Visi & Misi */}
         <div className="grid md:grid-cols-2 gap-8">
           <motion.div
-            variants={fadeRight}
+            variants={fadeUp}
             initial="initial"
             whileInView="animate"
             transition={{ duration: 0.8 }}
@@ -70,7 +60,7 @@ const VisiMisi = () => {
           </motion.div>
 
           <motion.div
-            variants={fadeLeft}
+            variants={fadeUp}
             initial="initial"
             whileInView="animate"
             transition={{ duration: 0.8 }}
