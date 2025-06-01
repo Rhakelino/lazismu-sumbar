@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import HeroSection from '@/components/HeroSection';
 
 // Data Foto
 const categories = [
@@ -60,32 +61,14 @@ const Foto = () => {
   return (
     <div className="max-w-full mx-auto">
       {/* Header */}
-      <div className="relative bg-gradient-to-br from-yellow-400 to-orange-600 mb-8 overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        <motion.div
-          variants={fadeUp}
-          initial="initial"
-          whileInView="animate"
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
-        >
-          <div className="text-center">
-            <div className="w-20 h-20 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-lg">
-               <Image src="/images/logo-zis.png" width={100} height={100} alt="Logo ZIS" />
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
-              <span className="bg-clip-text text-transparent bg-yellow-400">Galeri Foto</span>
-            </h1>
-            <p className="text-base text-blue-100 max-w-2xl mx-auto">
-              Koleksi foto kegiatan sosial dan kemanusiaan.
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      <HeroSection
+        title="Foto"
+        subtitle="Program donasi pilihan untuk kebaikan bersama"
+        imageSrc="/images/logo-zis.png"
+      />
 
       {/* Filter Kategori */}
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
+      <div className="flex flex-wrap justify-center gap-4 my-8">
         {categories.map(cat => (
           <button
             key={cat.name}

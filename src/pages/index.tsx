@@ -3,6 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Berita from './berita';
+import BeritaGrid from '@/components/BeritaGrid';
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -94,7 +96,12 @@ const Home: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="container mx-auto px-4 text-center"
         >
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Program Unggulan</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Program Unggulan</h2>
+            <div className="w-24 h-1 bg-orange-500 mx-auto mb-4 rounded"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto">Mendukung program-program kemanusiaan yang berdampak untuk
+              masyarakat yang membutuhkan</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {programs.map((program, index) => (
               <motion.div
@@ -167,7 +174,12 @@ const Home: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="container mx-auto px-4 text-center"
         >
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Testimoni Donatur</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Testimoni Donatur</h2>
+            <div className="w-24 h-1 bg-orange-500 mx-auto mb-4 rounded"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto">Apa kata mereka yang telah berpartisipasi dalam
+              program-program kami</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[{ name: 'Ahmad Syafiq', message: 'Saya sangat terbantu dengan adanya layanan dari LAZISMU!' }, { name: 'Nur Hasanah', message: 'Program beasiswa pendidikan sangat membantu anak-anak di daerah kami.' }, { name: 'Farid Rahman', message: 'Layanan ambulans gratis ini sangat berharga bagi kami.' }].map((testimonial, index) => (
               <motion.div
@@ -199,7 +211,7 @@ const Home: React.FC = () => {
         whileInView="animate"
         transition={{ duration: 0.8 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="py-16 bg-orange-500 text-white text-center"
+        className="py-16 bg-orange-500 text-white text-center mb-12"
       >
         <h2 className="text-3xl font-bold mb-4">Mari Berbagi Kebaikan!</h2>
         <p className="max-w-2xl mx-auto mb-8">Bersama kita dapat membantu lebih banyak saudara-saudara kita yang membutuhkan.</p>
@@ -207,6 +219,13 @@ const Home: React.FC = () => {
           Donasi Sekarang
         </Link>
       </motion.section>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Berita</h2>
+        <div className="w-24 h-1 bg-orange-500 mx-auto mb-4 rounded"></div>
+        <p className="text-gray-600 max-w-2xl mx-auto">Program donasi pilihan untuk kebaikan
+          bersama</p>
+        <BeritaGrid />
+      </div>
     </div>
   );
 };

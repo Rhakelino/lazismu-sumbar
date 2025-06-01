@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Eye, ClipboardList, Shield, Zap } from 'lucide-react';
 import Image from 'next/image';
+import HeroSection from '@/components/HeroSection';
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -13,29 +14,11 @@ const VisiMisi = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-yellow-400 to-orange-600 overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        <motion.div
-          variants={fadeUp}
-          initial="initial"
-          whileInView="animate"
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
-        >
-          <div className="text-center">
-            <div className="w-20 h-20 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <Image src="/images/logo-zis.png" width={100} height={100} alt="Logo ZIS" />
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
-              <span className="bg-clip-text text-transparent bg-yellow-400">Visi Misi</span>
-            </h1>
-            <p className="text-base text-blue-100 max-w-2xl mx-auto">
-              Program donasi pilihan untuk kebaikan bersama
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      <HeroSection
+        title="Visi Misi"
+        subtitle="Program donasi pilihan untuk kebaikan bersama"
+        imageSrc="/images/logo-zis.png"
+      />
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-16 space-y-16">
