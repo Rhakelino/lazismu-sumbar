@@ -131,7 +131,7 @@ const Home: React.FC = () => {
                     <span className="text-gray-600">Terkumpul: {program.totalRaised}</span>
                     <span className="font-medium">{program.progress}%</span>
                   </div>
-                  <Link href="#" className={`inline-block bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-600 transition-colors`}>
+                  <Link href="/program" className={`inline-block bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-${program.category === 'Pendidikan' ? 'orange' : program.category === 'Kesehatan' ? 'red' : 'green'}-600 transition-colors`}>
                     Donasi Sekarang
                   </Link>
                 </div>

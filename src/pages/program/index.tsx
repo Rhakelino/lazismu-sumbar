@@ -123,19 +123,28 @@ const Program = () => {
     return (
         <div className="max-w-full mx-auto">
             {/* Header */}
-            <div className="relative bg-gradient-to-br from-yellow-400 to-orange-600 overflow-hidden mb-6">
+            <div className="relative bg-gradient-to-br from-yellow-400 to-orange-600 mb-8 overflow-hidden">
                 <div className="absolute inset-0 bg-black opacity-10"></div>
-                <div className="text-center py-20">
-                    <div className="w-20 h-20 mx-auto mb-6">
-                        <Image src="/images/logo-zis.png" width={100} height={100} alt="Logo ZIS" className="filter drop-shadow-md" />
+                <motion.div
+                    variants={fadeUp}
+                    initial="initial"
+                    whileInView="animate"
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+                >
+                    <div className="text-center">
+                        <div className="w-20 h-20 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-lg">
+                            <Image src="/images/logo-zis.png" width={100} height={100} alt="Logo ZIS" />
+                        </div>
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
+                            <span className="bg-clip-text text-transparent bg-yellow-400">Program Lazismu</span>
+                        </h1>
+                        <p className="text-base text-blue-100 max-w-2xl mx-auto">
+                            Program donasi pilihan untuk kebaikan bersama
+                        </p>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
-                        <span className="bg-clip-text text-transparent bg-yellow-400">Struktur Lazismu</span>
-                    </h1>
-                    <p className="text-base text-blue-100 max-w-2xl mx-auto">
-                        Program donasi pilihan untuk kebaikan bersama
-                    </p>
-                </div>
+                </motion.div>
             </div>
 
             {/* Category Filter */}
@@ -197,20 +206,6 @@ const Program = () => {
             {filteredPrograms.length > 0 && totalPages > 1 && (
                 <div className="flex justify-center mt-10">
                     <nav className="flex items-center space-x-1">
-                        <button
-                            onClick={() => {
-                                if (currentPage > 1) {
-                                    setCurrentPage(prev => prev - 1);
-                                    window.scrollTo({ top: 150, behavior: 'smooth' }); // Scroll to the top
-                                }
-                            }}
-                            disabled={currentPage === 1}
-                            className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-500 transition ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
                         {Array.from({ length: totalPages }, (_, i) => (
                             <button
                                 key={i + 1}
@@ -223,20 +218,6 @@ const Program = () => {
                                 {i + 1}
                             </button>
                         ))}
-                        <button
-                            onClick={() => {
-                                if (currentPage < totalPages) {
-                                    setCurrentPage(prev => prev + 1);
-                                    window.scrollTo({ top: 150, behavior: 'smooth' }); // Scroll to the top
-                                }
-                            }}
-                            disabled={currentPage === totalPages}
-                            className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-500 transition ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
                     </nav>
                 </div>
             )}

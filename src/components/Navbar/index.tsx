@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bgColor, setBgColor] = useState("transparent");
   const [textColor, setTextColor] = useState("white");
+  const [shadow, setShadow] = useState("shadow-none");
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -18,9 +19,12 @@ const Navbar: React.FC = () => {
     if (window.scrollY > 50) {
       setBgColor("white");
       setTextColor("black");
+      setShadow("shadow-lg");
     } else {
       setBgColor("transparent");
       setTextColor("white");
+      setShadow("shadow-none");
+
     }
   };
 
@@ -63,7 +67,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-colors duration-300 bg-${bgColor}`}
+      className={`fixed top-0 w-full z-50 transition-colors duration-300 ${shadow} bg-${bgColor}`}
     >
       <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
@@ -131,7 +135,7 @@ const Navbar: React.FC = () => {
               Program
             </Link>
             <Link
-              href="/contact"
+              href="/kontak"
               className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
             >
               Kontak Kami
@@ -192,7 +196,7 @@ const Navbar: React.FC = () => {
                 Program
               </Link>
               <Link
-                href="/contact"
+                href="/kontak"
                 className="text-gray-900 hover:text-orange-600 font-medium transition-colors py-2"
               >
                 Kontak Kami
