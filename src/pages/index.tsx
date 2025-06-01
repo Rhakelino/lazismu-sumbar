@@ -95,7 +95,7 @@ const Home: React.FC = () => {
           className="container mx-auto px-4 text-center"
         >
           <h2 className="text-3xl font-bold text-gray-800 mb-6">Program Unggulan</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {programs.map((program, index) => (
               <motion.div
                 key={index}
@@ -168,7 +168,7 @@ const Home: React.FC = () => {
           className="container mx-auto px-4 text-center"
         >
           <h2 className="text-3xl font-bold text-gray-800 mb-6">Testimoni Donatur</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[{ name: 'Ahmad Syafiq', message: 'Saya sangat terbantu dengan adanya layanan dari LAZISMU!' }, { name: 'Nur Hasanah', message: 'Program beasiswa pendidikan sangat membantu anak-anak di daerah kami.' }, { name: 'Farid Rahman', message: 'Layanan ambulans gratis ini sangat berharga bagi kami.' }].map((testimonial, index) => (
               <motion.div
                 key={index}

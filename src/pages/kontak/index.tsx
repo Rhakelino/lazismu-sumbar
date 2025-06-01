@@ -44,13 +44,12 @@ const Kontak = () => {
             {/* Struktur Organisasi */}  
             <div className='max-w-6xl mx-auto px-4 py-16 space-y-16'>  
                 <div>   
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">  
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">  
                         <div className="md:col-span-2 bg-white rounded-lg shadow-sm p-6 border border-gray-200">  
                             <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center">  
                                  <Phone className="h-5 w-5 mr-2 text-orange-500" /> 
                                 Tentang LAZISMU Sumatera Barat  
                             </h2>  
-
                             <div className="space-y-4 text-gray-600">  
                                 <p className="leading-relaxed">  
                                     LAZISMU (Lembaga Amil Zakat, Infaq, dan Sedekah Muhammadiyah) Sumatera Barat adalah lembaga yang  

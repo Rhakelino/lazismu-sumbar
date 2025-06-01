@@ -70,7 +70,7 @@ const LaporanKeuangan = () => {
                     transition={{ duration: 0.8 }}
                     className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Laporan 2023 */}
                         <motion.div
                             viewport={{ once: true, amount: 0.3 }}
@@ -233,7 +233,7 @@ const LaporanKeuangan = () => {
                         className="bg-white rounded-xl shadow-md overflow-hidden"
                     >
                         <div className="p-6 md:p-8">
-                            <div className="grid md:grid-cols-2 gap-8">
+                            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-800 mb-4">Komitmen Kami</h3>
                                     <p className="text-gray-600 mb-6">

@@ -168,7 +168,7 @@ const Program = () => {
             {filteredPrograms.length === 0 && <div className="text-center py-12 text-gray-500">Tidak ada program pada kategori ini.</div>}
 
             {/* Programs List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-24 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-6 md:mx-12 lg:mx-24 gap-8">
                 {paginatedPrograms.map(program => (
                     <motion.div
                         key={program.slug}
