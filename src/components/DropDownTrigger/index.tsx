@@ -20,7 +20,7 @@ const dropdownMenus: DropdownMenus = {
     ],
     "info": [
         { href: "/berita", label: "Berita" },
-        { href: "/artikel", label: "Artikel" },
+        { href: "/foto", label: "Foto" },
         { href: "/video", label: "Video" },
     ],
 };
