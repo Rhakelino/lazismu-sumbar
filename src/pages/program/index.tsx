@@ -162,7 +162,7 @@ const Program = () => {
                         className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:-translate-y-2 duration-300"
                     >
                         <div className="relative">
-                            <img src={program.gambar} alt={program.judul} className="w-full h-56 object-cover" />
+                            <Image src={program.gambar} alt={program.judul} width={1000} height={224} className=" object-cover" />
                             <div className="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold uppercase px-2 py-1 rounded">
                                 {program.kategori}
                             </div>

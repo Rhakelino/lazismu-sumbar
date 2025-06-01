@@ -46,10 +46,10 @@ const Footer = () => {
         <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3 text-sm">
-                <li><a href="/latar-belakang" className="hover:text-orange-400">Tentang Kami</a></li>
-                <li><a href="/program" className="hover:text-orange-400">Donasi</a></li>
-                <li><a href="/berita" className="hover:text-orange-400">Berita</a></li>
-                <li><a href="/kontak" className="hover:text-orange-400">Kontak Kami</a></li>
+                <li><Link href="/latar-belakang" className="hover:text-orange-400">Tentang Kami</Link></li>
+                <li><Link href="/program" className="hover:text-orange-400">Donasi</Link></li>
+                <li><Link href="/berita" className="hover:text-orange-400">Berita</Link></li>
+                <li><Link href="/kontak" className="hover:text-orange-400">Kontak Kami</Link></li>
             </ul>
         </div>
     </div>
