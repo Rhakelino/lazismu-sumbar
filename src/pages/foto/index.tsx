@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 // Data Foto
 const categories = [
@@ -71,7 +72,7 @@ const Foto = () => {
         >
           <div className="text-center">
             <div className="w-20 h-20 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <img src="/images/logo-zis.png" alt="Logo ZIS" className="w-16 h-16" />
+               <Image src="/images/logo-zis.png" width={100} height={100} alt="Logo ZIS" />
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
               <span className="bg-clip-text text-transparent bg-yellow-400">Galeri Foto</span>
