@@ -135,6 +135,7 @@ const Struktur = () => {
                                 <div className="transform transition duration-300 hover:scale-[1.01]">
                                     <motion.h3
                                         variants={fadeUp}
+                                        key={index}
                                         initial="initial"
                                         whileInView="animate"
                                         transition={{ duration: 0.8 }}
@@ -146,6 +147,7 @@ const Struktur = () => {
                                     </motion.h3>
                                     <motion.div
                                         variants={fadeUp}
+                                        key={index}
                                         initial="initial"
                                         whileInView="animate"
                                         transition={{ duration: 0.8 }}
