@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import { useRouter } from 'next/router';
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -7,14 +8,20 @@ type AppShellProps = {
 
 const AppShell = (props: AppShellProps) => {
   const { children } = props;
+  const router = useRouter();
+
+  // Cek jika halaman yang aktif adalah halaman admin
+  const isAdminPage = router.pathname.includes('/admin');
 
   return (
     <main className='h-full'>
-      <Navbar />
-      <div> {/* Add AOS attribute */}
+      {/* Menyembunyikan Navbar hanya pada halaman admin */}
+      {!isAdminPage && <Navbar />}
+      
+      <div>
         {children}
-      </div>
-      <Footer />
+      </div>  
+      {!isAdminPage && <Footer />}
     </main>
   );
 };
