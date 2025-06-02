@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../lib/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { Edit, Trash, PlusCircle } from 'lucide-react'; // Import ikon dari Lucide React
+import Image from 'next/image';
 
 interface NewsItem {
     id: string;
@@ -190,7 +191,7 @@ const AdminBerita: React.FC = () => {
                                 <div className="flex flex-col text-neutral-400 overflow-hidden">
                                     <h3 className="font-semibold text-white">{item.title}</h3>
                                     <p>{item.description}</p>
-                                    <img src={item.image} alt={`News Image`} className="mt-2 w-48 rounded" />
+                                    <Image src={item.image} alt={`News Image`} width={192} height={240} className="mt-2 rounded" />
                                     <p className="text-sm">{new Date(item.created_at).toLocaleString()}</p>
                                 </div>
                             </li>
