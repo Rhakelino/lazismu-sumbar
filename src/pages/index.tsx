@@ -76,7 +76,7 @@ const Home: React.FC = () => {
         whileInView="animate"
         transition={{ duration: 0.5 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="relative mt-[-40px] z-10 bg-orange-400 text-white shadow-lg rounded-2xl mx-4 sm:mx-0 p-6 flex flex-col sm:flex-row justify-around text-center"
+        className="relative mt-[-40px] z-10 bg-orange-600 text-white shadow-lg rounded-2xl mx-4 sm:mx-0 p-6 flex flex-col sm:flex-row justify-around text-center"
       >
         {infoBoxes.map((infoBox, index) => (
           <div key={index} className="flex-1">

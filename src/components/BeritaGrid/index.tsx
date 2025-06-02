@@ -1,50 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { db } from '../../lib/firebase'; // Impor koneksi Firestore
+import { collection, getDocs } from 'firebase/firestore';
 import { motion } from 'framer-motion';
-const news = [
-    {
-        title: 'Peduli Lingkungan, Lazismu Ajak Masyarakat Bersihkan Sungai',
-        description: 'Lazismu menggelar aksi bersih-bersih sungai untuk mengurangi pencemaran lingkungan di kawasan Surabaya.',
-        image: 'https://picsum.photos/500/300?random=4',
-        created_at: '2025-06-01 09:00:00',
-    },
-    {
-        title: 'Aksi Solidaritas: Donasi untuk Korban Bencana Alam di Aceh',
-        description: 'Lazismu menggalang dana untuk membantu korban bencana alam di Aceh. Donasi sudah disalurkan kepada ribuan warga yang terdampak.',
-        image: 'https://picsum.photos/500/300?random=5',
-        created_at: '2025-06-02 14:30:00',
-    },
-    {
-        title: 'Program Pendidikan Gratis untuk Anak Yatim di Surabaya',
-        description: 'Lazismu Surabaya menyediakan beasiswa bagi anak yatim untuk melanjutkan pendidikan hingga perguruan tinggi.',
-        image: 'https://picsum.photos/500/300?random=6',
-        created_at: '2025-06-03 11:15:00',
-    },
-    {
-        title: 'Bantuan Kemanusiaan untuk Warga Palestina Terus Mengalir',
-        description: 'Program bantuan kemanusiaan terus digalakkan oleh Lazismu untuk membantu saudara-saudara kita di Palestina.',
-        image: 'https://picsum.photos/500/300?random=7',
-        created_at: '2025-05-28 16:45:00',
-    },
-    {
-        title: 'Qurban 2025: Membawa Kebahagiaan kepada Warga Miskin',
-        description: 'Lazismu menyelenggarakan program qurban untuk berbagi kebahagiaan dengan masyarakat miskin di seluruh Indonesia.',
-        image: 'https://picsum.photos/500/300?random=8',
-        created_at: '2025-06-04 12:00:00',
-    },
-    {
-        title: 'Pelatihan Kewirausahaan untuk Anak Muda di Surabaya',
-        description: 'Lazismu mengadakan pelatihan kewirausahaan untuk anak muda agar bisa memulai usaha dan menciptakan lapangan pekerjaan.',
-        image: 'https://picsum.photos/500/300?random=9',
-        created_at: '2025-05-30 10:20:00',
-    }
-];
+
+interface NewsItem {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    created_at: string;
+}
 
 const fadeUp = {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0 },
 };
 
-const BeritaGrid = () => {
+const BeritaGrid: React.FC = () => {
+    const [news, setNews] = useState<NewsItem[]>([]);
+
+    const fetchNews = async () => {
+        const querySnapshot = await getDocs(collection(db, 'news'));
+        const newsData: NewsItem[] = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data() as Omit<NewsItem, 'id'>, // Omit untuk mengambil data tanpa id
+        }));
+        setNews(newsData);
+    };
+
+    useEffect(() => {
+        fetchNews();
+    }, []);
+
     const formatDate = (dateString: string): string => {
         const options: Intl.DateTimeFormatOptions = {
             day: '2-digit',
@@ -55,12 +42,13 @@ const BeritaGrid = () => {
         };
         return new Date(dateString).toLocaleDateString('id-ID', options);
     };
+
     return (
         <div className="max-w-6xl mx-auto px-4 py-16 space-y-16">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {news.map((item, index) => (
+                {news.map((item) => (
                     <motion.div
-                        key={index}
+                        key={item.id}
                         variants={fadeUp}
                         initial="initial"
                         whileInView="animate"
@@ -70,7 +58,7 @@ const BeritaGrid = () => {
                     >
                         <img
                             src={item.image}
-                            alt={`News Image ${index + 1}`}
+                            alt={`News Image ${item.id}`}
                             className="w-full h-48 object-cover rounded-t-lg"
                         />
                         <div className="mt-4">
@@ -89,7 +77,7 @@ const BeritaGrid = () => {
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default BeritaGrid
+export default BeritaGrid;
