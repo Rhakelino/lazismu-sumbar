@@ -185,9 +185,9 @@ const AdminBerita: React.FC = () => {
             <h2 className="text-xl font-semibold mt-8">Daftar Berita</h2>
             <div className="bg-neutral-900 border border-neutral-700 mt-4 rounded-lg shadow-md p-4 w-full">
                 <ul className="space-y-4">
-                    {news.map((item) => (
+                    {news.map((item, key) => (
                         <div className='border py-4 px-8 rounded-lg border-neutral-700'>
-                            <li key={item.id} className=" pb-4 flex justify-between items-center">
+                            <li key={key} className=" pb-4 flex justify-between items-center">
                                 <div className="flex flex-col text-neutral-400 overflow-hidden">
                                     <h3 className="font-semibold text-white">{item.title}</h3>
                                     <p>{item.description}</p>
