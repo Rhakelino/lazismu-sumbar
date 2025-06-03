@@ -40,11 +40,7 @@ const AdminPesan: React.FC = () => {
             const messageRef = doc(db, 'pesan', id);
             await deleteDoc(messageRef);
             setNotification('Pesan berhasil dihapus!'); // Set notification message
-
-            // Refresh the messages list
             fetchMessages();
-
-            // Clear notification after 3 seconds
             setTimeout(() => {
                 setNotification(null);
             }, 3000);
@@ -60,7 +56,6 @@ const AdminPesan: React.FC = () => {
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
             <div className={`flex-1 h-full p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'} bg-black text-white`}>
                 <h1 className="text-2xl font-semibold mb-8">Pesan Masuk</h1>
-                
                 {/* Display notification if exists */}
                 {notification && (
                     <div className="bg-green-500 text-white p-3 rounded mb-4">

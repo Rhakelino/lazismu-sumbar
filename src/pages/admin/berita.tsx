@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../lib/firebase';
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { Edit, Trash, PlusCircle } from 'lucide-react'; // Import icons from Lucide React
 import Image from 'next/image';
 import Sidebar from '@/components/SideBar';
@@ -88,17 +88,15 @@ const AdminBerita: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar state
 
     const fetchNews = async () => {
-        const querySnapshot = await getDocs(collection(db, 'news'));
-        const newsData: NewsItem[] = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data() as Omit<NewsItem, 'id'>
-        }));
+    const newsQuery = query(collection(db, 'news'), orderBy('created_at', 'desc'));
+    const querySnapshot = await getDocs(newsQuery);
+    const newsData: NewsItem[] = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data() as Omit<NewsItem, 'id'>
+    }));
 
-        newsData.sort((a, b) => {
-            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-        });
-        setNews(newsData);
-    };
+    setNews(newsData);
+};
 
     useEffect(() => {
         fetchNews();

@@ -61,8 +61,8 @@ const BeritaGrid: React.FC = () => {
                                 key={index + 1}
                                 onClick={() => setCurrentPage(index + 1)}
                                 className={`w-10 h-10 flex items-center justify-center rounded-full font-medium transition ${currentPage === index + 1
-                                        ? 'bg-orange-500 text-white'
-                                        : 'border border-gray-300 text-gray-700 hover:bg-gray-100'
+                                    ? 'bg-orange-500 text-white'
+                                    : 'border border-gray-300 text-gray-700 hover:bg-gray-100'
                                     }`}
                             >
                                 {index + 1}
