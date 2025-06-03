@@ -5,7 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-interface BeritaItem {
+interface NewsItems {
     id: string;
     title: string;
     image: string;
@@ -14,16 +14,16 @@ interface BeritaItem {
 }
 
 const BeritaGrid: React.FC = () => {
-    const [beritaList, setBeritaList] = useState<BeritaItem[]>([]);
+    const [beritaList, setBeritaList] = useState<NewsItems[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
 
     useEffect(() => {
         const fetchBerita = async () => {
             const querySnapshot = await getDocs(collection(db, 'news'));
-            const beritaData: BeritaItem[] = querySnapshot.docs.map(doc => ({
+            const beritaData: NewsItems[] = querySnapshot.docs.map(doc => ({
                 id: doc.id,
-                ...doc.data() as Omit<BeritaItem, 'id'>,
+                ...doc.data() as Omit<NewsItems, 'id'>,
             }));
 
             beritaData.sort((a, b) => {
