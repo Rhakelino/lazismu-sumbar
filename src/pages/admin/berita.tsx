@@ -1,8 +1,7 @@
-// pages/admin/berita.tsx
 import React, { useEffect, useState } from 'react';
 import { db } from '../../lib/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { Edit, Trash, PlusCircle } from 'lucide-react'; // Import ikon dari Lucide React
+import { Edit, Trash, PlusCircle } from 'lucide-react'; // Import icons from Lucide React
 import Image from 'next/image';
 import Sidebar from '@/components/SideBar';
 
@@ -94,6 +93,10 @@ const AdminBerita: React.FC = () => {
             id: doc.id,
             ...doc.data() as Omit<NewsItem, 'id'>
         }));
+
+        newsData.sort((a, b) => {
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        });
         setNews(newsData);
     };
 
@@ -103,14 +106,25 @@ const AdminBerita: React.FC = () => {
 
     const handleAddNews = async () => {
         if (window.confirm('Apakah Anda yakin ingin menambahkan berita ini?')) {
-            await addDoc(collection(db, 'news'), {
-                ...formData,
-                created_at: new Date().toISOString(),
-            });
-            setFormData({ title: '', description: '', image: '' });
-            setNotification('Berita berhasil ditambahkan!');
-            fetchNews();
-            setTimeout(() => setNotification(null), 3000);
+            try {
+                await addDoc(collection(db, 'news'), {
+                    ...formData,
+                    created_at: new Date().toISOString(),
+                });
+                setNotification('Berita berhasil ditambahkan!');
+
+                // Reset form data after a short delay to ensure the notification displays first
+                setFormData({ title: '', description: '', image: '' });
+
+                // Fetch updated news list
+                await fetchNews(); // Ensure the updated list is fetched
+
+                // Clear the notification after 3 seconds
+                setTimeout(() => setNotification(null), 3000);
+            } catch (error) {
+                console.error('Error adding news:', error);
+                setNotification('Gagal menambahkan berita.');
+            }
         }
     };
 
@@ -151,18 +165,24 @@ const AdminBerita: React.FC = () => {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+
     return (
         <div className="flex">
             {/* Sidebar */}
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
             <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'} bg-black text-white`}>
                 <h1 className="text-2xl font-semibold mb-4">Admin Berita</h1>
-                {notification && <div className="bg-green-500 text-white p-2 rounded w-full text-center">{notification}</div>}
+                {notification && (
+                    <div className="bg-green-500 text-white p-2 rounded w-full text-center mb-4">
+                        {notification}
+                    </div>
+                )}
                 <form onSubmit={(e) => { e.preventDefault(); handleAddNews(); }} className="bg-neutral-900 border border-neutral-700 p-6 rounded-lg shadow-md w-full space-y-4">
                     <h2 className="text-xl font-semibold mb-4">Tambah Berita</h2>
                     <input
                         type="text"
                         name="title"
+                        value={formData.title}  // Ensure you bind value directly
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         placeholder="Judul Berita"
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white placeholder:opacity-50"
@@ -170,6 +190,7 @@ const AdminBerita: React.FC = () => {
                     />
                     <textarea
                         name="description"
+                        value={formData.description}  // Bind value to formData
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         placeholder="Deskripsi Berita"
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white placeholder:opacity-50"
@@ -178,6 +199,7 @@ const AdminBerita: React.FC = () => {
                     <input
                         type="text"
                         name="image"
+                        value={formData.image}  // Bind value to formData
                         onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                         placeholder="URL Gambar"
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white placeholder:opacity-50"
@@ -206,7 +228,6 @@ const AdminBerita: React.FC = () => {
                                     <button onClick={() => handleDelete(item.id)} className="bg-neutral-700 hover:bg-red-600 text-neutral-400 border border-neutral-600 px-2 py-1 rounded">
                                         <Trash size={24} />
                                     </button>
-                                   
                                 </div>
                             </div>
                         ))}

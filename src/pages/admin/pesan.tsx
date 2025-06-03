@@ -1,4 +1,3 @@
-// pages/admin/pesan.tsx
 import React, { useEffect, useState } from 'react';
 import { db } from '../../lib/firebase'; // Adjust the import based on your project structure
 import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
@@ -18,6 +17,7 @@ const AdminPesan: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar state
+    const [notification, setNotification] = useState<string | null>(null); // Notification state
 
     const fetchMessages = async () => {
         setLoading(true);
@@ -37,9 +37,17 @@ const AdminPesan: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         if (window.confirm('Are you sure you want to delete this message?')) {
-            // Implement delete functionality if needed
-            const newsRef = doc(db, 'pesan', id);
-            await deleteDoc(newsRef);
+            const messageRef = doc(db, 'pesan', id);
+            await deleteDoc(messageRef);
+            setNotification('Pesan berhasil dihapus!'); // Set notification message
+
+            // Refresh the messages list
+            fetchMessages();
+
+            // Clear notification after 3 seconds
+            setTimeout(() => {
+                setNotification(null);
+            }, 3000);
         }
     };
 
@@ -52,6 +60,14 @@ const AdminPesan: React.FC = () => {
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
             <div className={`flex-1 h-full p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'} bg-black text-white`}>
                 <h1 className="text-2xl font-semibold mb-8">Pesan Masuk</h1>
+                
+                {/* Display notification if exists */}
+                {notification && (
+                    <div className="bg-green-500 text-white p-3 rounded mb-4">
+                        {notification}
+                    </div>
+                )}
+                
                 {loading ? (
                     <p>Loading messages...</p>
                 ) : messages.length > 0 ? (
