@@ -17,7 +17,6 @@ const AppShell = (props: AppShellProps) => {
     <main className='h-full'>
       {/* Menyembunyikan Navbar hanya pada halaman admin */}
       {!isAdminPage && <Navbar />}
-      
       <div>
         {children}
       </div>  
