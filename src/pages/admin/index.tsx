@@ -31,9 +31,9 @@ export default function SignIn() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Sign In</h2>
-      <form onSubmit={handleSignIn} className="space-y-4">
+    <div className="flex min-h-screen justify-center flex-col items-center w-full border border-black">
+      <h2 className="text-2xl font-bold mb-4">Login Admin</h2>
+      <form onSubmit={handleSignIn} className="space-y-4 w-full px-4 lg:w-1/2">
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
           <input
