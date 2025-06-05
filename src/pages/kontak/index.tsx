@@ -16,7 +16,7 @@ const Kontak = () => {
                 imageSrc="/images/logo-zis.png"
             />
             {/* Struktur Organisasi */}
-            <div className='max-w-6xl mx-auto px-4 py-16 space-y-16'>
+            <div className='max-w-screen-md mx-auto px-2 sm:px-4 py-8 sm:py-16 space-y-8 sm:space-y-16 overflow-x-hidden'>
                 <div>
                     <motion.div
                         variants={fadeUp}
@@ -24,15 +24,15 @@ const Kontak = () => {
                         whileInView="animate"
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true, amount: 0.3 }}
-                        className="bg-white rounded-xl shadow-sm p-8 border border-gray-100"
+                        className="bg-white rounded-xl shadow-sm p-4 sm:p-8 border border-gray-100"
                     >
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                            <div className="md:col-span-2 bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8">
+                            <div className="md:col-span-2 bg-white rounded-lg shadow-sm p-4 sm:p-6 border border-gray-200">
                                 <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
                                     <Phone className="h-5 w-5 mr-2 text-orange-500" />
                                     Tentang LAZISMU Sumatera Barat
                                 </h2>
-                                <div className="space-y-4 text-gray-600">
+                                <div className="space-y-3 text-gray-600 text-sm sm:text-base">
                                     <p className="leading-relaxed">
                                         LAZISMU (Lembaga Amil Zakat, Infaq, dan Sedekah Muhammadiyah) Sumatera Barat adalah lembaga yang
                                         memiliki komitmen tinggi dalam mengelola zakat, infaq, dan sedekah dari masyarakat untuk
@@ -67,51 +67,52 @@ const Kontak = () => {
                             </div>
 
                             {/* Informasi Kontak */}
-                            <div className="bg-white rounded-lg shadow-sm p-6 border h-full border-gray-100 mb-8 max-w-xl mx-auto">
-                                <h2 className="text-lg font-bold text-gray-800 mb-6 gap-4 flex items-center">
-                                    <BadgeInfo className="w-10 h-10 text-orange-500" />
-                                    Informasi Kontak
-                                </h2>
-                                {/* Contact Details */}
-                                <div className="space-y-6">
-                                    <div className="flex items-center">
-                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
-                                            <Ambulance className="w-10 h-10 text-orange-500" />
-                                        </div>
-                                        <div className="ml-5 flex-grow">
-                                            <h3 className="text-base font-semibold text-gray-800">Layanan Ambulans Gratis</h3>
-                                            <p className="text-gray-600 mt-1">0823 8746 2887 (Pak Nal)</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
-                                            <Phone className="h-10 w-10 text-orange-500" />
-                                        </div>
-                                        <div className="ml-5 flex-grow">
-                                            <h3 className="text-base font-semibold text-gray-800">Whatsapp Kantor</h3>
-                                            <p className="text-gray-600 mt-1">0823 9170 7227</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
-                                            <Camera className="h-10 w-10 text-orange-500" />
-                                        </div>
-                                        <div className="ml-5 flex-grow">
-                                            <h3 className="text-base font-semibold text-gray-800">Media Lazismu</h3>
-                                            <p className="text-gray-600 mt-1">0821 6212 8403</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
-                                            <Mail className="h-10 w-10 text-orange-500" />
-                                        </div>
-                                        <div className="ml-5 flex-grow">
-                                            <h3 className="text-base font-semibold text-gray-800">Email</h3>
-                                            <p className="text-gray-600 mt-1">lazismusumaterabarat@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 border h-full border-gray-100 mb-8 w-full max-w-md mx-auto">
+  <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-4 sm:mb-6 gap-3 flex items-center">
+    <BadgeInfo className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+    Informasi Kontak
+  </h2>
+  {/* Contact Details */}
+  <div className="space-y-4 sm:space-y-6">
+    <div className="flex items-center">
+      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        <Ambulance className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+      </div>
+      <div className="ml-4 sm:ml-5 flex-grow">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Layanan Ambulans Gratis</h3>
+        <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 8746 2887 (Pak Nal)</p>
+      </div>
+    </div>
+    <div className="flex items-center">
+      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        <Phone className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+      </div>
+      <div className="ml-4 sm:ml-5 flex-grow">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Whatsapp Kantor</h3>
+        <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 9170 7227</p>
+      </div>
+    </div>
+    <div className="flex items-center">
+      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        <Camera className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+      </div>
+      <div className="ml-4 sm:ml-5 flex-grow">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Media Lazismu</h3>
+        <p className="text-gray-600 mt-1 text-xs sm:text-sm">0821 6212 8403</p>
+      </div>
+    </div>
+    <div className="flex items-center">
+      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+      </div>
+      <div className="ml-4 sm:ml-5 flex-grow">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Email</h3>
+        <p className="text-gray-600 mt-1 text-xs sm:text-sm break-all">lazismusumaterabarat@gmail.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+
                         </div>
                     </motion.div>
 
