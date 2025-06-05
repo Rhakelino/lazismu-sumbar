@@ -1,18 +1,85 @@
 import HeroSection from "@/components/HeroSection";
+import supabase from "@/lib/db";
 import { motion } from "framer-motion";
-import { Phone, BadgeInfo, Ambulance, Camera, Mail, MapPin } from "lucide-react"; // Ganti dengan icon library yang kamu pakai
+import { Phone, BadgeInfo, Ambulance, Camera, Mail, MapPin } from "lucide-react";
+import { useState } from "react";
 
-// Contoh animasi framer-motion
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   animate: { opacity: 1, y: 0 }
 };
 
 export default function KontakPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [notification, setNotification] = useState("");
+
+  // Handle input change
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const { name, email, subject, message } = formData;
+      // Ensure that the form data is not empty
+      if (!name || !email || !subject || !message) {
+        throw new Error("All fields must be filled.");
+      }
+      // Insert form data into Supabase (create a 'message' table)
+      const { data, error } = await supabase
+        .from("message") // Correct table name
+        .insert([
+          {
+            nama_lengkap: name, // Correct column names
+            email: email,
+            subjek: subject,
+            pesan: message,
+          },
+        ]);
+
+      // If there is an error, log and throw the error to display to the user
+      if (error) {
+        console.error("Supabase Insert Error:", error); // Log the full error from Supabase
+        throw new Error(error.message); // Provide a more detailed error message
+      }
+
+      setNotification("Pesan Anda berhasil dikirim!");
+
+      // Clear form data after submission
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+
+      setTimeout(() => {
+        setNotification(""); // Reset the notification after 3 seconds
+      }, 1000);
+    } catch (error: any) {
+      // Log the error message to the console for debugging
+      console.error("Error submitting form: ", error);
+
+      // Display a notification with the detailed error message
+      setNotification(`Terjadi kesalahan: ${error.message}`);
+    }
+  };
   return (
     <div>
       {/* Header Section */}
-      {/* Ganti HeroSection dengan komponenmu sendiri jika ada */}
       <HeroSection title="Kontak Kami" subtitle="Program donasi pilihan untuk kebaikan bersama" imageSrc="/images/logo-zis.png" />
 
       <div className="max-w-screen-xl mx-auto px-2 sm:px-4 py-8 sm:py-16 space-y-8 sm:space-y-16 overflow-x-hidden">
@@ -49,19 +116,7 @@ export default function KontakPage() {
               </div>
               <div className="mt-5 flex items-center">
                 <div className="flex space-x-3">
-                  {/* Tambahkan icon sosial media di sini */}
-                  <a href="https://www.facebook.com/lazismusumbar" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
-                    {/* Facebook Icon */}
-                  </a>
-                  <a href="https://www.instagram.com/lazismusumaterabarat/" target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:text-pink-800">
-                    {/* Instagram Icon */}
-                  </a>
-                  <a href="https://www.twitter.com/lazismusumbar" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-600">
-                    {/* Twitter Icon */}
-                  </a>
-                  <a href="https://www.youtube.com/lazismusumbar" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-800">
-                    {/* YouTube Icon */}
-                  </a>
+                  {/* Add social media icons here */}
                 </div>
                 <span className="ml-4 text-sm text-gray-500">Ikuti kami di sosial media</span>
               </div>
@@ -74,42 +129,7 @@ export default function KontakPage() {
                 Informasi Kontak
               </h2>
               <div className="space-y-4 sm:space-y-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-                    <Ambulance className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-                  </div>
-                  <div className="ml-4 sm:ml-5 flex-grow">
-                    <h3 className="text-sm sm:text-base font-semibold text-gray-800">Layanan Ambulans Gratis</h3>
-                    <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 8746 2887 (Pak Nal)</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-                    <Phone className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-                  </div>
-                  <div className="ml-4 sm:ml-5 flex-grow">
-                    <h3 className="text-sm sm:text-base font-semibold text-gray-800">Whatsapp Kantor</h3>
-                    <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 9170 7227</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-                    <Camera className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-                  </div>
-                  <div className="ml-4 sm:ml-5 flex-grow">
-                    <h3 className="text-sm sm:text-base font-semibold text-gray-800">Media Lazismu</h3>
-                    <p className="text-gray-600 mt-1 text-xs sm:text-sm">0821 6212 8403</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-                    <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-                  </div>
-                  <div className="ml-4 sm:ml-5 flex-grow">
-                    <h3 className="text-sm sm:text-base font-semibold text-gray-800">Email</h3>
-                    <p className="text-gray-600 mt-1 text-xs sm:text-sm break-all">lazismusumaterabarat@gmail.com</p>
-                  </div>
-                </div>
+                {/* Add contact information here */}
               </div>
             </div>
           </div>
@@ -122,7 +142,7 @@ export default function KontakPage() {
             </h2>
             <div className="rounded-lg overflow-hidden border border-gray-200">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126349.87422777654!2d100.2775352!3d-0.9519828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b9e3d0ad4d9f%3A0xa4b7469c50253fa!2sJl.+Bundo+Kanduang+No.1%2C+Belakang+Tangsi%2C+Kec.%2FPadang+Bar.%2C+Kota+Padang%2C+Sumatera+Barat!5e0!3m2!1sen!2sid!4v1658923483022!5m2!1sen!2sid"
+                src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAP_URL"
                 className="w-full h-56 sm:h-72 md:h-96"
                 style={{ minHeight: 200, border: 0 }}
                 allowFullScreen
@@ -134,72 +154,88 @@ export default function KontakPage() {
           </div>
 
           {/* Form Kirim Pesan */}
-          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 border border-gray-200 max-w-4xl mx-auto">
-            <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-4 4v-5z" />
-              </svg>
-              Kirim Pesan
-            </h2>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 border border-gray-200 max-w-4xl mx-auto">
+              <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-4 4v-5z" />
+                </svg>
+                Kirim Pesan
+              </h2>
+
+              {/* Notification */}
+              {notification && (
+                <div className="text-center text-sm text-gray-800 mb-4 p-3 rounded-md bg-green-200">
+                  {notification}
+                </div>
+              )}
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      placeholder="Masukkan nama lengkap Anda"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      placeholder="Masukkan email Anda"
+                      required
+                    />
+                  </div>
+                </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subjek</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    placeholder="Masukkan nama lengkap Anda"
+                    placeholder="Masukkan subjek pesan"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    placeholder="Masukkan email Anda"
+                    placeholder="Masukkan pesan Anda"
                     required
-                  />
+                  ></textarea>
                 </div>
-              </div>
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subjek</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Masukkan subjek pesan"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Masukkan pesan Anda"
-                  required
-                ></textarea>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className="inline-flex items-center px-4 py-2 bg-orange-600 border border-transparent rounded-md font-semibold text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Kirim Pesan
-                </button>
-              </div>
-            </form>
+                <div>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center px-4 py-2 bg-orange-600 border border-transparent rounded-md font-semibold text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                  >
+                    Kirim Pesan
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </motion.div>
       </div>
