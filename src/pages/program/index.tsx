@@ -22,7 +22,6 @@ const Program = () => {
     const [selectedCategory, setSelectedCategory] = useState('Semua');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
-
     const programs = [
         {
             gambar: 'https://picsum.photos/500/300?random=1',
