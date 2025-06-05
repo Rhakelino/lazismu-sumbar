@@ -18,14 +18,19 @@ export default function SignIn() {
     });
 
     if (error) {
-      setError(error.message);
+      setError("lah lu siapa bjir");
     } else {
       setSuccess(true);
       console.log('Login berhasil:', data);
       if (data?.user) {
         // Misalnya, setelah login berhasil, arahkan ke halaman admin
-        window.location.href = '/admin/berita'; // Ganti dengan URL dashboard Anda
+        setTimeout(() => {
+          setSuccess(true);
+          // Redirect to the admin dashboard after 3 seconds
+          window.location.href = '/admin/berita'; // Ganti dengan URL dashboard Anda
+        }, 3000); // Delay of 3 seconds
       }
+
 
     }
   };
@@ -61,7 +66,10 @@ export default function SignIn() {
           />
         </div>
         {error && <div className="text-red-500 text-sm">{error}</div>}
-        {success && <div className="text-green-500 text-sm">Login berhasil!</div>}
+        {success && <div className='flex gap-2'>
+          <div className="text-green-500 text-sm">Halo Ganteng!</div>
+          <div className="animate-spin rounded-full border-t-2 border-b-2 border-orange-500 h-4 w-4"></div>
+        </div>}
         <div>
           <button
             type="submit"
