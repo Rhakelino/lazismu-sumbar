@@ -20,6 +20,7 @@ const BeritaGrid: React.FC = () => {
         const { data, error } = await supabase
           .from('news')
           .select('*')
+          .order('created_at', { ascending: false });
         if (error) throw error;
         setNews(data);
       } catch (err: any) {
@@ -47,7 +48,6 @@ const BeritaGrid: React.FC = () => {
       </div>
     );
   }
-
   if (!news) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -55,39 +55,41 @@ const BeritaGrid: React.FC = () => {
       </div>
     );
   }
-
-
   return (
     <div className="mx-6 md:mx-12 lg:mx-24 py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {news.map((item) => (
           <Link href={`/detail-berita/${item.id}`} key={item.id}>
             <motion.div
-              className="bg-white rounded-lg shadow-md p-4"
+              className="bg-white rounded-lg shadow-md flex flex-col h-full"
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 200 }}
             >
-              <div className="relative w-full h-48 mb-3">
+              <div className="relative w-full h-48 mb-3 overflow-hidden">
                 <Image
                   src={item.image}
                   alt={`Gambar Berita ${item.title}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded"
+                  fill
+                  className="rounded-lg object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
-              <p className="text-sm text-gray-700 mb-2">{item.description}</p>
-              <p className="text-sm text-gray-500">{new Date(item.created_at).toLocaleDateString('id-ID', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}</p>
-
+              <div className="flex-1 flex flex-col px-4 pb-4">
+                <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
+                <p className="text-sm text-gray-700 mb-2 flex-1">{item.description}</p>
+                <p className="text-sm text-gray-500">
+                  {new Date(item.created_at).toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
+              </div>
             </motion.div>
           </Link>
         ))}
       </div>
+
     </div>
   );
 };
