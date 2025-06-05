@@ -1,47 +1,12 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Camera, Ambulance, BadgeInfo } from 'lucide-react';
 import HeroSection from '@/components/HeroSection';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 
 const fadeUp = {
     initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0 },
 };
-
 const Kontak = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({ ...prevState, [name]: value }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        try {
-            await addDoc(collection(db, 'pesan'), {
-                nama_lengkap: formData.name,
-                email: formData.email,
-                subjek: formData.subject,
-                pesan: formData.message,
-                created_at: new Date().toISOString(),
-            });
-            alert('Pesan berhasil dikirim!'); // Feedback for users
-            setFormData({ name: '', email: '', subject: '', message: '' }); // Reset form
-        } catch (error) {
-            console.error('Error adding document: ', error);
-            alert('Gagal mengirim pesan. Silakan coba lagi.');
-        }
-    };
-
     return (
         <div>
             {/* Header Section */}
@@ -50,7 +15,6 @@ const Kontak = () => {
                 subtitle="Program donasi pilihan untuk kebaikan bersama"
                 imageSrc="/images/logo-zis.png"
             />
-
             {/* Struktur Organisasi */}
             <div className='max-w-6xl mx-auto px-4 py-16 space-y-16'>
                 <div>
@@ -101,7 +65,7 @@ const Kontak = () => {
                                     <span className="ml-4 text-sm text-gray-500">Ikuti kami di sosial media</span>
                                 </div>
                             </div>
-                            
+
                             {/* Informasi Kontak */}
                             <div className="bg-white rounded-lg shadow-sm p-6 border h-full border-gray-100 mb-8 max-w-xl mx-auto">
                                 <h2 className="text-lg font-bold text-gray-800 mb-6 gap-4 flex items-center">
@@ -179,7 +143,7 @@ const Kontak = () => {
                                 </svg>
                                 Kirim Pesan
                             </h2>
-                            <form onSubmit={handleSubmit} className="space-y-4">
+                            <form className="space-y-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
@@ -187,8 +151,6 @@ const Kontak = () => {
                                             type="text"
                                             id="name"
                                             name="name"
-                                            value={formData.name}
-                                            onChange={handleChange}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                             placeholder="Masukkan nama lengkap Anda"
                                             required
@@ -200,8 +162,6 @@ const Kontak = () => {
                                             type="email"
                                             id="email"
                                             name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                             placeholder="Masukkan email Anda"
                                             required
@@ -214,8 +174,6 @@ const Kontak = () => {
                                         type="text"
                                         id="subject"
                                         name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         placeholder="Masukkan subjek pesan"
                                         required
@@ -227,8 +185,6 @@ const Kontak = () => {
                                         id="message"
                                         name="message"
                                         rows={4}
-                                        value={formData.message}
-                                        onChange={handleChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         placeholder="Masukkan pesan Anda"
                                         required
