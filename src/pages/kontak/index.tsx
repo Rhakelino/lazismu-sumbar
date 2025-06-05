@@ -68,50 +68,50 @@ const Kontak = () => {
 
                             {/* Informasi Kontak */}
                             <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 border h-full border-gray-100 mb-8 w-full max-w-md mx-auto">
-  <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-4 sm:mb-6 gap-3 flex items-center">
-    <BadgeInfo className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-    Informasi Kontak
-  </h2>
-  {/* Contact Details */}
-  <div className="space-y-4 sm:space-y-6">
-    <div className="flex items-center">
-      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-        <Ambulance className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-      </div>
-      <div className="ml-4 sm:ml-5 flex-grow">
-        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Layanan Ambulans Gratis</h3>
-        <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 8746 2887 (Pak Nal)</p>
-      </div>
-    </div>
-    <div className="flex items-center">
-      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-        <Phone className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-      </div>
-      <div className="ml-4 sm:ml-5 flex-grow">
-        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Whatsapp Kantor</h3>
-        <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 9170 7227</p>
-      </div>
-    </div>
-    <div className="flex items-center">
-      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-        <Camera className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-      </div>
-      <div className="ml-4 sm:ml-5 flex-grow">
-        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Media Lazismu</h3>
-        <p className="text-gray-600 mt-1 text-xs sm:text-sm">0821 6212 8403</p>
-      </div>
-    </div>
-    <div className="flex items-center">
-      <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-        <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
-      </div>
-      <div className="ml-4 sm:ml-5 flex-grow">
-        <h3 className="text-sm sm:text-base font-semibold text-gray-800">Email</h3>
-        <p className="text-gray-600 mt-1 text-xs sm:text-sm break-all">lazismusumaterabarat@gmail.com</p>
-      </div>
-    </div>
-  </div>
-</div>
+                                <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-4 sm:mb-6 gap-3 flex items-center">
+                                    <BadgeInfo className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+                                    Informasi Kontak
+                                </h2>
+                                {/* Contact Details */}
+                                <div className="space-y-4 sm:space-y-6">
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                                            <Ambulance className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+                                        </div>
+                                        <div className="ml-4 sm:ml-5 flex-grow">
+                                            <h3 className="text-sm sm:text-base font-semibold text-gray-800">Layanan Ambulans Gratis</h3>
+                                            <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 8746 2887 (Pak Nal)</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                                            <Phone className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+                                        </div>
+                                        <div className="ml-4 sm:ml-5 flex-grow">
+                                            <h3 className="text-sm sm:text-base font-semibold text-gray-800">Whatsapp Kantor</h3>
+                                            <p className="text-gray-600 mt-1 text-xs sm:text-sm">0823 9170 7227</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                                            <Camera className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+                                        </div>
+                                        <div className="ml-4 sm:ml-5 flex-grow">
+                                            <h3 className="text-sm sm:text-base font-semibold text-gray-800">Media Lazismu</h3>
+                                            <p className="text-gray-600 mt-1 text-xs sm:text-sm">0821 6212 8403</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0 bg-orange-50 rounded-full p-2 sm:p-3 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                                            <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+                                        </div>
+                                        <div className="ml-4 sm:ml-5 flex-grow">
+                                            <h3 className="text-sm sm:text-base font-semibold text-gray-800">Email</h3>
+                                            <p className="text-gray-600 mt-1 text-xs sm:text-sm break-all">lazismusumaterabarat@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </motion.div>
@@ -124,18 +124,24 @@ const Kontak = () => {
                         viewport={{ once: true, amount: 0.3 }}
                         className="bg-white rounded-xl shadow-sm p-8 border border-gray-100"
                     >
-                        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 mb-8">
-                            <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                                <MapPin className="h-5 w-5 mr-2 text-orange-500" />
-                                Lokasi Kami
-                            </h2>
-                            <div className="rounded-lg overflow-hidden border border-gray-200">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126349.87422777654!2d100.2775352!3d-0.9519828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b9e3d0ad4d9f%3A0xa4b7469c50253fa!2sJl.+Bundo+Kanduang+No.1%2C+Belakang+Tangsi%2C+Kec.%2FPadang+Bar.%2C+Kota+Padang%2C+Sumatera+Barat!5e0!3m2!1sen!2sid!4v1658923483022!5m2!1sen!2sid"
-                                    className="w-full h-[300px] md:h-[400px]" style={{ border: 0 }} allowFullScreen loading="lazy"
-                                ></iframe>
-                            </div>
-                        </div>
+                       <div className="w-full max-w-md mx-auto rounded-lg shadow-sm mb-8 bg-white p-4 sm:p-6">
+  <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center">
+    <MapPin className="h-5 w-5 mr-2 text-orange-500" />
+    Lokasi Kami
+  </h2>
+  <div className="rounded-lg overflow-hidden border border-gray-200">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126349.87422777654!2d100.2775352!3d-0.9519828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b9e3d0ad4d9f%3A0xa4b7469c50253fa!2sJl.+Bundo+Kanduang+No.1%2C+Belakang+Tangsi%2C+Kec.%2FPadang+Bar.%2C+Kota+Padang%2C+Sumatera+Barat!5e0!3m2!1sen!2sid!4v1658923483022!5m2!1sen!2sid"
+      className="w-full h-56 sm:h-72 border-0"
+      style={{ minHeight: 200, border: 0 }}
+      allowFullScreen
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      title="Lokasi Lazismu"
+    ></iframe>
+  </div>
+</div>
+
 
                         <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
                             <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
