@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import supabase from '@/lib/db';
 import { INews } from '@/types/news';
+import Image from 'next/image';
 
 const DetailBerita: React.FC = () => {
     const router = useRouter();
@@ -70,10 +71,12 @@ const DetailBerita: React.FC = () => {
                 })}</span>
             </div>
             {news.image && (
-                <img
+                <Image
                     src={news.image}
                     alt={news.title}
-                    className="w-full h-64 object-cover rounded-lg mb-6"
+                    className="object-cover rounded-lg mb-6"
+                    height={720}
+                    width={1000}
                     loading="lazy"
                 />
             )}

@@ -48,22 +48,21 @@ const BeritaGrid: React.FC = () => {
     );
   }
 
-   if (!news) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <p className="text-gray-500 text-lg">Berita tidak ditemukan.</p>
-            </div>
-        );
-    }
+  if (!news) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500 text-lg">Berita tidak ditemukan.</p>
+      </div>
+    );
+  }
 
 
   return (
     <div className="mx-6 md:mx-12 lg:mx-24 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {news.map((item) => (
-          <Link href={`/detail-berita/${item.id}`}>
+          <Link href={`/detail-berita/${item.id}`} key={item.id}>
             <motion.div
-              key={item.id}
               className="bg-white rounded-lg shadow-md p-4"
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 200 }}
