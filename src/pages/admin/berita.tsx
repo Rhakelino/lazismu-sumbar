@@ -3,6 +3,7 @@ import { Edit, Trash, PlusCircle } from 'lucide-react';
 import Image from 'next/image';
 import Sidebar from '@/components/SideBar';
 import supabase from '@/lib/db';
+import { useRouter } from 'next/router';
 
 interface NewsItem {
     id: string;
@@ -93,6 +94,19 @@ const AdminBerita: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [notification, setNotification] = useState<string | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.push('/admin'); // Redirect to your login page
+                return; 
+            }
+            fetchNews();
+        };
+        checkUser();
+    }, [router]);
 
     const fetchNews = async () => {
         const { data, error } = await supabase
@@ -106,10 +120,6 @@ const AdminBerita: React.FC = () => {
             setNews(data || []);
         }
     };
-
-    useEffect(() => {
-        fetchNews();
-    }, []);
 
     const handleAddNews = async () => {
         if (!formData.image) {
@@ -210,13 +220,11 @@ const AdminBerita: React.FC = () => {
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
             <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'} bg-black text-white`}>
                 <h1 className="text-2xl font-semibold mb-4">Admin Berita</h1>
-
                 {notification && (
                     <div className="bg-green-500 text-white p-2 rounded text-center mb-4">
                         {notification}
                     </div>
                 )}
-
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();

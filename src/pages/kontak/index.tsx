@@ -40,7 +40,7 @@ export default function KontakPage() {
       }
       // Insert form data into Supabase (create a 'message' table)
       const { data, error } = await supabase
-        .from("message") // Correct table name
+        .from("messages") // Correct table name
         .insert([
           {
             nama_lengkap: name, // Correct column names

@@ -1,11 +1,24 @@
 import supabase from '@/lib/db';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const router = useRouter(); // Initialize useRouter
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        // User is logged in, redirect to admin berita page  
+        router.push('/admin/berita');
+      }
+    };
+    checkUser();
+  }, [router]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +43,6 @@ export default function SignIn() {
           window.location.href = '/admin/berita'; // Ganti dengan URL dashboard Anda
         }, 3000); // Delay of 3 seconds
       }
-
-
     }
   };
 

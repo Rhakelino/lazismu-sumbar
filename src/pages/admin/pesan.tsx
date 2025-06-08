@@ -3,17 +3,32 @@ import { Trash } from 'lucide-react';
 import Sidebar from '@/components/SideBar';
 import supabase from '@/lib/db';
 import { IMessage } from '@/types/messages';
+import { useRouter } from 'next/router';
 
 const AdminPesan: React.FC = () => {
     const [messages, setMessages] = useState<IMessage[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false); // Sidebar state
     const [notification, setNotification] = useState<string | null>(null); // Notification state
+    const router = useRouter();
+
+
+     useEffect(() => {
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.push('/admin'); // Redirect to your login page
+                return; 
+            }
+            fetchMessages();
+        };
+        checkUser();
+    }, [router]);
 
     // Fetch messages from the database
     const fetchMessages = async () => {
         const { data, error } = await supabase
-            .from('message')
+            .from('messages')
             .select('*')
             .order('created_at', { ascending: false });
 
@@ -32,7 +47,7 @@ const AdminPesan: React.FC = () => {
     const deleteMessage = async (id: string) => {
         if (window.confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
             const { error } = await supabase
-                .from('message')
+                .from('messages')
                 .delete()
                 .eq('id', id);
 
