@@ -129,7 +129,42 @@ export default function KontakPage() {
                 Informasi Kontak
               </h2>
               <div className="space-y-4 sm:space-y-6">
-                {/* Add contact information here */}
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
+                    <Ambulance className="w-10 h-10 text-orange-500" />
+                  </div>
+                  <div className="lg:ml-5 flex-grow">
+                    <h3 className="text-base font-semibold text-gray-800">Layanan Ambulans Gratis</h3>
+                    <p className="text-gray-600 mt-1">0823 8746 2887 (Pak Nal)</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
+                    <Phone className="h-10 w-10 text-orange-500" />
+                  </div>
+                  <div className="lg:ml-5 flex-grow">
+                    <h3 className="text-base font-semibold text-gray-800">Whatsapp Kantor</h3>
+                    <p className="text-gray-600 mt-1">0823 9170 7227</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
+                    <Camera className="h-10 w-10 text-orange-500" />
+                  </div>
+                  <div className="lg:ml-5 flex-grow">
+                    <h3 className="text-base font-semibold text-gray-800">Media Lazismu</h3>
+                    <p className="text-gray-600 mt-1">0821 6212 8403</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <div className="flex-shrink-0 bg-orange-50 rounded-full p-3 w-14 h-14 flex items-center justify-center">
+                    <Mail className="h-10 w-10 text-orange-500" />
+                  </div>
+                  <div className="lg:ml-5 flex-grow">
+                    <h3 className="text-base font-semibold text-gray-800">Email</h3>
+                    <p className="text-gray-600 mt-1">lazismusumaterabarat@gmail.com</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
