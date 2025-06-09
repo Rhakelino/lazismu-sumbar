@@ -20,16 +20,55 @@ const Modal: React.FC<{
     initialData: any;
 }> = ({ isOpen, onClose, onSubmit, initialData }) => {
     const [localFormData, setLocalFormData] = useState(initialData);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     useEffect(() => {
         setLocalFormData(initialData);
-    }, [initialData]);
+        setSelectedFile(null);
+    }, [initialData, isOpen]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setLocalFormData({
             ...localFormData,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            try {
+                // Upload the new file to Supabase storage
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}.${fileExt}`;
+
+                const { error: uploadError } = await supabase.storage
+                    .from('news-images')
+                    .upload(fileName, file, { upsert: true });
+
+                if (uploadError) {
+                    console.error('Gagal upload gambar:', uploadError.message);
+                    return;
+                }
+
+                const { data: publicUrlData } = supabase.storage
+                    .from('news-images')
+                    .getPublicUrl(fileName);
+
+                const newImageUrl = publicUrlData?.publicUrl;
+
+                if (newImageUrl) {
+                    // Update the form data with the new image URL
+                    setLocalFormData((prev: any) => ({
+                        ...prev,
+                        image: newImageUrl
+                    }));
+                    setSelectedFile(file);
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,20 +101,35 @@ const Modal: React.FC<{
                         className="border p-2 w-full rounded-lg bg-neutral-900 border-neutral-700 text-white"
                         required
                     />
-                    <input
-                        type="text"
-                        name="image"
-                        value={localFormData.image}
-                        onChange={handleChange}
-                        placeholder="URL Gambar"
-                        className="border p-2 w-full rounded-lg bg-neutral-900 border-neutral-700 text-white"
-                        required
-                    />
-                    <button type="submit" className="bg-white text-black hover:bg-gray-200 p-2 rounded-lg w-full font-semibold">
+                    <div className="flex flex-col items-center">
+                        {localFormData.image && (
+                            <Image
+                                src={localFormData.image}
+                                alt="Preview"
+                                width={200}
+                                height={200}
+                                className="mb-4 rounded"
+                            />
+                        )}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={!localFormData.image}
+                        className="bg-white text-black hover:bg-gray-200 p-2 rounded-lg w-full font-semibold disabled:opacity-50"
+                    >
                         Update Berita
                     </button>
                 </form>
-                <button onClick={onClose} className="mt-4 text-white border border-neutral-500 hover:bg-neutral-800 px-2 py-1 rounded-lg">
+                <button
+                    onClick={onClose}
+                    className="mt-4 text-white border border-neutral-500 hover:bg-neutral-800 px-2 py-1 rounded-lg"
+                >
                     Tutup
                 </button>
             </div>
@@ -101,7 +155,7 @@ const AdminBerita: React.FC = () => {
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) {
                 router.push('/admin'); // Redirect to your login page
-                return; 
+                return;
             }
             fetchNews();
         };
@@ -142,17 +196,65 @@ const AdminBerita: React.FC = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (window.confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
-            const { error } = await supabase.from('news').delete().eq('id', id);
+    if (window.confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+        try {
+            // Cari item yang akan dihapus untuk mendapatkan URL gambar
+            const { data: newsItem, error: fetchError } = await supabase
+                .from('news')
+                .select('image')
+                .eq('id', id)
+                .single();
 
-            if (!error) {
-                setNotification('Berita berhasil dihapus!');
-                fetchNews();
+            if (fetchError) {
+                console.error('Gagal mengambil data berita:', fetchError.message);
+                setNotification('Gagal mengambil data berita.');
+                return;
             }
 
+            // Ekstrak nama file dari URL gambar
+            if (newsItem?.image) {
+                const fileName = newsItem.image.split('/').pop();
+                
+                if (fileName) {
+                    // Hapus file dari storage
+                    const { error: storageError } = await supabase.storage
+                        .from('news-images')
+                        .remove([fileName]);
+
+                    if (storageError) {
+                        console.error('Gagal menghapus file dari storage:', storageError.message);
+                        setNotification('Gagal menghapus file dari storage.');
+                        return;
+                    }
+                }
+            }
+
+            // Hapus data dari database
+            const { error: deleteError } = await supabase
+                .from('news')
+                .delete()
+                .eq('id', id);
+
+            if (deleteError) {
+                console.error('Gagal menghapus berita:', deleteError.message);
+                setNotification('Gagal menghapus berita.');
+                return;
+            }
+
+            // Refresh daftar berita
+            fetchNews();
+            
+            // Tampilkan notifikasi
+            setNotification('Berita berhasil dihapus!');
+        } catch (error) {
+            console.error('Error saat menghapus berita:', error);
+            setNotification('Terjadi kesalahan saat menghapus berita.');
+        } finally {
+            // Sembunyikan notifikasi setelah 3 detik
             setTimeout(() => setNotification(null), 3000);
         }
-    };
+    }
+};
 
     const handleEdit = (item: NewsItem) => {
         setFormData({
@@ -164,22 +266,66 @@ const AdminBerita: React.FC = () => {
         setIsModalOpen(true);
     };
 
-    const handleUpdate = async (data: any) => {
+    const handleUpdate = async (data: {
+        title: string,
+        description: string,
+        image: string
+    }) => {
         if (editId) {
-            const { error } = await supabase
-                .from('news')
-                .update(data)
-                .eq('id', editId);
+            try {
+                // Cari item lama untuk mendapatkan URL gambar sebelumnya
+                const { data: oldItem, error: fetchError } = await supabase
+                    .from('news')
+                    .select('image')
+                    .eq('id', editId)
+                    .single();
 
-            if (!error) {
+                if (fetchError) {
+                    console.error('Gagal mengambil data lama:', fetchError.message);
+                    setNotification('Gagal mengambil data lama.');
+                    return;
+                }
+
+                // Hapus foto lama dari storage jika ada
+                if (oldItem?.image) {
+                    const oldFileName = oldItem.image.split('/').pop();
+                    if (oldFileName) {
+                        const { error: storageDeleteError } = await supabase.storage
+                            .from('news-images')
+                            .remove([oldFileName]);
+
+                        if (storageDeleteError) {
+                            console.error('Gagal menghapus foto lama:', storageDeleteError.message);
+                        }
+                    }
+                }
+
+                // Update data di database
+                const { error: updateError } = await supabase
+                    .from('news')
+                    .update(data)
+                    .eq('id', editId);
+
+                if (updateError) {
+                    console.error('Gagal memperbarui Berita:', updateError.message);
+                    setNotification('Gagal memperbarui Berita.');
+                    return;
+                }
+
+                // Proses berhasil
                 setNotification('Berita berhasil diperbarui!');
                 fetchNews();
+                setEditId(null);
+                setIsModalOpen(false);
+            } catch (error) {
+                console.error('Error updating news:', error);
+                setNotification('Terjadi kesalahan saat memperbarui Berita.');
+            } finally {
+                setTimeout(() => setNotification(null), 3000);
             }
-
-            setEditId(null);
-            setTimeout(() => setNotification(null), 3000);
         }
     };
+
 
     const handleImageUpload = async (file: File) => {
         const fileExt = file.name.split('.').pop();
@@ -237,7 +383,6 @@ const AdminBerita: React.FC = () => {
                     <input
                         type="text"
                         name="title"
-                        value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         placeholder="Judul Berita"
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
@@ -246,7 +391,6 @@ const AdminBerita: React.FC = () => {
 
                     <textarea
                         name="description"
-                        value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         placeholder="Deskripsi Berita"
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
