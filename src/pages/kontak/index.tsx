@@ -177,7 +177,7 @@ export default function KontakPage() {
             </h2>
             <div className="rounded-lg overflow-hidden border border-gray-200">
               <iframe
-                src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAP_URL"
+                src="https://www.google.com/maps/embed/v1/place?q=lazismu+sumbar&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
                 className="w-full h-56 sm:h-72 md:h-96"
                 style={{ minHeight: 200, border: 0 }}
                 allowFullScreen
