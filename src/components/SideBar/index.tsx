@@ -28,7 +28,7 @@ const Sidebar: React.FC<{ isOpen: boolean; toggleSidebar: () => void; }> = ({ is
                 <h2 className={`text-xl font-semibold mb-6 ${isOpen ? 'block' : 'hidden'}`}>Admin Panel</h2>
                 <nav className="flex-1">
                     <ul className="space-y-4">
-                        {['Berita', 'Pesan', 'Program'].map((text, index) => (
+                        {['Berita', 'Pesan', 'Foto'].map((text, index) => (
                             <li key={index}>
                                 <Link
                                     href={`/admin/${text.toLowerCase()}`}
