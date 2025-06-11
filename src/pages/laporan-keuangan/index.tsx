@@ -8,16 +8,6 @@ const fadeUp = {
     animate: { opacity: 1, y: 0 },
 };
 
-const fadeLeft = {
-    initial: { opacity: 0, x: 40 },
-    animate: { opacity: 1, x: 0 },
-};
-
-const fadeRight = {
-    initial: { opacity: 0, x: -40 },
-    animate: { opacity: 1, x: 0 },
-};
-
 const LaporanKeuangan = () => {
     return (
         <div>
@@ -46,7 +36,7 @@ const LaporanKeuangan = () => {
 
                 <motion.div
                     viewport={{ once: true, amount: 0.3 }}
-                    variants={fadeRight}
+                    variants={fadeUp}
                     initial="initial"
                     whileInView="animate"
                     transition={{ duration: 0.8 }}

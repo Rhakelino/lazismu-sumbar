@@ -15,11 +15,11 @@ const BeritaGrid: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const itemsPerPage = 6; // Jumlah berita per halaman
 
-  
-    const fadeUp = {
-        initial: { opacity: 0, y: 40 },
-        animate: { opacity: 1, y: 0 },
-    };
+
+  const fadeUp = {
+    initial: { opacity: 0, y: 40 },
+    animate: { opacity: 1, y: 0 },
+  };
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -100,7 +100,9 @@ const BeritaGrid: React.FC = () => {
               </div>
               <div className="flex-1 flex flex-col px-4 pb-4">
                 <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
-                <p className="text-sm text-gray-700 mb-2 flex-1">{item.description}</p>
+                <p className="text-sm text-gray-700 mb-2 flex-1">{item.description.length > 50
+                  ? item.description.slice(0, 100) + '...'
+                  : item.description}</p>
                 <Link href={`/detail-berita/${item.id}`} className='text-sm text-orange-500'>Lihat selengkapnya</Link>
                 <p className="text-sm text-gray-500">
                   {new Date(item.created_at).toLocaleDateString('id-ID', {

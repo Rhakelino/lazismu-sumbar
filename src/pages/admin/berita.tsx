@@ -5,6 +5,8 @@ import Sidebar from '@/components/SideBar';
 import supabase from '@/lib/db';
 import { useRouter } from 'next/router';
 
+
+
 interface NewsItem {
     id: string;
     title: string;
@@ -196,65 +198,65 @@ const AdminBerita: React.FC = () => {
     };
 
     const handleDelete = async (id: string) => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
-        try {
-            // Cari item yang akan dihapus untuk mendapatkan URL gambar
-            const { data: newsItem, error: fetchError } = await supabase
-                .from('news')
-                .select('image')
-                .eq('id', id)
-                .single();
+        if (window.confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+            try {
+                // Cari item yang akan dihapus untuk mendapatkan URL gambar
+                const { data: newsItem, error: fetchError } = await supabase
+                    .from('news')
+                    .select('image')
+                    .eq('id', id)
+                    .single();
 
-            if (fetchError) {
-                console.error('Gagal mengambil data berita:', fetchError.message);
-                setNotification('Gagal mengambil data berita.');
-                return;
-            }
+                if (fetchError) {
+                    console.error('Gagal mengambil data berita:', fetchError.message);
+                    setNotification('Gagal mengambil data berita.');
+                    return;
+                }
 
-            // Ekstrak nama file dari URL gambar
-            if (newsItem?.image) {
-                const fileName = newsItem.image.split('/').pop();
-                
-                if (fileName) {
-                    // Hapus file dari storage
-                    const { error: storageError } = await supabase.storage
-                        .from('news-images')
-                        .remove([fileName]);
+                // Ekstrak nama file dari URL gambar
+                if (newsItem?.image) {
+                    const fileName = newsItem.image.split('/').pop();
 
-                    if (storageError) {
-                        console.error('Gagal menghapus file dari storage:', storageError.message);
-                        setNotification('Gagal menghapus file dari storage.');
-                        return;
+                    if (fileName) {
+                        // Hapus file dari storage
+                        const { error: storageError } = await supabase.storage
+                            .from('news-images')
+                            .remove([fileName]);
+
+                        if (storageError) {
+                            console.error('Gagal menghapus file dari storage:', storageError.message);
+                            setNotification('Gagal menghapus file dari storage.');
+                            return;
+                        }
                     }
                 }
+
+                // Hapus data dari database
+                const { error: deleteError } = await supabase
+                    .from('news')
+                    .delete()
+                    .eq('id', id);
+
+                if (deleteError) {
+                    console.error('Gagal menghapus berita:', deleteError.message);
+                    setNotification('Gagal menghapus berita.');
+                    return;
+                }
+
+                // Refresh daftar berita
+                fetchNews();
+
+                // Tampilkan notifikasi
+                setNotification('Berita berhasil dihapus!');
+            } catch (error) {
+                console.error('Error saat menghapus berita:', error);
+                setNotification('Terjadi kesalahan saat menghapus berita.');
+            } finally {
+                // Sembunyikan notifikasi setelah 3 detik
+                setTimeout(() => setNotification(null), 3000);
             }
-
-            // Hapus data dari database
-            const { error: deleteError } = await supabase
-                .from('news')
-                .delete()
-                .eq('id', id);
-
-            if (deleteError) {
-                console.error('Gagal menghapus berita:', deleteError.message);
-                setNotification('Gagal menghapus berita.');
-                return;
-            }
-
-            // Refresh daftar berita
-            fetchNews();
-            
-            // Tampilkan notifikasi
-            setNotification('Berita berhasil dihapus!');
-        } catch (error) {
-            console.error('Error saat menghapus berita:', error);
-            setNotification('Terjadi kesalahan saat menghapus berita.');
-        } finally {
-            // Sembunyikan notifikasi setelah 3 detik
-            setTimeout(() => setNotification(null), 3000);
         }
-    }
-};
+    };
 
     const handleEdit = (item: NewsItem) => {
         setFormData({
@@ -388,7 +390,6 @@ const AdminBerita: React.FC = () => {
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
                         required
                     />
-
                     <textarea
                         name="description"
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -396,7 +397,6 @@ const AdminBerita: React.FC = () => {
                         className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
                         required
                     />
-
                     <input
                         type="file"
                         accept="image/*"
@@ -429,7 +429,9 @@ const AdminBerita: React.FC = () => {
                         {news.map((item) => (
                             <div key={item.id} className="border border-neutral-700 rounded-lg p-4 bg-neutral-800">
                                 <h3 className="font-semibold text-white">{item.title}</h3>
-                                <p className="text-neutral-400">{item.description}</p>
+                                <p className="text-neutral-400">{item.description.length > 50
+                                    ? item.description.slice(0, 100) + '...'
+                                    : item.description}</p>
                                 <Image
                                     src={item.image}
                                     alt="News"

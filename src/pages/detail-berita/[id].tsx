@@ -81,9 +81,9 @@ const DetailBerita: React.FC = () => {
                 />
             )}
             <article
-                className="prose prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: news.description }}
-            />
+    className="prose prose-lg max-w-none"
+    dangerouslySetInnerHTML={{ __html: news.description }}
+/>
             <button
                 onClick={() => router.back()}
                 className="mt-8 px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
