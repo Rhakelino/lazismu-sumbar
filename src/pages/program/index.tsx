@@ -176,7 +176,11 @@ const Program = () => {
                                 <span className="text-gray-600">Terkumpul: {program.terkumpul}</span>
                                 <span className="font-medium">{Math.round((parseInt(program.terkumpul.replace(/[^0-9]/g, '')) / parseInt(program.target.replace(/[^0-9]/g, '')) * 100))}%</span>
                             </div>
-                            <a href={`/donasi/${program.slug}`} className="inline-block bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors">
+                            {/* Dalam component Program.tsx, ubah link donasi */}
+                            <a
+                                href={`/donasi-form?programSlug=${program.slug}&programName=${encodeURIComponent(program.judul)}&programImage=${encodeURIComponent(program.gambar)}`}
+                                className="inline-block bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+                            >
                                 Donasi Sekarang
                             </a>
                         </div>

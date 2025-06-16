@@ -10,17 +10,21 @@ const AppShell = (props: AppShellProps) => {
   const { children } = props;
   const router = useRouter();
 
-  // Cek jika halaman yang aktif adalah halaman admin
+  // Cek jika halaman yang aktif adalah halaman admin atau donasi-form
   const isAdminPage = router.pathname.includes('/admin');
+  const isDonasiForm = router.pathname.includes('/donasi-form');
+  
+  // Hide both on either admin or donasi-form pages
+  const hideNavAndFooter = isAdminPage || isDonasiForm;
 
   return (
     <main className='h-full'>
-      {/* Menyembunyikan Navbar hanya pada halaman admin */}
-      {!isAdminPage && <Navbar />}
+      {/* Menyembunyikan Navbar pada halaman admin dan donasi-form */}
+      {!hideNavAndFooter && <Navbar />}
       <div>
         {children}
       </div>  
-      {!isAdminPage && <Footer />}
+      {!hideNavAndFooter && <Footer />}
     </main>
   );
 };
