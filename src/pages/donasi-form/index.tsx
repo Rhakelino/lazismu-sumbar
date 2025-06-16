@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Script from 'next/script';
 import { motion } from 'framer-motion';
 import { Switch } from '@headlessui/react';
 import Image from 'next/image';
@@ -65,6 +66,7 @@ const DonationForm: React.FC = () => {
   const router = useRouter();
   const { programSlug, programName, programImage } = router.query;
   const customAmountInputRef = useRef<HTMLInputElement>(null);
+  const [midtransLoaded, setMidtransLoaded] = useState(false);
 
   // Form state
   const [donationAmount, setDonationAmount] = useState<number | null>(null);
@@ -149,6 +151,14 @@ const DonationForm: React.FC = () => {
   const handlePayment = async (): Promise<void> => {
     if (!validateForm()) return;
 
+    // Check if Midtrans is loaded
+    if (!midtransLoaded || typeof window.snap === 'undefined') {
+      setErrors({
+        general: 'Layanan pembayaran belum siap. Mohon tunggu sebentar dan coba lagi.'
+      });
+      return;
+    }
+
     setLoading(true);
     setErrors({});
 
@@ -181,33 +191,37 @@ const DonationForm: React.FC = () => {
         throw new Error('Token pembayaran tidak ditemukan');
       }
 
-      // Initialize Midtrans Snap
-      if (typeof window.snap === 'undefined') {
-        throw new Error('Midtrans Snap tidak tersedia');
-      }
+      console.log('Opening payment window with token:', data.token.token);
 
       // Open Midtrans Snap payment page
       window.snap.pay(data.token.token, {
         onSuccess: (result: MidtransResult) => {
-          console.log('Payment success:', result);
+          console.log('🎉 Payment success!', result);
           // Store transaction data in localStorage for reference
           localStorage.setItem(`donation_${result.order_id}`, JSON.stringify({
             orderId: result.order_id,
             amount: result.gross_amount,
             status: 'success',
-            donorName: hideName ? 'Sobat Lazismu' : name,
+            donorName: hideName ? 'Hamba Allah' : name,
             programName: programName,
             timestamp: new Date().toISOString()
           }));
 
-          router.push({
-            pathname: '/donasi-sukses',
-            query: {
-              orderId: result.order_id,
-              amount: result.gross_amount,
-              donorName: hideName ? 'Hamba Allah' : name
-            }
-          });
+          // Try both navigation methods for reliability
+          try {
+            router.push({
+              pathname: '/donasi-sukses',
+              query: {
+                orderId: result.order_id,
+                amount: result.gross_amount,
+                donorName: hideName ? 'Hamba Allah' : name
+              }
+            });
+          } catch (error) {
+            console.error('Navigation error:', error);
+            // Fallback to basic navigation
+            window.location.href = `/donasi-sukses?orderId=${result.order_id}&amount=${result.gross_amount}&donorName=${encodeURIComponent(hideName ? 'Hamba Allah' : name)}`;
+          }
         },
         onPending: (result: MidtransResult) => {
           console.log('Payment pending:', result);
@@ -222,14 +236,19 @@ const DonationForm: React.FC = () => {
             timestamp: new Date().toISOString()
           }));
 
-          router.push({
-            pathname: '/donasi-pending',
-            query: {
-              orderId: result.order_id,
-              amount: result.gross_amount,
-              paymentType: result.payment_type
-            }
-          });
+          try {
+            router.push({
+              pathname: '/donasi-pending',
+              query: {
+                orderId: result.order_id,
+                amount: result.gross_amount,
+                paymentType: result.payment_type
+              }
+            });
+          } catch (error) {
+            console.error('Navigation error:', error);
+            window.location.href = `/donasi-pending?orderId=${result.order_id}&amount=${result.gross_amount}&paymentType=${result.payment_type}`;
+          }
         },
         onError: (result: MidtransResult) => {
           console.error('Payment error:', result);
@@ -304,11 +323,22 @@ const DonationForm: React.FC = () => {
     <>
       <Head>
         <title>Donasi - {programName || 'Donasi Umum'}</title>
-        <script
-          src="https://app.sandbox.midtrans.com/snap/snap.js"
-          data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
-        ></script>
       </Head>
+      <Script
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
+        strategy="lazyOnload"
+        onLoad={() => {
+          console.log('Midtrans Snap script loaded successfully');
+          setMidtransLoaded(true);
+        }}
+        onError={(e) => {
+          console.error('Error loading Midtrans Snap script:', e);
+          setErrors({
+            general: 'Gagal memuat layanan pembayaran. Silakan muat ulang halaman.'
+          });
+        }}
+      />
       <div className="min-h-screen bg-[#F4F6FA] flex flex-col pb-28">
         {/* Header Program */}
         <div className="max-w-lg w-full mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden">
