@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Script from 'next/script';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Switch } from '@headlessui/react';
 import Image from 'next/image';
 
@@ -58,6 +58,12 @@ interface FormErrors {
   general?: string;
 }
 
+interface SuccessData {
+  orderId: string;
+  amount: string;
+  donorName: string;
+}
+
 // Validation constants
 const MIN_DONATION = 10000;
 const MAX_DONATION = 100000000;
@@ -81,6 +87,14 @@ const DonationForm: React.FC = () => {
   const [salutation, setSalutation] = useState<'Bapak' | 'Ibu' | 'Kak'>('Bapak');
   const [hideName, setHideName] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
+  
+  // Success state
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successData, setSuccessData] = useState<SuccessData | null>(null);
+  
+  // Pending state
+  const [showPending, setShowPending] = useState(false);
+  const [pendingData, setPendingData] = useState<any>(null);
 
   // Focus on custom amount input when showCustomAmount changes
   useEffect(() => {
@@ -103,6 +117,23 @@ const DonationForm: React.FC = () => {
     { value: 'gopay', label: 'GoPay' },
     { value: 'qris', label: 'QRIS' },
   ];
+
+  // Reset form
+  const resetForm = () => {
+    setDonationAmount(null);
+    setCustomAmount('');
+    setShowCustomAmount(false);
+    setName('');
+    setEmail('');
+    setPhone('');
+    setMessage('');
+    setHideName(false);
+    setErrors({});
+    setShowSuccess(false);
+    setSuccessData(null);
+    setShowPending(false);
+    setPendingData(null);
+  };
 
   // Validate form
   const validateForm = (): boolean => {
@@ -150,15 +181,7 @@ const DonationForm: React.FC = () => {
   // Handle payment
   const handlePayment = async (): Promise<void> => {
     if (!validateForm()) return;
-
-    // Check if Midtrans is loaded
-    if (!midtransLoaded || typeof window.snap === 'undefined') {
-      setErrors({
-        general: 'Layanan pembayaran belum siap. Mohon tunggu sebentar dan coba lagi.'
-      });
-      return;
-    }
-
+    
     setLoading(true);
     setErrors({});
 
@@ -187,84 +210,78 @@ const DonationForm: React.FC = () => {
 
       const data: TransactionResponse = await response.json();
 
-      if (!data.token?.token) {
-        throw new Error('Token pembayaran tidak ditemukan');
+      if (!data.token?.token || !data.orderId) {
+        throw new Error('Data transaksi tidak lengkap');
       }
 
-      console.log('Opening payment window with token:', data.token.token);
+      // Store transaction data in localStorage
+      const transactionData = {
+        orderId: data.orderId,
+        amount: formatCurrency(amount),
+        donorName: hideName ? 'Hamba Allah' : name,
+        programName: programName || 'Donasi Umum',
+        timestamp: new Date().toISOString(),
+        status: 'success'
+      };
+      localStorage.setItem(`donation_${data.orderId}`, JSON.stringify(transactionData));
 
-      // Open Midtrans Snap payment page
-      window.snap.pay(data.token.token, {
-        onSuccess: (result: MidtransResult) => {
-          console.log('🎉 Payment success!', result);
-          // Store transaction data in localStorage for reference
-          localStorage.setItem(`donation_${result.order_id}`, JSON.stringify({
-            orderId: result.order_id,
-            amount: result.gross_amount,
-            status: 'success',
-            donorName: hideName ? 'Hamba Allah' : name,
-            programName: programName,
-            timestamp: new Date().toISOString()
-          }));
-
-          // Try both navigation methods for reliability
-          try {
+      // Initialize Midtrans Snap
+      if (window.snap) {
+        window.snap.pay(data.token.token, {
+          onSuccess: (result: MidtransResult) => {
+            // Update transaction status in localStorage
+            const updatedData = {
+              ...transactionData,
+              status: 'success',
+              paymentType: result.payment_type,
+              transactionTime: result.transaction_time
+            };
+            localStorage.setItem(`donation_${data.orderId}`, JSON.stringify(updatedData));
+            
+            // Redirect to success page
             router.push({
               pathname: '/donasi-sukses',
               query: {
-                orderId: result.order_id,
-                amount: result.gross_amount,
+                orderId: data.orderId,
+                amount: amount.toString(),
                 donorName: hideName ? 'Hamba Allah' : name
               }
             });
-          } catch (error) {
-            console.error('Navigation error:', error);
-            // Fallback to basic navigation
-            window.location.href = `/donasi-sukses?orderId=${result.order_id}&amount=${result.gross_amount}&donorName=${encodeURIComponent(hideName ? 'Hamba Allah' : name)}`;
-          }
-        },
-        onPending: (result: MidtransResult) => {
-          console.log('Payment pending:', result);
-          // Store pending transaction data
-          localStorage.setItem(`donation_${result.order_id}`, JSON.stringify({
-            orderId: result.order_id,
-            amount: result.gross_amount,
-            status: 'pending',
-            donorName: hideName ? 'Hamba Allah' : name,
-            programName: programName,
-            paymentType: result.payment_type,
-            timestamp: new Date().toISOString()
-          }));
-
-          try {
-            router.push({
-              pathname: '/donasi-pending',
-              query: {
-                orderId: result.order_id,
-                amount: result.gross_amount,
-                paymentType: result.payment_type
-              }
+          },
+          onPending: (result: MidtransResult) => {
+            // Update transaction status in localStorage
+            const updatedData = {
+              ...transactionData,
+              status: 'pending',
+              paymentType: result.payment_type,
+              transactionTime: result.transaction_time
+            };
+            localStorage.setItem(`donation_${data.orderId}`, JSON.stringify(updatedData));
+            
+            // Show pending overlay
+            setPendingData({
+              orderId: data.orderId,
+              amount: formatCurrency(amount),
+              paymentType: result.payment_type
             });
-          } catch (error) {
-            console.error('Navigation error:', error);
-            window.location.href = `/donasi-pending?orderId=${result.order_id}&amount=${result.gross_amount}&paymentType=${result.payment_type}`;
+            setShowPending(true);
+          },
+          onError: (result: MidtransResult) => {
+            console.error('Payment error:', result);
+            setErrors({
+              general: 'Pembayaran gagal. Silakan coba lagi.'
+            });
+          },
+          onClose: () => {
+            console.log('Payment window closed');
           }
-        },
-        onError: (result: MidtransResult) => {
-          console.error('Payment error:', result);
-          setErrors({
-            general: `Pembayaran gagal: ${result.status_message}`
-          });
-          setLoading(false);
-        },
-        onClose: () => {
-          console.log('Customer closed the payment window');
-          setErrors({
-            general: 'Anda menutup popup pembayaran sebelum menyelesaikan transaksi'
-          });
-          setLoading(false);
-        }
-      });
+        });
+      } else {
+        throw new Error('Layanan pembayaran belum siap');
+      }
+
+      setLoading(false);
+      
     } catch (error) {
       console.error('Payment error:', error);
       setErrors({
@@ -340,6 +357,124 @@ const DonationForm: React.FC = () => {
         }}
       />
       <div className="min-h-screen bg-[#F4F6FA] flex flex-col pb-28">
+        {/* Success Overlay */}
+        <AnimatePresence>
+          {showSuccess && successData && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", duration: 0.5 }}
+                className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative"
+              >
+                <div className="text-center">
+                  <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                    <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">Terima Kasih!</h2>
+                  <p className="text-gray-600 mb-6">Donasi Anda telah berhasil diproses</p>
+                  
+                  <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+                    <div className="mb-2">
+                      <span className="text-sm text-gray-500">Order ID:</span>
+                      <span className="block font-medium text-gray-800">{successData.orderId}</span>
+                    </div>
+                    <div className="mb-2">
+                      <span className="text-sm text-gray-500">Jumlah:</span>
+                      <span className="block font-medium text-gray-800">{successData.amount}</span>
+                    </div>
+                    <div>
+                      <span className="text-sm text-gray-500">Donatur:</span>
+                      <span className="block font-medium text-gray-800">{successData.donorName}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={resetForm}
+                      className="px-6 py-3 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors flex-1"
+                    >
+                      Donasi Lagi
+                    </button>
+                    <button
+                      onClick={() => router.push('/')}
+                      className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-medium hover:bg-gray-300 transition-colors flex-1"
+                    >
+                      Kembali ke Beranda
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Pending Overlay */}
+        <AnimatePresence>
+          {showPending && pendingData && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", duration: 0.5 }}
+                className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative"
+              >
+                <div className="text-center">
+                  <div className="mx-auto w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                    <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Tertunda</h2>
+                  <p className="text-gray-600 mb-6">Silakan selesaikan pembayaran Anda</p>
+                  
+                  <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+                    <div className="mb-2">
+                      <span className="text-sm text-gray-500">Order ID:</span>
+                      <span className="block font-medium text-gray-800">{pendingData.orderId}</span>
+                    </div>
+                    <div className="mb-2">
+                      <span className="text-sm text-gray-500">Jumlah:</span>
+                      <span className="block font-medium text-gray-800">{pendingData.amount}</span>
+                    </div>
+                    <div>
+                      <span className="text-sm text-gray-500">Metode Pembayaran:</span>
+                      <span className="block font-medium text-gray-800">{pendingData.paymentType}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={resetForm}
+                      className="px-6 py-3 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors flex-1"
+                    >
+                      Donasi Lagi
+                    </button>
+                    <button
+                      onClick={() => router.push('/')}
+                      className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-medium hover:bg-gray-300 transition-colors flex-1"
+                    >
+                      Kembali ke Beranda
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Header Program */}
         <div className="max-w-lg w-full mx-auto mt-8 bg-white rounded-xl shadow-md overflow-hidden">
           <div className="flex flex-col sm:flex-row items-center p-4 gap-4">

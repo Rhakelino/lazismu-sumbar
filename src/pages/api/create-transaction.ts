@@ -121,11 +121,6 @@ export default async function handler(
                 first_name: transactionData.donorName,
                 email: transactionData.donorEmail || 'anonymous@example.com',
                 phone: transactionData.donorPhone
-            },
-            callbacks: {
-                finish: `${process.env.NEXT_PUBLIC_SITE_URL}/donasi-sukses`,
-                error: `${process.env.NEXT_PUBLIC_SITE_URL}/donasi-error`,
-                pending: `${process.env.NEXT_PUBLIC_SITE_URL}/donasi-pending`
             }
         };
 

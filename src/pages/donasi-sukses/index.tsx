@@ -10,20 +10,24 @@ interface DonationData {
   donorName: string;
   programName: string;
   timestamp: string;
+  paymentType?: string;
+  transactionTime?: string;
 }
 
 const DonasiSukses: React.FC = () => {
   const router = useRouter();
-  const { orderId, amount, donorName } = router.query;
+  const { orderId } = router.query;
   const [donationData, setDonationData] = useState<DonationData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (orderId) {
-      // Try to get donation data from localStorage
+      // Get donation data from localStorage
       const storedData = localStorage.getItem(`donation_${orderId}`);
       if (storedData) {
         setDonationData(JSON.parse(storedData));
       }
+      setLoading(false);
     }
   }, [orderId]);
 
@@ -48,6 +52,39 @@ const DonasiSukses: React.FC = () => {
       minute: '2-digit'
     });
   };
+
+  // Format payment type
+  const formatPaymentType = (type?: string): string => {
+    if (!type) return '-';
+    const types: { [key: string]: string } = {
+      'bank_transfer': 'Transfer Bank',
+      'gopay': 'GoPay',
+      'qris': 'QRIS',
+      'credit_card': 'Kartu Kredit'
+    };
+    return types[type] || type;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
+  if (!donationData) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Data Donasi Tidak Ditemukan</h2>
+          <Link href="/">
+            <span className="text-orange-500 hover:text-orange-600">Kembali ke Beranda</span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -86,37 +123,47 @@ const DonasiSukses: React.FC = () => {
           </p>
 
           {/* Donation Details */}
-          {donationData && (
-            <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                Detail Donasi
-              </h3>
-              <dl className="space-y-2">
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Program</dt>
-                  <dd className="font-medium text-gray-900">
-                    {donationData.programName}
-                  </dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Nominal</dt>
-                  <dd className="font-medium text-gray-900">
-                    {formatCurrency(donationData.amount)}
-                  </dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Tanggal</dt>
-                  <dd className="font-medium text-gray-900">
-                    {formatDate(donationData.timestamp)}
-                  </dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-600">Status</dt>
-                  <dd className="font-medium text-green-600">Berhasil</dd>
-                </div>
-              </dl>
-            </div>
-          )}
+          <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Detail Donasi
+            </h3>
+            <dl className="space-y-2">
+              <div className="flex justify-between">
+                <dt className="text-gray-600">Program</dt>
+                <dd className="font-medium text-gray-900">
+                  {donationData.programName}
+                </dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-600">Nominal</dt>
+                <dd className="font-medium text-gray-900">
+                  {donationData.amount}
+                </dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-600">Tanggal</dt>
+                <dd className="font-medium text-gray-900">
+                  {formatDate(donationData.timestamp)}
+                </dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-600">Status</dt>
+                <dd className="font-medium text-green-600">Berhasil</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-600">Metode Pembayaran</dt>
+                <dd className="font-medium text-gray-900">
+                  {formatPaymentType(donationData.paymentType)}
+                </dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-600">Order ID</dt>
+                <dd className="font-medium text-gray-900">
+                  {donationData.orderId}
+                </dd>
+              </div>
+            </dl>
+          </div>
 
           {/* Next Steps */}
           <div className="space-y-4">
