@@ -15,7 +15,7 @@ interface MidtransNotification {
   gross_amount: string;
   fraud_status?: string;
   currency: string;
-}
+} 
 
 // Definisikan tipe untuk respons API
 type ApiResponse = {
@@ -50,17 +50,69 @@ export default async function handler(
     const orderId: string = notification.order_id;
     const transactionStatus: string = notification.transaction_status;
     const fraudStatus: string | undefined = notification.fraud_status;
+    const paymentType: string = notification.payment_type;
+    const grossAmount: string = notification.gross_amount;
+    const transactionTime: string = notification.transaction_time;
     
     console.log(`Transaction notification received:
       Order ID: ${orderId}
       Status: ${transactionStatus}
       Fraud Status: ${fraudStatus || 'N/A'}
+      Payment Type: ${paymentType}
+      Amount: ${grossAmount}
+      Transaction Time: ${transactionTime}
     `);
+    
+    // Proses status transaksi berdasarkan status
+    switch (transactionStatus) {
+      case 'capture':
+      case 'settlement':
+        // Payment successful
+        console.log(`✅ Payment successful for order: ${orderId}`);
+        // Here you can add database operations, email notifications, etc.
+        break;
+        
+      case 'pending':
+        // Payment pending
+        console.log(`⏳ Payment pending for order: ${orderId}`);
+        break;
+        
+      case 'deny':
+        // Payment denied
+        console.log(`❌ Payment denied for order: ${orderId}`);
+        break;
+        
+      case 'expire':
+        // Payment expired
+        console.log(`⏰ Payment expired for order: ${orderId}`);
+        break;
+        
+      case 'cancel':
+        // Payment cancelled
+        console.log(`🚫 Payment cancelled for order: ${orderId}`);
+        break;
+        
+      default:
+        console.log(`❓ Unknown status for order: ${orderId} - ${transactionStatus}`);
+    }
+    
+    // Handle fraud status
+    if (fraudStatus === 'challenge') {
+      console.log(`⚠️ Fraud challenge for order: ${orderId}`);
+    } else if (fraudStatus === 'accept') {
+      console.log(`✅ Fraud check passed for order: ${orderId}`);
+    } else if (fraudStatus === 'deny') {
+      console.log(`❌ Fraud check failed for order: ${orderId}`);
+    }
     
     // Proses status transaksi
     // Di sini Anda bisa menyimpan data ke database
+    // Contoh: await saveTransactionToDatabase(notification);
     
-    res.status(200).json({ success: true, message: 'Notification processed' });
+    res.status(200).json({ 
+      success: true, 
+      message: `Notification processed for order: ${orderId} with status: ${transactionStatus}` 
+    });
   } catch (error) {
     console.error('Notification error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
