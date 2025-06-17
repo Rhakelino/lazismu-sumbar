@@ -24,47 +24,16 @@ interface TransactionResponse {
 const MIN_DONATION_AMOUNT = 10000; // Rp 10.000
 const MAX_DONATION_AMOUNT = 100000000; // Rp 100.000.000
 
-// Validate transaction request
-function validateTransactionRequest(data: TransactionRequest): string | null {
-    if (!data.amount || typeof data.amount !== 'number') {
-        return 'Nominal donasi tidak valid';
-    }
-
-    if (data.amount < MIN_DONATION_AMOUNT) {
-        return `Minimal donasi Rp ${MIN_DONATION_AMOUNT.toLocaleString('id-ID')}`;
-    }
-
-    if (data.amount > MAX_DONATION_AMOUNT) {
-        return `Maksimal donasi Rp ${MAX_DONATION_AMOUNT.toLocaleString('id-ID')}`;
-    }
-
-    if (!data.donorName || data.donorName.trim().length < 3) {
-        return 'Nama donor tidak valid';
-    }
-
-    if (data.donorEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.donorEmail)) {
-        return 'Format email tidak valid';
-    }
-
-    if (data.donorPhone && !/^[0-9+\-\s()]{10,15}$/.test(data.donorPhone)) {
-        return 'Format nomor telepon tidak valid';
-    }
-
-    return null;
-}
-
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<TransactionResponse>
 ) {
-    // Set CORS headers
+    // CORS headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-    res.setHeader('Content-Type', 'application/json');
 
-    // Handle preflight request
     if (req.method === 'OPTIONS') {
         res.status(200).end();
         return;
@@ -76,21 +45,32 @@ export default async function handler(
 
     try {
         // Validate environment variables
-        const serverKey = process.env.MIDTRANS_SERVER_KEY;
-        const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
-        const isProduction = process.env.MIDTRANS_IS_PRODUCTION === 'true';
+        // const serverKey = process.env.MIDTRANS_SERVER_KEY;
+        // const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
+        // const isProduction = process.env.MIDTRANS_IS_PRODUCTION === 'true';
+
+        // HARDCODED MIDTRANS KEYS FOR TESTING ONLY
+        const serverKey = 'SB-Mid-server-Leqc5AAKt_uykwW93JEnRohs'; // GANTI DENGAN SERVER KEY SANDBOX ANDA
+        const clientKey = 'SB-Mid-client-mwlpXErSanUali3G'; // GANTI DENGAN CLIENT KEY SANDBOX ANDA
+        const isProduction = false;
 
         if (!serverKey || !clientKey) {
             console.error('Missing Midtrans credentials');
-            return res.status(500).json({ error: 'Konfigurasi pembayaran tidak lengkap' });
+            return res.status(500).json({ 
+                error: 'Konfigurasi pembayaran tidak lengkap' 
+            });
         }
 
         // Parse and validate request body
         const transactionData = req.body as TransactionRequest;
-        const validationError = validateTransactionRequest(transactionData);
 
-        if (validationError) {
-            return res.status(400).json({ error: validationError });
+        // Validate amount
+        if (!transactionData.amount || 
+            transactionData.amount < MIN_DONATION_AMOUNT || 
+            transactionData.amount > MAX_DONATION_AMOUNT) {
+            return res.status(400).json({ 
+                error: 'Nominal donasi tidak valid' 
+            });
         }
 
         // Initialize Midtrans client
@@ -124,30 +104,18 @@ export default async function handler(
             }
         };
 
-        // Create transaction
+        // Create transaction token
         const transaction = await snap.createTransaction(parameter);
-
-        // Log successful transaction creation (without sensitive data)
-        console.log(`Transaction created successfully: ${orderId}`);
 
         return res.status(200).json({
             token: transaction,
             orderId
         });
 
-    } catch (error: unknown) {
+    } catch (error) {
         console.error('Transaction creation error:', error);
-
-        // Handle specific Midtrans errors
-        if (error && typeof error === 'object' && 'message' in error) {
-            return res.status(400).json({
-                error: `Error Midtrans: ${error.message}`
-            });
-        }
-
-        // Handle other errors
-        return res.status(500).json({
-            error: 'Terjadi kesalahan dalam memproses transaksi'
+        return res.status(500).json({ 
+            error: 'Terjadi kesalahan dalam memproses transaksi' 
         });
     }
-} 
+}

@@ -180,55 +180,8 @@ const DonationForm: React.FC = () => {
 
   // Handle payment success with improved redirect
   const handlePaymentSuccess = async (result: MidtransResult, orderId: string, amount: number) => {
-    try {
-      console.log('🎉 Payment Success! Processing redirect...', { orderId, amount });
-      
-      const transactionData = {
-        orderId,
-        amount: formatCurrency(amount),
-        donorName: hideName ? 'Hamba Allah' : name,
-        programName: programName as string || 'Donasi Umum',
-        timestamp: new Date().toISOString(),
-        status: 'success',
-        paymentType: result.payment_type,
-        transactionTime: result.transaction_time
-      };
-
-      // Store transaction data in localStorage
-      localStorage.setItem(`donation_${orderId}`, JSON.stringify(transactionData));
-      console.log('💾 Transaction data saved to localStorage');
-      
-      // Create success URL with proper encoding
-      const successUrl = `/donasi-sukses?orderId=${encodeURIComponent(orderId)}&amount=${encodeURIComponent(amount.toString())}&donorName=${encodeURIComponent(hideName ? 'Hamba Allah' : name)}`;
-      console.log('🔗 Redirecting to:', successUrl);
-      
-      // Multiple redirect strategies for maximum compatibility
-      try {
-        // Strategy 1: Router push with replace for immediate redirect
-        await router.replace(successUrl);
-        console.log('✅ Router.replace successful');
-      } catch (routerError) {
-        console.warn('⚠️ Router.replace failed, trying router.push:', routerError);
-        try {
-          await router.push(successUrl);
-          console.log('✅ Router.push successful');
-        } catch (pushError) {
-          console.warn('⚠️ Router.push failed, using window.location:', pushError);
-          // Strategy 2: Force page redirect with window.location
-          window.location.href = successUrl;
-        }
-      }
-      
-    } catch (error) {
-      console.error('❌ Error handling payment success:', error);
-      // Fallback: show success overlay if redirect fails
-      setSuccessData({
-        orderId,
-        amount: formatCurrency(amount),
-        donorName: hideName ? 'Hamba Allah' : name
-      });
-      setShowSuccess(true);
-    }
+    const successUrl = `/donasi-sukses?orderId=${encodeURIComponent(orderId)}&amount=${encodeURIComponent(amount.toString())}&donorName=${encodeURIComponent(hideName ? 'Hamba Allah' : name)}`;
+    window.location.href = successUrl;
   };
 
   // Handle payment
