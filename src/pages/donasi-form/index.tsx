@@ -180,7 +180,7 @@ const DonationForm: React.FC = () => {
 
   // Handle payment success with improved redirect
   const handlePaymentSuccess = async (result: MidtransResult, orderId: string, amount: number) => {
-    const successUrl = `/donasi-sukses?orderId=${encodeURIComponent(orderId)}&amount=${encodeURIComponent(amount.toString())}&donorName=${encodeURIComponent(hideName ? 'Hamba Allah' : name)}`;
+    const successUrl = `/donasi-sukses?orderId=${encodeURIComponent(orderId)}&amount=${encodeURIComponent(amount.toString())}&donorName=${encodeURIComponent(hideName ? 'Hamba Allah' : name)}&programName=${encodeURIComponent(programName as string || 'Donasi Umum')}`;
     window.location.href = successUrl;
   };
 

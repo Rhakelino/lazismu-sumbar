@@ -42,7 +42,8 @@ const DonasiSukses: React.FC = () => {
         setDonationData({
           orderId: orderId as string,
           amount: amount as string,
-          donorName: donorName as string
+          donorName: donorName as string,
+          programName: (router.query.programName as string) || undefined
         });
       }
     }
