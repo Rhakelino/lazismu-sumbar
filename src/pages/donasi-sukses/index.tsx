@@ -21,8 +21,9 @@ const DonasiSukses: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('🎉 Success page loaded with params:', { orderId, amount, donorName });
+    console.log('🎉 Success page loaded with params:', { orderId, amount, donorName, programName: router.query.programName });
     
+    if (!router.isReady) return;
     // Get donation data from localStorage or query params
     if (orderId) {
       const storedData = localStorage.getItem(`donation_${orderId}`);
@@ -35,21 +36,21 @@ const DonasiSukses: React.FC = () => {
           console.error('❌ Error parsing stored donation data:', error);
         }
       }
-      
       // Fallback to query params if no stored data
       if (!donationData && orderId && amount && donorName) {
-        console.log('📋 Using query params as fallback');
+        console.log('📋 Using query params as fallback', { orderId, amount, donorName, programName: router.query.programName });
         setDonationData({
           orderId: orderId as string,
           amount: amount as string,
           donorName: donorName as string,
           programName: (router.query.programName as string) || undefined
         });
+      } else if (!orderId || !amount || !donorName) {
+        console.warn('❗ Query params incomplete:', { orderId, amount, donorName, programName: router.query.programName });
       }
     }
-    
     setLoading(false);
-  }, [orderId, amount, donorName, donationData]);
+  }, [router.isReady, orderId, amount, donorName, donationData, router.query.programName]);
 
   // Format currency
   const formatCurrency = (amount: string | number): string => {
