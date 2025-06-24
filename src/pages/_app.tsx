@@ -108,6 +108,8 @@ export default function App({ Component, pageProps }: AppProps) {
           content="donasi, zakat, sedekah, lazismu, kemanusiaan, pendidikan, kesehatan, ekonomi"
         />
 
+        <meta name="google-site-verification" content="kode-verifikasi-anda" />
+
         {/* Structured Data */}
         <script
           type="application/ld+json"
