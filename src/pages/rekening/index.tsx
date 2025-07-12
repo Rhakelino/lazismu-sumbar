@@ -311,18 +311,6 @@ const DaftarRekening: React.FC = () => {
       </div>
     );
   };
-
-  useEffect(() => {
-    // Initialize active tab from URL hash or default to first section
-    const hash = window.location.hash.replace('#', '') || 'lazismu_zakat';
-    setActiveTab(hash);
-    
-    // Scroll to the section after a small delay
-    setTimeout(() => {
-      scrollToSection(hash);
-    }, 300);
-  }, []);
-
   return (
     <div className="min-h-screen bg-gray-50">
        <HeroSection
