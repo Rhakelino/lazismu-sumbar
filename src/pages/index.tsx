@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Berita from "./berita";
 import BeritaGrid from "@/components/BeritaGrid";
 
 const fadeUp = {
@@ -25,9 +24,8 @@ const Home: React.FC = () => {
   const infoBoxes = [
     { title: "6", description: "Pilar Lazismu" },
     { title: "Rp 1.977.468.393", description: "Total Himpunan" },
-    { title: "4828", description: "Donatur" },
+    { title: "Rp 2.188.080.000", description: "Target Himpunan" },
   ];
-
   const programs = [
     {
       category: "Pendidikan",
@@ -73,32 +71,28 @@ const Home: React.FC = () => {
       </section>
 
       {/* Info Box */}
-     <motion.div
-  variants={fadeUp}
-  initial="initial"
-  whileInView="animate"
-  transition={{ duration: 0.5 }}
-  viewport={{ once: true, amount: 0.3 }}
-  className="relative mt-[-40px] z-10 bg-orange-600 text-white mx-4 sm:mx-0 p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 rounded-2xl shadow-lg"
->
-  {[
-    { title: "Pilar Lazismu", value: "6" },
-    { title: "Total Himpunan", value: "Rp 1.977.468.393" },
-    { title: "Target Himpunan", value: "Rp 2.188.080.000" }
-  ].map((item, index) => (
-    <div
-      key={index}
-      className="bg-orange-500/30 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:bg-orange-500/40 hover:scale-[1.02]"
-    >
-      <h3 className="text-sm sm:text-base font-medium text-white/90 mb-1 sm:mb-2">
-        {item.title}
-      </h3>
-      <p className="text-xl sm:text-3xl font-bold text-white">
-        {item.value}
-      </p>
-    </div>
-  ))}
-</motion.div>
+      <motion.div
+        variants={fadeUp}
+        initial="initial"
+        whileInView="animate"
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true, amount: 0.3 }}
+        className="relative mt-[-40px] z-10 bg-orange-600 text-white mx-4 sm:mx-0 p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 rounded-2xl shadow-lg"
+      >
+        {infoBoxes.map((item, index) => (
+          <div
+            key={index}
+            className="bg-orange-500/30 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:bg-orange-500/40 hover:scale-[1.02]"
+          >
+            <h3 className="text-sm sm:text-base font-medium text-white/90 mb-1 sm:mb-2">
+              {item.description}
+            </h3>
+            <p className="text-xl sm:text-3xl font-bold text-white">
+              {item.title}
+            </p>
+          </div>
+        ))}
+      </motion.div>
 
       {/* Program Section */}
       <section className="py-16">
