@@ -88,7 +88,7 @@ export default function KontakPage() {
           initial="initial"
           whileInView="animate"
           transition={{ duration: 0.6 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0 }}
           className="bg-white rounded-xl shadow-sm p-4 sm:p-8 border border-gray-100"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8">

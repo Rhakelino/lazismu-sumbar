@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import BeritaGrid from "@/components/BeritaGrid";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectCards, EffectFade, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -94,13 +94,14 @@ const Home: React.FC = () => {
         {/* Mobile View */}
         <div className="block md:hidden">
           <Swiper
-            modules={[Autoplay, EffectCards]}
-            effect="cards"
-            grabCursor={true}
+            modules={[Autoplay]}
+            effect="slide"
+            grabCursor={false}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
             }}
+            loop={true}
             className="w-full h-[250px]"
           >
             {heroImages.map((image, index) => (
@@ -125,12 +126,12 @@ const Home: React.FC = () => {
             ))}
           </Swiper>
         </div>
-
         {/* Desktop View */}
         <div className="hidden md:block h-full">
           <Swiper
             modules={[Autoplay, Navigation]}
             effect="slide"
+            grabCursor={true}
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
@@ -154,8 +155,11 @@ const Home: React.FC = () => {
                     quality={100}
                   />
                   <div className="absolute inset-0 bg-black opacity-50" />
-                  {/* Overlay Content */}
-                  <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+               
+                {/* Overlay Content */}
+                <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+                  {/* Existing content */}
+                     <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
                     <div className="max-w-2xl">
                       <motion.h1
                         initial={{ opacity: 0, y: 50 }}
@@ -188,10 +192,6 @@ const Home: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Overlay Content */}
-                <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-                  {/* Existing content */}
                 </div>
               </SwiperSlide>
             ))}
@@ -229,7 +229,7 @@ const Home: React.FC = () => {
           initial="initial"
           whileInView="animate"
           transition={{ duration: 0.5 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0 }}
           className="container mx-auto px-4 text-center"
         >
           <div className="text-center mb-12">

@@ -29,7 +29,7 @@ const LatarBelakang: React.FC = () => {
               initial="initial"
               whileInView="animate"
               transition={{ duration: 0.6 }}
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0 }}
               className="bg-white rounded-xl shadow-sm p-8 border border-gray-100"
             >
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
