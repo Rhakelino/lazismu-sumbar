@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import BeritaGrid from "@/components/BeritaGrid";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
+import { Autoplay, EffectCards, EffectFade, Navigation } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -90,69 +90,114 @@ const Home: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen">
-        <Swiper
-          modules={[Autoplay, EffectFade, Navigation]}
-          effect="fade"
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          loop={true}
-          className="h-full"
-        >
-          {heroImages.map((image, index) => (
-            <SwiperSlide key={index} className="relative h-full">
-              {/* Background Image */}
-              <div className="absolute inset-0">
-                <Image
-                  src={image.src}
-                  alt={`Slide ${index + 1}`}
-                  layout="fill"
-                  objectFit="cover"
-                  priority
-                  className="w-full h-full"
-                />
-                <div className="absolute inset-0 bg-black opacity-50" />
-              </div>
-              {/* Overlay Content */}
-              <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-                <div className="max-w-2xl">
-                  <motion.h1
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="text-4xl md:text-6xl font-bold mb-4"
-                  >
-                    {image.title}
-                  </motion.h1>
-                  <motion.p
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.4 }}
-                    className="text-xl md:text-2xl mb-8"
-                  >
-                    {image.subtitle}
-                  </motion.p>
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.6 }}
-                  >
-                    <Link
-                      href="/program"
-                      className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
-                    >
-                      Program Kami
-                    </Link>
-                  </motion.div>
+      <section className="relative md:h-screen">
+        {/* Mobile View */}
+        <div className="block md:hidden">
+          <Swiper
+            modules={[Autoplay, EffectCards]}
+            effect="cards"
+            grabCursor={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            className="w-full h-[250px]"
+          >
+            {heroImages.map((image, index) => (
+              <SwiperSlide
+                key={index}
+                className="rounded-lg overflow-hidden shadow-lg"
+              >
+                <div className="relative w-full h-full">
+                  <Image
+                    src={image.src}
+                    alt={`Slide ${index + 1}`}
+                    fill
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center'
+                    }}
+                    sizes="100vw"
+                    priority
+                  />
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
+        {/* Desktop View */}
+        <div className="hidden md:block h-full">
+          <Swiper
+            modules={[Autoplay, Navigation]}
+            effect="slide"
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            className="h-full"
+          >
+            {heroImages.map((image, index) => (
+              <SwiperSlide key={index} className="relative h-full">
+                <div className="absolute inset-0 w-full h-full">
+                  <Image
+                    src={image.src}
+                    alt={`Slide ${index + 1}`}
+                    fill
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center'
+                    }}
+                    priority
+                    sizes="100vw"
+                    quality={100}
+                  />
+                  <div className="absolute inset-0 bg-black opacity-50" />
+                  {/* Overlay Content */}
+                  <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+                    <div className="max-w-2xl">
+                      <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.2 }}
+                        className="text-4xl md:text-6xl font-bold mb-4"
+                      >
+                        {image.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.4 }}
+                        className="text-xl md:text-2xl mb-8"
+                      >
+                        {image.subtitle}
+                      </motion.p>
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.6 }}
+                      >
+                        <Link
+                          href="/program"
+                          className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
+                        >
+                          Program Kami
+                        </Link>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Overlay Content */}
+                <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+                  {/* Existing content */}
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
       {/* Info Box */}
       <motion.div
         variants={fadeUp}
