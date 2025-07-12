@@ -1,7 +1,31 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import HeroSection from "@/components/HeroSection";
+
+// Definisi type untuk berbagai jenis data
+type MemberItem = {
+  name: string;
+  role?: string;
+};
+
+type LeaderItem = {
+  title: string;
+  name: string;
+  role?: string;
+};
+
+type StaffItem = {
+  role: string;
+  name?: string;
+  members?: string[];
+};
+
+type WakilKetua = {
+  title: string;
+  name: string;
+};
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -13,10 +37,68 @@ const fadeRight = {
   animate: { opacity: 1, x: 0 },
 };
 
-const Struktur = () => {
+const Struktur: React.FC = () => {
+  // Definisi data dengan type yang jelas
+  const dewanPengawas: MemberItem[] = [
+    { name: "Prof. Dr. Sobhan Lubis, M.A", role: "Ketua" },
+    { name: "Dr. Mursal, M.Ag", role: "Anggota" },
+    { name: "Dr. Desi Asmaret, M.Ag", role: "Anggota" },
+  ];
+
+  const leaders: LeaderItem[] = [
+    {
+      title: "Ketua Badan Pengurus",
+      name: "Zainal Akil, S.Pd",
+    },
+    {
+      title: "Sekretaris",
+      name: "Afdi Efendi, S.Ag",
+    },
+  ];
+
+  const wakilSekretaris = {
+    name: "Anasrul, SHI., C.ELM",
+  };
+
+  const wakilKetuaBidang: WakilKetua[] = [
+    {
+      title: "Himpunan & Kerjasama",
+      name: "Dr. Hj. Ulfatmi Amirsyah, M.Ag",
+    },
+    {
+      title: "Audit Kepatuhan",
+      name: "Dr. Willy Nofranita, S.E.,M.Si, Ak, CA",
+    },
+    {
+      title: "Pendayahgunaan dan Pendistribusian",
+      name: "Dr. Budi Santoso",
+    },
+    {
+      title: "Transformasi Digital dan Monitoring Evaluasi",
+      name: "Arif Budiman, M.Kom",
+    },
+  ];
+
+  const managerArea = {
+    name: "M. Amirul Ramli, S.Pd, M.Pd",
+  };
+
+  const staffList: StaffItem[] = [
+    { role: "Staff Keuangan", name: "Tuti Nurhayati, S. Ak." },
+    {
+      role: "Staff Program",
+      members: ["Adv. Arva Dekri, S.H.", "Miki Rinaldi"],
+    },
+    { role: "Staff Administrasi", name: "Roza Rahmadani, S.Sos" },
+    {
+      role: "Staff Fundraising",
+      members: ["IdilPutra, S.Pd", "Ade Syahputra"],
+    },
+  ];
+
   return (
     <div>
-      {/* Header Section */}
+      {/* Hero Section */}
       <HeroSection
         title="Struktur"
         subtitle="Program donasi pilihan untuk kebaikan bersama"
@@ -57,6 +139,7 @@ const Struktur = () => {
           <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full mb-8"></div>
 
           <div className="space-y-8">
+            {/* Dewan Pengawas Syariah */}
             <div className="transform transition duration-300 hover:scale-[1.01]">
               <motion.h3
                 variants={fadeUp}
@@ -78,13 +161,9 @@ const Struktur = () => {
                 className="bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-sm p-5 border border-amber-100"
               >
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[
-                    { name: "Prof. Dr. Sobhan Lubis, M.A", role: "Ketua" },
-                    { name: "Dr. Mursal, M.Ag", role: "Anggota" },
-                    { name: "Dr. Desi Asmaret, M.Ag", role: "Anggota" },
-                  ].map((member, index) => (
+                  {dewanPengawas.map((member, index) => (
                     <motion.li
-                      key={member.name} // Use a unique identifier
+                      key={member.name}
                       variants={fadeUp}
                       initial="initial"
                       whileInView="animate"
@@ -109,17 +188,9 @@ const Struktur = () => {
               </motion.div>
             </div>
 
+            {/* Ketua dan Sekretaris */}
             <div className="grid md:grid-cols-2 gap-6 mb-3">
-              {[
-                {
-                  title: "Ketua Badan Pengurus",
-                  name: "Zainal Akil, S.Pd",
-                },
-                {
-                  title: "Sekretaris",
-                  name: "Afdi Efendi, S.Ag",
-                },
-              ].map((leader, index) => (
+              {leaders.map((leader, index) => (
                 <div
                   key={index}
                   className="transform transition duration-300 hover:scale-[1.01]"
@@ -164,9 +235,6 @@ const Struktur = () => {
                         <p className="font-bold text-gray-800 text-lg">
                           {leader.name}
                         </p>
-                        <p className="text-sm font-medium text-orange-600 mt-1">
-                          {leader.role}
-                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -174,7 +242,8 @@ const Struktur = () => {
               ))}
             </div>
 
-            <div className="flex w-  flex-col pt-8 gap-6 mb-3">
+            {/* Wakil Sekretaris */}
+            <div className="flex flex-col pt-8 gap-6 mb-3">
               <div className="transform transition duration-300 hover:scale-[1.01]">
                 <motion.h3
                   variants={fadeUp}
@@ -184,9 +253,8 @@ const Struktur = () => {
                   viewport={{ once: true, amount: 0.3 }}
                   className="font-bold text-gray-800 text-lg mb-3 flex items-center"
                 >
-                  <span className="w-2  h-8 bg-orange-400 rounded-r-md mr-2">
-                    <p>Wakil Sekretaris</p>
-                  </span>
+                  <span className="w-2 h-8 bg-orange-400 rounded-r-md mr-2"></span>
+                  Wakil Sekretaris
                 </motion.h3>
                 <motion.div
                   variants={fadeUp}
@@ -215,15 +283,15 @@ const Struktur = () => {
                         </svg>
                       </div>
                       <p className="font-bold text-gray-800 text-lg">
-                        Anasrul, SHI., C.ELM
+                        {wakilSekretaris.name}
                       </p>
-                      <p className="text-sm font-medium text-orange-600 mt-1"></p>
                     </div>
                   </div>
                 </motion.div>
               </div>
             </div>
 
+            {/* Wakil Ketua Bidang */}
             <div className="transform transition duration-300 pt-8 hover:scale-[1.01]">
               <motion.h3
                 variants={fadeUp}
@@ -237,24 +305,7 @@ const Struktur = () => {
                 Wakil Ketua Bidang
               </motion.h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[
-                  {
-                    title: "Himpunan & Kerjasama",
-                    name: "Dr. Hj. Ulfatmi Amirsyah, M.Ag",
-                  },
-                  {
-                    title: "Audit Kepatuhan",
-                    name: "Dr. Willy Nofranita, S.E.,M.Si, Ak, CA",
-                  },
-                  {
-                    title: "Pendayahgunaan dan Pendistribusian",
-                    name: "Dr. Budi Santoso",
-                  },
-                  {
-                    title: "Transformasi Digital dan Monitoring Evaluasi",
-                    name: "Arif Budiman, M.Kom",
-                  },
-                ].map((field, index) => (
+                {wakilKetuaBidang.map((field, index) => (
                   <motion.div
                     key={index}
                     variants={fadeUp}
@@ -284,7 +335,6 @@ const Struktur = () => {
                           stroke="currentColor"
                           strokeWidth="2"
                         >
-                          {/* Placeholder for Icon */}
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -313,119 +363,96 @@ const Struktur = () => {
               </div>
             </div>
 
-            <div className="transform transition duration-300 hover:scale-[1.01]">
-              <motion.h3
-                variants={fadeUp}
-                initial="initial"
-                whileInView="animate"
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true, amount: 0.3 }}
-                className="font-bold text-gray-800 text-lg mb-3 flex items-center"
-              >
-                <span className="w-2 h-8 bg-teal-400 rounded-r-md mr-2"></span>
-                Manager & Staff
-              </motion.h3>
-              <motion.div
-                variants={fadeUp}
-                initial="initial"
-                whileInView="animate"
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true, amount: 0.3 }}
-                className="bg-gradient-to-br from-teal-50 to-white rounded-xl shadow-sm p-5 border border-teal-100 mb-5"
-              >
-                <div className="flex flex-col md:flex-row items-center justify-center md:justify-start p-4 bg-white rounded-lg shadow-sm">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full mb-3 md:mb-0 md:mr-4 flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="text-center md:text-left">
-                    <h4 className="text-xs font-semibold text-teal-600 uppercase tracking-wider mb-1">
-                      Manager Area
-                    </h4>
-                    <p className="font-bold text-gray-800 text-lg">
-                      M. Amirul Ramli, S.Pd, M.Pd
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { role: "Staff Keuangan", name: "Tuti Nurhayati, S. Ak." },
-                  {
-                    role: "Staff Program",
-                    members: ["Adv. Arva Dekri, S.H.", "Miki Rinaldi"],
-                  },
-                  { role: "Staff Administrasi", name: "Roza Rahmadani, S.Sos" },
-                  {
-                    role: "Staff Fundraising",
-                    members: ["IdilPutra, S.Pd", "Ade Syahputra"],
-                  },
-                ].map((staff, index) => (
-                  <motion.div
-                    key={index}
-                    variants={fadeUp}
-                    initial="initial"
-                    whileInView="animate"
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    className="bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-sm p-4 border border-gray-100"
+            {/* Manager Area */}
+            <motion.div
+              variants={fadeUp}
+              initial="initial"
+              whileInView="animate"
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="bg-gradient-to-br from-teal-50 to-white rounded-xl shadow-sm p-5 border border-teal-100 mb-5"
+            >
+              <div className="flex flex-col md:flex-row items-center justify-center md:justify-start p-4 bg-white rounded-lg shadow-sm">
+                <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-400 rounded-full mb-3 md:mb-0 md:mr-4 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
                   >
-                    <div className="flex items-center mb-3">
-                      <div className="bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg p-2 mr-3">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 text-white"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </div>
-                      <h4 className="font-bold text-gray-700 text-sm uppercase">
-                        {staff.role}
-                      </h4>
-                    </div>
-                    <div className="p-3 bg-white rounded-lg shadow-sm">
-                      {staff.members ? (
-                        <ul className="space-y-2">
-                          {staff.members.map((member, idx) => (
-                            <li key={idx} className="flex items-center text-sm">
-                              <span className="flex-shrink-0 bg-gray-200 text-gray-600 rounded-md w-5 h-5 flex items-center justify-center text-xs mr-2">
-                                {idx + 1}
-                              </span>
-                              <p className="text-gray-700">{member}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="font-medium text-gray-800">
-                          {staff.name}
-                        </p>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+                <div className="text-center md:text-left">
+                  <h4 className="text-xs font-semibold text-teal-600 uppercase tracking-wider mb-1">
+                    Manager Area
+                  </h4>
+                  <p className="font-bold text-gray-800 text-lg">
+                    {managerArea.name}
+                  </p>
+                </div>
               </div>
+            </motion.div>
+
+            {/* Staff */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {staffList.map((staff, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeUp}
+                  initial="initial"
+                  whileInView="animate"
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  className="bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-sm p-4 border border-gray-100"
+                >
+                  <div className="flex items-center mb-3">
+                    <div className="bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg p-2 mr-3">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <h4 className="font-bold text-gray-700 text-sm uppercase">
+                      {staff.role}
+                    </h4>
+                  </div>
+                  <div className="p-3 bg-white rounded-lg shadow-sm">
+                    {staff.members ? (
+                      <ul className="space-y-2">
+                        {staff.members.map((member, idx) => (
+                          <li key={idx} className="flex items-center text-sm">
+                            <span className="flex-shrink-0 bg-gray-200 text-gray-600 rounded-md w-5 h-5 flex items-center justify-center text-xs mr-2">
+                              {idx + 1}
+                            </span>
+                            <p className="text-gray-700">{member}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="font-medium text-gray-800">{staff.name}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
+            {/* Volunteer Section */}
             <div className="transform transition duration-300 hover:scale-[1.01]">
               <motion.h3
                 variants={fadeUp}
