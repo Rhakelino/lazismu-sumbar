@@ -35,7 +35,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, imageSrc, ch
           </h1>
           <p className="text-base text-blue-100 max-w-2xl mx-auto">{subtitle}</p>
         </div>
-
         {/* Menampilkan children */}
         {children}
       </motion.div>

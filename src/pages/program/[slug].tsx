@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 // Type definition untuk program
@@ -127,7 +126,7 @@ const ProgramDetail: React.FC = () => {
     const program = programs.find(p => p.slug === slug);
 
     if (!program) {
-        return <div>Program tidak ditemukan</div>;
+        return <div className="container mx-auto text-center py-20">Program tidak ditemukan</div>;
     }
 
     // Animasi Framer Motion
@@ -143,15 +142,15 @@ const ProgramDetail: React.FC = () => {
     );
 
     return (
-        <div className="max-w-6xl mx-auto px-4 pt-24">
+        <div className="container mx-auto px-4 pt-24">
             <motion.div
                 {...fadeUp}
-                className="bg-white shadow-lg rounded-lg overflow-hidden"
+                className="bg-white shadow-lg rounded-xl overflow-hidden"
             >
                 {/* Header Program */}
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid md:grid-cols-2 gap-6">
                     {/* Gambar Utama */}
-                    <div className="relative h-[400px] w-full">
+                    <div className="relative h-[300px] md:h-[500px] w-full">
                         <Image
                             src={program.gambar}
                             alt={program.judul}
@@ -163,53 +162,53 @@ const ProgramDetail: React.FC = () => {
 
                     {/* Informasi Program */}
                     <div className="p-6">
-                        <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
                             {program.judul}
                         </h1>
 
                         <div className="flex justify-between items-center mb-4">
-                            <span className="text-lg text-gray-600">
+                            <span className="text-base md:text-lg text-gray-600">
                                 <strong>Kategori:</strong> {program.kategori}
                             </span>
-                            <span className="text-lg text-gray-600">
+                            <span className="text-base md:text-lg text-gray-600">
                                 <strong>Sisa Waktu:</strong> {program.sisa_hari} Hari
                             </span>
                         </div>
 
                         {/* Progress Donasi */}
                         <div className="mb-4">
-                            <div className="w-full bg-gray-200 rounded-full h-4 mb-2">
+                            <div className="w-full bg-gray-200 rounded-full h-3 md:h-4 mb-2">
                                 <div
-                                    className="bg-green-500 h-4 rounded-full"
+                                    className="bg-green-500 h-3 md:h-4 rounded-full"
                                     style={{ width: `${persentaseDonasi}%` }}
                                 />
                             </div>
-                            <div className="flex justify-between text-gray-600">
+                            <div className="flex justify-between text-gray-600 text-sm md:text-base">
                                 <span>Terkumpul: {program.terkumpul}</span>
                                 <span>{persentaseDonasi}%</span>
                             </div>
                         </div>
 
                         {/* Statistik Donasi */}
-                        <div className="grid grid-cols-3 gap-4 text-center bg-gray-50 p-4 rounded-lg">
+                        <div className="grid grid-cols-3 gap-2 md:gap-4 text-center bg-gray-50 p-2 md:p-4 rounded-lg">
                             <div>
-                                <h3 className="text-xl font-bold text-green-600">{program.terkumpul}</h3>
-                                <p className="text-sm text-gray-600">Terkumpul</p>
+                                <h3 className="text-base md:text-xl font-bold text-green-600">{program.terkumpul}</h3>
+                                <p className="text-xs md:text-sm text-gray-600">Terkumpul</p>
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-blue-600">{program.target}</h3>
-                                <p className="text-sm text-gray-600">Target</p>
+                                <h3 className="text-base md:text-xl font-bold text-blue-600">{program.target}</h3>
+                                <p className="text-xs md:text-sm text-gray-600">Target</p>
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-orange-600">{program.sisa_hari}</h3>
-                                <p className="text-sm text-gray-600">Hari Tersisa</p>
+                                <h3 className="text-base md:text-xl font-bold text-orange-600">{program.sisa_hari}</h3>
+                                <p className="text-xs md:text-sm text-gray-600">Hari Tersisa</p>
                             </div>
                         </div>
 
                         {/* Tombol Donasi */}
                         <button
                             onClick={() => setShowDevelopmentModal(true)}
-                            className="w-full mt-6 inline-block text-center bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+                            className="w-full mt-4 md:mt-6 inline-block text-center bg-green-500 text-white py-2 md:py-3 rounded-lg text-base md:text-lg font-semibold hover:bg-green-600 transition-colors"
                         >
                             Donasi Sekarang
                         </button>
@@ -217,13 +216,13 @@ const ProgramDetail: React.FC = () => {
                 </div>
 
                 {/* Navigasi Tab */}
-                <div className="border-b border-gray-200">
-                    <nav className="flex space-x-8 px-6 pt-4">
+                <div className="border-b border-gray-200 overflow-x-auto">
+                    <nav className="flex space-x-4 md:space-x-8 px-4 md:px-6 pt-4 whitespace-nowrap">
                         <button
                             onClick={() => setActiveTab('deskripsi')}
-                            className={`py-2 text-lg font-medium ${activeTab === 'deskripsi'
-                                ? 'text-green-600 border-b-2 border-green-600'
-                                : 'text-gray-500 hover:text-gray-700'
+                            className={`py-2 text-base md:text-lg font-medium ${activeTab === 'deskripsi'
+                                    ? 'text-green-600 border-b-2 border-green-600'
+                                    : 'text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             Deskripsi
@@ -231,9 +230,9 @@ const ProgramDetail: React.FC = () => {
                         {program.dokumentasi && (
                             <button
                                 onClick={() => setActiveTab('dokumentasi')}
-                                className={`py-2 text-lg font-medium ${activeTab === 'dokumentasi'
-                                    ? 'text-green-600 border-b-2 border-green-600'
-                                    : 'text-gray-500 hover:text-gray-700'
+                                className={`py-2 text-base md:text-lg font-medium ${activeTab === 'dokumentasi'
+                                        ? 'text-green-600 border-b-2 border-green-600'
+                                        : 'text-gray-500 hover:text-gray-700'
                                     }`}
                             >
                                 Dokumentasi
@@ -243,25 +242,25 @@ const ProgramDetail: React.FC = () => {
                 </div>
 
                 {/* Konten Tab */}
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                     {activeTab === 'deskripsi' ? (
                         <div>
-                            <h2 className="text-2xl font-semibold mb-4">Deskripsi Program</h2>
-                            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                            <h2 className="text-xl md:text-2xl font-semibold mb-4">Deskripsi Program</h2>
+                            <p className="text-base md:text-base text-gray-700 leading-relaxed whitespace-pre-line">
                                 {program.deskripsiLengkap || program.deskripsi}
                             </p>
 
                             {program.lokasi && (
-                                <div className="mt-6">
-                                    <h3 className="text-xl font-semibold mb-2">Lokasi</h3>
-                                    <p className="text-gray-600">{program.lokasi}</p>
+                                <div className="mt-4 md:mt-6">
+                                    <h3 className="text-lg md:text-xl font-semibold mb-2">Lokasi</h3>
+                                    <p className="text-base text-gray-600">{program.lokasi}</p>
                                 </div>
                             )}
 
                             {program.manfaat && (
-                                <div className="mt-6">
-                                    <h3 className="text-xl font-semibold mb-2">Manfaat Program</h3>
-                                    <ul className="list-disc list-inside text-gray-700">
+                                <div className="mt-4 md:mt-6">
+                                    <h3 className="text-lg md:text-xl font-semibold mb-2">Manfaat Program</h3>
+                                    <ul className="list-disc list-inside text-base text-gray-700">
                                         {program.manfaat.map((manfaat, index) => (
                                             <li key={index} className="mb-2">{manfaat}</li>
                                         ))}
@@ -270,7 +269,7 @@ const ProgramDetail: React.FC = () => {
                             )}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
                             {program.dokumentasi?.map((dok, index) => (
                                 <div
                                     key={index}
@@ -310,16 +309,18 @@ const ProgramDetail: React.FC = () => {
                     </div>
                 </div>
             )}
+
+            {/* Modal Pengembangan */}
             {showDevelopmentModal && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
+                    className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
                     onClick={() => setShowDevelopmentModal(false)}
                 >
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3 }}
-                        className="bg-white p-8 rounded-lg text-center max-w-md mx-4"
+                        className="bg-white p-6 rounded-lg text-center max-w-md w-full"
                     >
                         <div className="mb-4">
                             <svg
@@ -340,7 +341,6 @@ const ProgramDetail: React.FC = () => {
                         <h2 className="text-2xl font-bold mb-4">Fitur Sedang Dikembangkan</h2>
                         <p className="text-gray-600 mb-6">
                             Terima kasih atas minat Anda. Saat ini, fitur donasi sedang dalam proses pengembangan.
-                            Kami akan segera meluncurkannya untuk memudahkan Anda berdonasi.
                         </p>
                         <button
                             onClick={() => setShowDevelopmentModal(false)}

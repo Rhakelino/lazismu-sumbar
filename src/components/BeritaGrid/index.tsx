@@ -81,7 +81,7 @@ const BeritaGrid: React.FC = () => {
       {/* Grid Berita */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {news.map((item) => (
-          <Link href={`/detail-berita/${item.id}`} key={item.id}>
+          <Link href={`/detail-berita/${item.title}`} key={item.id}>
             <motion.div
               className="bg-white rounded-lg shadow-md flex flex-col h-full"
               variants={fadeUp}
@@ -103,7 +103,7 @@ const BeritaGrid: React.FC = () => {
                 <p className="text-sm text-gray-700 mb-2 flex-1">{item.description.length > 50
                   ? item.description.slice(0, 100) + '...'
                   : item.description}</p>
-                <Link href={`/detail-berita/${item.id}`} className='text-sm text-orange-500'>Lihat selengkapnya</Link>
+                <Link href={`/detail-berita/${item.title}`} className='text-sm text-orange-500'>Lihat selengkapnya</Link>
                 <p className="text-sm text-gray-500">
                   {new Date(item.created_at).toLocaleDateString('id-ID', {
                     year: 'numeric',
