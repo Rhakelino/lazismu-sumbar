@@ -4,7 +4,6 @@ import HeroSection from '@/components/HeroSection';
 import BeritaGrid from '@/components/BeritaGrid';
 
 const Berita = () => {
-
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Hero Section */}
