@@ -40,7 +40,7 @@ const DEFAULT_SEO = {
 const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "NonprofitOrganization",
-  name: "LAZISMU",
+  name: "LAZISMU SUMATERA BARAT",
   description: "Platform donasi dan layanan kemanusiaan",
   url: "https://www.websiteanda.com/",
   logo: "https://www.websiteanda.com/logo.png",
@@ -140,7 +140,6 @@ export default function App({ Component, pageProps }: AppProps) {
             <div className="animate-spin rounded-full border-t-2 border-b-2 border-orange-500 h-12 w-12"></div>
           </div>
         )}
-
         <Component {...pageProps} />
       </AppShell>
     </>

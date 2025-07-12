@@ -4,6 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import BeritaGrid from "@/components/BeritaGrid";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -62,18 +68,89 @@ const Home: React.FC = () => {
     },
   ];
 
+
+  const heroImages = [
+    {
+      src: "/images/slider-1.jpg",
+      title: "Salurkan Kebaikan Anda",
+      subtitle: "Wujudkan Perubahan Positif Bersama Kami"
+    },
+    {
+      src: "/images/slider-2.jpg",
+      title: "Bersama Membangun Harapan",
+      subtitle: "Setiap Donasi Membawa Dampak Nyata"
+    },
+    {
+      src: "/images/slider-3.jpg",
+      title: "Peduli Tanpa Batas",
+      subtitle: "Aksi Sosial untuk Kemanusiaan"
+    }
+  ];
+
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
-        <Image
-          src="/images/slider-1.jpg"
-          alt="Hero Background"
-          layout="fill"
-          objectFit="cover"
-          className="absolute inset-0"
-        />
-        <div className="absolute inset-0 bg-black opacity-40" />
+      <section className="relative h-screen">
+        <Swiper
+          modules={[Autoplay, EffectFade, Navigation]}
+          effect="fade"
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          className="h-full"
+        >
+          {heroImages.map((image, index) => (
+            <SwiperSlide key={index} className="relative h-full">
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <Image
+                  src={image.src}
+                  alt={`Slide ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  priority
+                  className="w-full h-full"
+                />
+                <div className="absolute inset-0 bg-black opacity-50" />
+              </div>
+              {/* Overlay Content */}
+              <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+                <div className="max-w-2xl">
+                  <motion.h1
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="text-4xl md:text-6xl font-bold mb-4"
+                  >
+                    {image.title}
+                  </motion.h1>
+                  <motion.p
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.4 }}
+                    className="text-xl md:text-2xl mb-8"
+                  >
+                    {image.subtitle}
+                  </motion.p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.6 }}
+                  >
+                    <Link
+                      href="/program"
+                      className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
+                    >
+                      Program Kami
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </section>
 
       {/* Info Box */}
