@@ -20,8 +20,14 @@ const fadeRight = {
   animate: { opacity: 1, x: 0 },
 };
 
+interface InfoBoxItem {
+  title: string;
+  description: string;
+}
+
+
 const Home: React.FC = () => {
-  const infoBoxes = [
+  const infoBoxes: InfoBoxItem[] = [
     { title: "6", description: "Pilar Lazismu" },
     { title: "Rp 1.977.468.393", description: "Total Himpunan" },
     { title: "Rp 2.188.080.000", description: "Target Himpunan" },
