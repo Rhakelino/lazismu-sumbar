@@ -142,7 +142,7 @@ const ProgramDetail: React.FC = () => {
     );
 
     return (
-        <div className="container mx-auto px-4 pt-24">
+        <div className="container mx-auto px-4 py-24">
             <motion.div
                 {...fadeUp}
                 className="bg-white shadow-lg rounded-xl overflow-hidden"
