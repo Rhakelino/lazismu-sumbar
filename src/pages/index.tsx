@@ -44,7 +44,7 @@ const Home: React.FC = () => {
       title: "Beasiswa Pendidikan",
       description:
         "Memberikan akses pendidikan berkualitas kepada anak-anak yang kurang mampu melalui program beasiswa.",
-      imageUrl: "https://picsum.photos/500/300?random=1",
+      imageUrl: "/images/beasiswa-sang-surya.jpg",
       progress: 75,
       totalRaised: "Rp 150.000.000",
     },
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
       title: "Layanan Kesehatan Gratis",
       description:
         "Menyediakan layanan kesehatan gratis untuk masyarakat prasejahtera di daerah terpencil.",
-      imageUrl: "https://picsum.photos/500/300?random=2",
+      imageUrl: "/images/kesehatan-gratis.jpg",
       progress: 60,
       totalRaised: "Rp 120.000.000",
     },
@@ -62,7 +62,7 @@ const Home: React.FC = () => {
       title: "Pemberdayaan UMKM",
       description:
         "Mendukung pengembangan usaha mikro kecil menengah untuk meningkatkan kemandirian ekonomi.",
-      imageUrl: "https://picsum.photos/500/300?random=3",
+      imageUrl: "/images/UMKM.jpg",
       progress: 45,
       totalRaised: "Rp 90.000.000",
     },
