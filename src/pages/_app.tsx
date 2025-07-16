@@ -18,8 +18,8 @@ const DEFAULT_SEO = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://www.websiteanda.com",
-    site_name: "LAZISMU",
+    url: "https://www.lazismusumaterabarat.org",
+    site_name: "LAZISMU SUMATERA BARAT",
     images: [
       {
         url: "https://www.websiteanda.com/og-image.jpg",
@@ -42,7 +42,7 @@ const ORGANIZATION_SCHEMA = {
   "@type": "NonprofitOrganization",
   name: "LAZISMU SUMATERA BARAT",
   description: "Platform donasi dan layanan kemanusiaan",
-  url: "https://www.websiteanda.com/",
+  url: "https://www.lazismusumaterabarat.org/",
   logo: "https://www.websiteanda.com/logo.png",
   foundingDate: "2010",
   address: {

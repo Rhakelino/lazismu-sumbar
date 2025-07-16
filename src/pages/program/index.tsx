@@ -75,18 +75,18 @@ const Program: React.FC = () => {
       sisa_hari: 20,
     },
     {
-      gambar: "https://picsum.photos/500/300?random=2",
-      judul: "Zakat Produktif UMKM",
+      gambar: "/images/palestina.jpg",
+      judul: "Program Kemanusiaan Peduli Palestina",
       terkumpul: "Rp 120.000.000",
       target: "Rp 200.000.000",
-      deskripsi: "Bantu pemberdayaan ekonomi mustahik melalui zakat produktif.",
+      deskripsi: "Peduli Palestina",
       kategori: "Pilar Kemanusiaan",
-      slug: "zakat-produktif-umkm",
+      slug: "peduli-palestina",
       sisa_hari: 25,
     },
     {
-      gambar: "https://picsum.photos/500/300?random=3",
-      judul: "Infaq Pembangunan Masjid",
+      gambar: "/images/peduli-lansia.jpg",
+      judul: "Peduli Lansia",
       terkumpul: "Rp 90.000.000",
       target: "Rp 200.000.000",
       deskripsi: "Dukung pembangunan dan renovasi masjid di daerah minoritas.",
@@ -95,8 +95,28 @@ const Program: React.FC = () => {
       sisa_hari: 30,
     },
     {
-      gambar: "https://picsum.photos/500/300?random=4",
-      judul: "SOS! Save Our School Wujudkan Pendidikan Bermutu Untuk Semua",
+      gambar: "/images/mualaf.jpg",
+      judul: "Pemberdayaan Mualaf",
+      terkumpul: "Rp 70.000.000",
+      target: "Rp 150.000.000",
+      deskripsi: "Pemberdayaan Mualaf...",
+      kategori: "Pilar Sosial Dakwah",
+      slug: "pemberdayaan-mualaf",
+      sisa_hari: 60,
+    },
+    {
+      gambar: "/images/jumat-berkah.jpg",
+      judul: "Jumat Berkah",
+      terkumpul: "Rp 32.000.000",
+      target: "Rp 100.000.000",
+      deskripsi: "Program Jumat Berkah",
+      kategori: "Pilar Sosial Dakwah",
+      slug: "jumat-berkah",
+      sisa_hari: 76,
+    },
+    {
+      gambar: "/images/beasiswa-mentari.jpg",
+      judul: "Beasiswa",
       terkumpul: "Rp 70.000.000",
       target: "Rp 100.000.000",
       deskripsi: "Berikan kesempatan pendidikan untuk anak yatim dan dhuafa.",
@@ -115,7 +135,7 @@ const Program: React.FC = () => {
       sisa_hari: 35,
     },
     {
-      gambar: "https://picsum.photos/500/300?random=6",
+      gambar: "/images/ambulan-gratis.jpg",
       judul: "Ambulans Gratis",
       terkumpul: "Rp 100.000.000",
       target: "Rp 250.000.000",
@@ -125,23 +145,23 @@ const Program: React.FC = () => {
       sisa_hari: 40,
     },
     {
-      gambar: "https://picsum.photos/500/300?random=7",
-      judul: "Pemberdayaan UMKM Desa",
+      gambar: "/images/umkm.jpg",
+      judul: "Pemberdayaan UMKM",
       terkumpul: "Rp 110.000.000",
       target: "Rp 200.000.000",
       deskripsi: "Berikan modal dan pelatihan untuk UMKM di desa tertinggal.",
       kategori: "Pilar Ekonomi",
-      slug: "pemberdayaan-umkm-desa",
+      slug: "pemberdayaan-umkm",
       sisa_hari: 28,
     },
     {
-      gambar: "https://picsum.photos/500/300?random=8",
-      judul: "Posko Kesehatan Gratis",
+      gambar: "/images/kesehatan-gratis.jpg",
+      judul: "Layanan Kesehatan Gratis",
       terkumpul: "Rp 95.000.000",
       target: "Rp 180.000.000",
-      deskripsi: "Dirikan posko kesehatan gratis di daerah terpencil.",
+      deskripsi: "Layanan Kesehatan Gratis",
       kategori: "Pilar Kesehatan",
-      slug: "posko-kesehatan-gratis",
+      slug: "layanan-kesehatan-gratis",
       sisa_hari: 22,
     },
     {
@@ -195,8 +215,8 @@ const Program: React.FC = () => {
               window.scrollTo({ top: 300, behavior: "smooth" });
             }}
             className={`flex items-center gap-2 min-w-[160px] px-4 py-3 rounded text-base font-medium transition text-center ${selectedCategory === cat.name
-                ? `bg-${cat.color}-100 text-${cat.color}-600 border border-${cat.color}-200`
-                : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+              ? `bg-${cat.color}-100 text-${cat.color}-600 border border-${cat.color}-200`
+              : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
               }`}
           >
             <svg
@@ -232,15 +252,16 @@ const Program: React.FC = () => {
                   initial="initial"
                   whileInView="animate"
                   transition={{ duration: 0.5 }}
-                  className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:-translate-y-2 duration-300"
+                  className="bg-white rounded-lg mb-8 shadow-md overflow-hidden transition-transform transform hover:-translate-y-2 duration-300 flex flex-col h-[450px]"
                 >
-                  <div className="relative">
+                  {/* Fixed height image container */}
+                  <div className="relative h-[200px] w-full">
                     <Image
                       src={program.gambar}
                       alt={program.judul}
-                      width={1000}
-                      height={224}
-                      className="object-cover"
+                      fill
+                      className="object-top"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div
                       className={`absolute top-4 left-4 bg-${categoryColor}-500 text-white text-xs font-bold uppercase px-2 py-1 rounded`}
@@ -248,11 +269,13 @@ const Program: React.FC = () => {
                       {program.kategori}
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+
+                  {/* Card content with flex to push button to bottom */}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
                       {program.judul}
                     </h3>
-                    <p className="text-gray-600 mb-4">{program.deskripsi}</p>
+                    <p className="text-gray-600 mb-4 line-clamp-2">{program.deskripsi}</p>
 
                     {/* Progress bar */}
                     <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
@@ -260,7 +283,7 @@ const Program: React.FC = () => {
                         className={`bg-${categoryColor}-500 h-2.5 rounded-full`}
                         style={{
                           width: `${(parseInt(program.terkumpul.replace(/[^0-9]/g, "")) /
-                              parseInt(program.target.replace(/[^0-9]/g, ""))) *
+                            parseInt(program.target.replace(/[^0-9]/g, ""))) *
                             100
                             }%`,
                         }}
@@ -281,13 +304,15 @@ const Program: React.FC = () => {
                       </span>
                     </div>
 
-                    {/* Tombol Donasi */}
-                    <Link
-                      href={`/program/${program.slug}`}
-                      className={`inline-block bg-${categoryColor}-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-${categoryColor}-600 transition-colors`}
-                    >
-                      Lihat Selengkapnya
-                    </Link>
+                    {/* Button pushed to bottom with mt-auto */}
+                    <div className="mt-auto">
+                      <Link
+                        href={`/program/${program.slug}`}
+                        className={`inline-block bg-${categoryColor}-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-${categoryColor}-600 transition-colors w-full text-center`}
+                      >
+                        Lihat Selengkapnya
+                      </Link>
+                    </div>
                   </div>
                 </motion.div>
               );
@@ -306,8 +331,8 @@ const Program: React.FC = () => {
                       window.scrollTo({ top: 300, behavior: "smooth" });
                     }}
                     className={`w-10 h-10 flex items-center justify-center rounded-full font-medium transition ${currentPage === i + 1
-                        ? "bg-orange-500 text-white"
-                        : "border border-gray-300 text-gray-700 hover:bg-gray-100"
+                      ? "bg-orange-500 text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-100"
                       }`}
                   >
                     {i + 1}
