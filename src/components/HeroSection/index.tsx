@@ -16,8 +16,16 @@ const fadeUp = {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, imageSrc, children }) => {
   return (
-    <div className="relative bg-orange-500 overflow-hidden">
-      <div className="absolute inset-0 bg-black opacity-10"></div>
+    <div
+      className="relative overflow-hidden"
+      style={{
+        backgroundImage: "url('/images/hero-section.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}
+    >
+      {/* Darker overlay */}
+      <div className="absolute inset-0 bg-black opacity-40"></div>
       <motion.div
         variants={fadeUp}
         initial="initial"
