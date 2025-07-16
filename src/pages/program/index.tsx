@@ -65,7 +65,7 @@ const Program: React.FC = () => {
   // List program dengan kategori yang lebih rinci
   const programs: Program[] = [
     {
-      gambar: "https://picsum.photos/500/300?random=1",
+      gambar: "/images/qurban.jpg",
       judul: "Qurban Berkah Nusantara",
       terkumpul: "Rp 80.000.000",
       target: "Rp 150.000.000",
@@ -96,7 +96,7 @@ const Program: React.FC = () => {
     },
     {
       gambar: "https://picsum.photos/500/300?random=4",
-      judul: "Beasiswa Anak Yatim",
+      judul: "SOS! Save Our School Wujudkan Pendidikan Bermutu Untuk Semua",
       terkumpul: "Rp 70.000.000",
       target: "Rp 100.000.000",
       deskripsi: "Berikan kesempatan pendidikan untuk anak yatim dan dhuafa.",
