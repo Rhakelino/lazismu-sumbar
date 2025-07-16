@@ -35,7 +35,7 @@ interface InfoBoxItem {
 const Home: React.FC = () => {
   const infoBoxes: InfoBoxItem[] = [
     { title: "6", description: "Pilar Lazismu" },
-    { title: "Rp 1.977.468.393", description: "Total Himpunannan" },
+    { title: "Rp 1.919.344.957", description: "Total Himpunannan" },
     { title: "Rp 2.188.080.000", description: "Target Himpunan" },
   ];
   const programs = [
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
       title: "Beasiswa Pendidikan",
       description:
         "Memberikan akses pendidikan berkualitas kepada anak-anak yang kurang mampu melalui program beasiswa.",
-      imageUrl: "/images/beasiswa-sang-surya.jpg",
+      imageUrl: "/images/beasiswa-mentari.jpg",
       progress: 75,
       totalRaised: "Rp 150.000.000",
     },
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
       category: "Kesehatan",
       title: "Layanan Kesehatan Gratis",
       description:
-        "Menyediakan layanan kesehatan gratis untuk masyarakat prasejahtera di daerah terpencil.",
+        "Menyediakan layanan kesehatan gratis untuk masyarakat prasejahtera di daerah.",
       imageUrl: "/images/kesehatan-gratis.jpg",
       progress: 60,
       totalRaised: "Rp 120.000.000",
@@ -62,7 +62,7 @@ const Home: React.FC = () => {
       title: "Pemberdayaan UMKM",
       description:
         "Mendukung pengembangan usaha mikro kecil menengah untuk meningkatkan kemandirian ekonomi.",
-      imageUrl: "/images/UMKM.jpg",
+      imageUrl: "/images/umkm.jpg",
       progress: 45,
       totalRaised: "Rp 90.000.000",
     },
