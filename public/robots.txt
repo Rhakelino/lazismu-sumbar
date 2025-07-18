@@ -1,9 +1,14 @@
-# *
+# Global access to all user agents
 User-agent: *
 Allow: /
 
-# Host
-Host: https://www.lazismusumaterabarat.org
+# Explicitly allow favicon (optional, but helpful for clarity)
+Allow: /favicon.ico
 
-# Sitemaps
+# Host (tidak wajib untuk Google, tapi valid untuk Yandex dan Baidu)
+# Jika ingin pakai, cukup 1 baris, tanpa "https://"
+# Namun disarankan untuk dihapus jika hosting modern (seperti Vercel) yang tidak butuh ini.
+#Host: www.lazismusumaterabarat.org
+
+# Sitemap untuk Googlebot
 Sitemap: https://www.lazismusumaterabarat.org/sitemap.xml
