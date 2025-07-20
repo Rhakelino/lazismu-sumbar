@@ -99,15 +99,13 @@ export default function App({ Component, pageProps }: AppProps) {
         />
 
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
 
         {/* Font Optimization */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="canonical" href="https://www.lazismusumaterabarat.org" />
+
 
         {/* Structured Data */}
         <script
