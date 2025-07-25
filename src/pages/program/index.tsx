@@ -1,9 +1,12 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import HeroSection from "@/components/HeroSection";
 import Link from "next/link";
+import { FreeMode } from "swiper/modules";
 
 // Type definition untuk program
 type Program = {
@@ -224,10 +227,28 @@ const Program: React.FC = () => {
       sisa_hari: 24,
     },
   ];
+
   // State untuk filter dan pagination
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const itemsPerPage = 8;
+
+  // Effect untuk mengecek ukuran layar
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Cek saat pertama kali render
+    checkMobile();
+
+    // Tambahkan event listener
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup event listener
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Filter dan pagination
   const filteredPrograms = useMemo(() => {
@@ -241,6 +262,61 @@ const Program: React.FC = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  // Render kategori dengan kondisional
+  const renderCategories = () => {
+    const categoryButtons = categories.map((cat) => (
+      <button
+        key={cat.name}
+        onClick={() => {
+          setSelectedCategory(cat.name);
+          setCurrentPage(1);
+          window.scrollTo({ top: 300, behavior: "smooth" });
+        }}
+        className={`flex items-center gap-2 min-w-[160px] px-4 py-3 rounded text-base font-medium transition text-center ${
+          selectedCategory === cat.name
+            ? `bg-${cat.color}-100 text-${cat.color}-600 border border-${cat.color}-200`
+            : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+        }`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className={`w-5 h-5 text-${cat.color}-500`}
+        >
+          <path fillRule="evenodd" d={cat.icon} clipRule="evenodd" />
+        </svg>
+        {cat.name}
+      </button>
+    ));
+
+    // Jika mobile, gunakan Swiper
+    if (isMobile) {
+      return (
+        <Swiper
+          modules={[FreeMode]}
+          spaceBetween={10}
+          freeMode={true}
+          slidesPerView={"auto"}
+          className="category-mobile-slider px-4 mx-8 my-6"
+        >
+          {categoryButtons.map((button, index) => (
+            <SwiperSlide key={index} className="!w-auto">
+              {button}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      );
+    }
+
+    // Jika desktop, gunakan flex wrap
+    return (
+      <div className="flex flex-wrap justify-center gap-4 my-8 px-4">
+        {categoryButtons}
+      </div>
+    );
+  };
 
   // Animasi Framer Motion
   const fadeUp = {
@@ -258,33 +334,8 @@ const Program: React.FC = () => {
       />
 
       {/* Kategori Filter dengan ikon */}
-      <div className="flex flex-wrap justify-center gap-4 my-8 px-4">
-        {categories.map((cat) => (
-          <button
-            key={cat.name}
-            onClick={() => {
-              setSelectedCategory(cat.name);
-              setCurrentPage(1);
-              window.scrollTo({ top: 300, behavior: "smooth" });
-            }}
-            className={`flex items-center gap-2 min-w-[160px] px-4 py-3 rounded text-base font-medium transition text-center ${
-              selectedCategory === cat.name
-                ? `bg-${cat.color}-100 text-${cat.color}-600 border border-${cat.color}-200`
-                : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
-            }`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className={`w-5 h-5 text-${cat.color}-500`}
-            >
-              <path fillRule="evenodd" d={cat.icon} clipRule="evenodd" />
-            </svg>
-            {cat.name}
-          </button>
-        ))}
-      </div>
+      {renderCategories()}
+
       {/* Daftar Program */}
       {filteredPrograms.length === 0 ? (
         <div className="text-center py-12 text-gray-500">
@@ -324,7 +375,7 @@ const Program: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Card content with flex to push button to bottom */}
+                  {/* Card content dengan flex untuk push button ke bawah */}
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
                       {program.judul}
@@ -364,7 +415,7 @@ const Program: React.FC = () => {
                       </span>
                     </div>
 
-                    {/* Button pushed to bottom with mt-auto */}
+                    {/* Button didorong ke bawah dengan mt-auto */}
                     <div className="mt-auto">
                       <Link
                         href={`/program/${program.slug}`}
