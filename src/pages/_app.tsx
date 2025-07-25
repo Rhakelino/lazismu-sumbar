@@ -85,13 +85,16 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         {/* Meta Umum */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#FF6B00" />
         <meta name="robots" content="index, follow" />
         <meta
           name="keywords"
-          content="lazismu sumatera barat, lazismu padang, lazismu sumbar, lazismusumaterabarat, zakat padang, donasi kemanusiaan sumbar"
+          content="lazismu, lazismu sumatera barat, lazismu padang, lazismu sumbar, lazismusumaterabarat, zakat padang, donasi kemanusiaan sumbar"
         />
         <meta
           name="google-site-verification"
@@ -103,9 +106,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
         {/* Font Optimization */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="canonical" href="https://www.lazismusumaterabarat.org" />
-
 
         {/* Structured Data */}
         <script
