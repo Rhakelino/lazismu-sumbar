@@ -4,9 +4,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-black to-blue-500 text-white pt-12 pb-8 px-6">
+    <footer className="bg-white pt-12 pb-8 px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-start">
-        {/* Logo and Social Links */}
+        {/* Logo dan Social Links */}
         <div>
           <div className="flex items-center gap-4 mb-6">
             <Image
@@ -15,7 +15,7 @@ const Footer = () => {
               height={100}
               alt="Logo ZIS"
             />
-            <span className="font-bold text-2xl tracking-wide text-white">
+            <span className="font-bold text-2xl tracking-wide">
               LAZISMU SUMATERA BARAT
             </span>
           </div>
@@ -27,6 +27,7 @@ const Footer = () => {
               href="https://www.instagram.com/lazismusumaterabarat/"
               target="_blank"
               aria-label="Instagram"
+              rel="noopener noreferrer"
               className="hover:text-orange-400 transition-transform transform hover:scale-110"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -54,7 +55,8 @@ const Footer = () => {
             <a
               href="https://www.tiktok.com/@lazismusumaterabarat"
               target="_blank"
-              aria-label="YouTube"
+              aria-label="Tiktok"
+              rel="noopener noreferrer"
               className="hover:text-orange-400 transition-transform transform hover:scale-110"
             >
               <svg
@@ -81,7 +83,7 @@ const Footer = () => {
             <li>
               Email:{" "}
               <a
-                href="mailto:info@lazismusumbar.or.id"
+                href="mailto:lazismusumaterabarat@gmail.com"
                 className="hover:text-orange-400"
               >
                 lazismusumaterabarat@gmail.com
@@ -89,7 +91,7 @@ const Footer = () => {
             </li>
             <li>
               Telp:{" "}
-              <a href="tel:+6282162128403" className="hover:text-orange-400">
+              <a href="tel:+6282391707227" className="hover:text-orange-400">
                 0823 9170 7227
               </a>
             </li>
@@ -123,14 +125,17 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-      {/* Footer Bottom */}
-      <div className="mt-12 pt-6 text-center text-xs">
-        <p>
-          © 2025 LAZISMU Sumbar. All rights reserved. |{" "}
-          <a href="/privacy-policy" className="hover:text-orange-400">
-            Privacy Policy
-          </a>
-        </p>
+      {/* Gambar dekoratif kanan bawah */}
+      <div className="absolute bottom-0 -right-10 md:-right-16 pointer-events-none">
+        <div className="w-[330px] md:w-[350px]">
+          <Image
+            src="/images/element-footer1.png"
+            width={350} // maximal, nanti dikontrol via parent div
+            height={350}
+            alt="Dekoratif Footer Kanan Bawah"
+            className="w-full h-auto"
+          />
+        </div>
       </div>
     </footer>
   );
