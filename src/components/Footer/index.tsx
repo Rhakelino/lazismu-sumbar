@@ -156,7 +156,7 @@ const Footer = () => {
 
       {/* Gambar dekoratif kanan bawah */}
       <div className="absolute bottom-0 -right-10 md:-right-16 pointer-events-none">
-        <div className="w-[330px] md:w-[300px]">
+        <div className="w-[250px] md:w-[300px]">
           <Image
             src="/images/element-footer1.png"
             width={350}
