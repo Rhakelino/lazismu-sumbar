@@ -1,8 +1,57 @@
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import supabase from "@/lib/db"; // Sesuaikan dengan path file supabaseClient Anda
 import Link from "next/link";
-import React from "react";
 
 const Footer = () => {
+  const [totalVisitors, setTotalVisitors] = useState(0);
+  const [todayVisitors, setTodayVisitors] = useState(0);
+  const [yesterdayVisitors, setYesterdayVisitors] = useState(0);
+
+  useEffect(() => {
+    async function fetchVisitorStats() {
+      // Ambil seluruh visitor_count untuk total pengunjung
+      const { data: totalData, error: totalError } = await supabase
+        .from("visitors")
+        .select("visitor_count");
+
+      if (!totalError && totalData) {
+        const total = totalData.reduce((acc, i) => acc + i.visitor_count, 0);
+        setTotalVisitors(total);
+      }
+
+      // Hitung tanggal hari ini dan kemarin
+      const todayStr = new Date().toISOString().split("T")[0];
+      const yesterdayDate = new Date();
+      yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+      const yesterdayStr = yesterdayDate.toISOString().split("T");
+
+      // Ambil pengunjung hari ini
+      const { data: todayData, error: todayError } = await supabase
+        .from("visitors")
+        .select("visitor_count")
+        .eq("visit_date", todayStr);
+
+      if (!todayError && todayData) {
+        const totalToday = todayData.reduce((acc, i) => acc + i.visitor_count, 0);
+        setTodayVisitors(totalToday);
+      }
+
+      // Ambil pengunjung kemarin
+      const { data: yesterdayData, error: yesterdayError } = await supabase
+        .from("visitors")
+        .select("visitor_count")
+        .eq("visit_date", yesterdayStr);
+
+      if (!yesterdayError && yesterdayData) {
+        const totalYesterday = yesterdayData.reduce((acc, i) => acc + i.visitor_count, 0);
+        setYesterdayVisitors(totalYesterday);
+      }
+    }
+
+    fetchVisitorStats();
+  }, []);
+
   return (
     <footer className="bg-white pt-12 pb-8 px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-start">
@@ -77,15 +126,11 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-4">Kontak</h3>
           <ul className="space-y-3 text-sm">
             <li>
-              Jl. Bundo Kanduang No.1, Belakang Tangsi, Kec. Padang Bar., Kota
-              Padang, Sumatera Barat
+              Jl. Bundo Kanduang No.1, Belakang Tangsi, Kec. Padang Bar., Kota Padang, Sumatera Barat
             </li>
             <li>
               Email:{" "}
-              <a
-                href="mailto:lazismusumaterabarat@gmail.com"
-                className="hover:text-orange-400"
-              >
+              <a href="mailto:lazismusumaterabarat@gmail.com" className="hover:text-orange-400">
                 lazismusumaterabarat@gmail.com
               </a>
             </li>
@@ -98,39 +143,23 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Quick Links */}
+        {/* Statistik Pengunjung menggantikan Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+          <h3 className="text-lg font-semibold mb-4">Statistik Pengunjung</h3>
           <ul className="space-y-3 text-sm">
-            <li>
-              <Link href="/latar-belakang" className="hover:text-orange-400">
-                Tentang Kami
-              </Link>
-            </li>
-            <li>
-              <Link href="/program" className="hover:text-orange-400">
-                Donasi
-              </Link>
-            </li>
-            <li>
-              <Link href="/berita" className="hover:text-orange-400">
-                Berita
-              </Link>
-            </li>
-            <li>
-              <Link href="/kontak" className="hover:text-orange-400">
-                Kontak Kami
-              </Link>
-            </li>
+            <li>Total Pengunjung: {totalVisitors}</li>
+            <li>Pengunjung Hari Ini: {todayVisitors}</li>
+            <li>Pengunjung Kemarin: {yesterdayVisitors}</li>
           </ul>
         </div>
       </div>
+
       {/* Gambar dekoratif kanan bawah */}
       <div className="absolute bottom-0 -right-10 md:-right-16 pointer-events-none">
-        <div className="w-[330px] md:w-[350px]">
+        <div className="w-[330px] md:w-[300px]">
           <Image
             src="/images/element-footer1.png"
-            width={350} // maximal, nanti dikontrol via parent div
+            width={350}
             height={350}
             alt="Dekoratif Footer Kanan Bawah"
             className="w-full h-auto"

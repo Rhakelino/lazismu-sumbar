@@ -7,6 +7,7 @@ import Head from "next/head";
 import { DefaultSeo } from "next-seo";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { incrementVisitor } from "@/lib/db";
 
 // Progress Bar Configuration
 NProgress.configure({ showSpinner: false, trickleSpeed: 200 });
@@ -58,6 +59,10 @@ const ORGANIZATION_SCHEMA = {
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    incrementVisitor();
+  }, []);
 
   useEffect(() => {
     const handleStart = () => {
