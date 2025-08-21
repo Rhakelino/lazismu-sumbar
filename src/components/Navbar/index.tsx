@@ -14,7 +14,6 @@ const Navbar: React.FC = () => {
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // 🔁 Handle scroll background
   const handleScroll = () => {
     if (window.scrollY > 50) {
       setBgColor("white");
@@ -48,30 +47,56 @@ const Navbar: React.FC = () => {
   }, [router]);
 
   // ✅ Auto-close saat klik di luar menu
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isMobileMenuOpen &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isMobileMenuOpen]);
+  
 
   return (
-    <nav
+   <nav
       className={`fixed top-0 w-full z-50 transition-colors duration-300 ${shadow} bg-${bgColor}`}
     >
       <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Mobile Hamburger Button */}
+        <div className="flex h-16 items-center justify-between w-full">
+          {/* Logo kiri */}
+          <div className="flex items-center justify-start ml-4 lg:ml-0">
+            <Link href="/">
+              <Image src="/images/logo.png" alt="Logo" width={60} height={60} />
+            </Link>
+          </div>
+
+          {/* Desktop Navigation tengah */}
+          <div className="hidden lg:flex flex-1 justify-center space-x-8">
+            <Link
+              href="/"
+              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
+            >
+              Beranda
+            </Link>
+            <DropdownTrigger dropdownKey="tentang" textColor={textColor}>
+              Tentang Kami
+            </DropdownTrigger>
+            <Link
+              href="/program"
+              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
+            >
+              Program
+            </Link>
+            <Link
+              href="/kontak"
+              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
+            >
+              Kontak Kami
+            </Link>
+            <DropdownTrigger dropdownKey="info" textColor={textColor}>
+              Info
+            </DropdownTrigger>
+            <Link
+              href="/rekening"
+              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
+            >
+              Daftar Rekening
+            </Link>
+          </div>
+
+          {/* Hamburger menu kanan */}
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
@@ -108,62 +133,6 @@ const Navbar: React.FC = () => {
                 </svg>
               )}
             </button>
-          </div>
-
-          {/* Logo */}
-          <div className="flex items-center justify-start ml-4 lg:ml-0">
-            <Link href="/">
-              <Image src="/images/logo.png" alt="Logo" width={60} height={60} />
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex flex-1 justify-center space-x-8">
-            <Link
-              href="/"
-              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
-            >
-              Beranda
-            </Link>
-            <DropdownTrigger dropdownKey="tentang" textColor={textColor}>
-              Tentang Kami
-            </DropdownTrigger>
-            <Link
-              href="/program"
-              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
-            >
-              Program
-            </Link>
-            <Link
-              href="/kontak"
-              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
-            >
-              Kontak Kami
-            </Link>
-            <DropdownTrigger dropdownKey="info" textColor={textColor}>
-              Info
-            </DropdownTrigger>
-            <Link
-              href="/rekening"
-              className={`text-${textColor} font-semibold text-sm hover:text-orange-600 transition-colors`}
-            >
-              Daftar Rekening
-            </Link>
-          </div>
-
-          {/* Social Media Icons */}
-          <div className="ml-3 hidden lg:flex gap-4">
-            {["instagram", "facebook", "youtube"].map((platform) => (
-              <Link
-                key={platform}
-                href={`https://www.${platform}.com`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-orange-600 transition-colors"
-              >
-                <i className={`fa-brands fa-${platform} text-2xl`}></i>
-              </Link>
-            ))}
           </div>
         </div>
       </div>

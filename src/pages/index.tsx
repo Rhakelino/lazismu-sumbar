@@ -35,7 +35,7 @@ interface InfoBoxItem {
 const Home: React.FC = () => {
   const infoBoxes: InfoBoxItem[] = [
     { title: "6", description: "Pilar Lazismu" },
-    { title: "Rp 1.919.344.957", description: "Total Himpunannan" },
+    { title: "Rp 2.010.889.249", description: "Total Himpunannan" },
     { title: "Rp 2.188.080.000", description: "Target Himpunan" },
   ];
   const programs = [
