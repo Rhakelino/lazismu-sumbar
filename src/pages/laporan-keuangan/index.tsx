@@ -12,11 +12,11 @@ const LaporanKeuangan = () => {
     return (
         <div>
             {/* Header Section */}
-           <HeroSection
-        title="Laporan Keuangan"
-        subtitle="Program donasi pilihan untuk kebaikan bersama"
-        imageSrc="/images/logo-zis.png"
-      />
+            <HeroSection
+                title="Laporan Keuangan"
+                subtitle="Program donasi pilihan untuk kebaikan bersama"
+                imageSrc="/images/logo-zis.png"
+            />
 
             {/* Featured Reports */}
             <div className="max-w-6xl mx-auto px-4 py-16">
@@ -121,7 +121,7 @@ const LaporanKeuangan = () => {
                                     <span>PDF (2.1 MB)</span>
                                 </div>
                                 <p className="text-gray-600 mb-5">
-                                    Laporan keuangan tahunan LAZISMU untuk tahun yang berakhir 31 Desember 2022 dan laporan auditor independen.
+                                    Laporan keuangan tahunan LAZISMU untuk tahun yang berakhir 31 Desember 2024 dan laporan auditor independen.
                                 </p>
                                 <div className="flex justify-between items-center">
                                     <a href="#" className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-lg font-medium flex items-center hover:shadow-md transition">
@@ -165,10 +165,10 @@ const LaporanKeuangan = () => {
                                     <span>PDF (1.9 MB)</span>
                                 </div>
                                 <p className="text-gray-600 mb-5">
-                                    Laporan keuangan tahunan LAZISMU untuk tahun yang berakhir 31 Desember 2021 dan laporan auditor independen.
+                                    Laporan keuangan tahunan LAZISMU untuk tahun yang berakhir 31 Desember 2025 dan laporan auditor independen.
                                 </p>
                                 <div className="flex justify-between items-center">
-                                    <a href="#" className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-lg font-medium flex items-center hover:shadow-md transition">
+                                    <a href="/files/laporan-keuangan-2025.xlsx" download className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-lg font-medium flex items-center hover:shadow-md transition">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                         </svg>
