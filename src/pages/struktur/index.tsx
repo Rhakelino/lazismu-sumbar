@@ -44,15 +44,15 @@ const fadeRight = {
 const Struktur: React.FC = () => {
   const dewanPengawas: MemberItem[] = [
     {
-      name: "Dr. Mursal, M.Ag",
-      role: "Anggota",
-      image: "/images/mursal.jpg",
-    },
-    {
 
       name: "Prof. Dr. Sobhan Lubis, M.A",
       role: "Ketua",
       image: "/images/sobhan.jpg",
+    },
+    {
+      name: "Dr. Mursal, M.Ag",
+      role: "Anggota",
+      image: "/images/mursal.jpg",
     },
     {
       name: "Dr. Desi Asmaret, M.Ag",
@@ -365,44 +365,44 @@ const Struktur: React.FC = () => {
           </div>
           {/* Volunteer Section */}
         </div>
-          <div className="">
-            <motion.h3
-              variants={fadeUp}
-              initial="initial"
-              whileInView="animate"
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true, amount: 0.3 }}
-              className="font-bold text-gray-800 text-lg mb-3 flex items-center pt-10"
-            >
-              <span className="w-2 h-8 bg-teal-400 rounded-r-md mr-2"></span>
-              Volunteer
-            </motion.h3>
-            <motion.div
-              variants={fadeUp}
-              initial="initial"
-              whileInView="animate"
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true, amount: 0.3 }}
-              className="relative bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-sm p-4 sm:p-6 border border-amber-100 text-center overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 bg-amber-200 rounded-full opacity-50"></div>
-              <div className="absolute bottom-0 left-0 -mb-8 -ml-8 w-36 h-36 bg-amber-200 rounded-full opacity-30"></div>
+        <div className="">
+          <motion.h3
+            variants={fadeUp}
+            initial="initial"
+            whileInView="animate"
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="font-bold text-gray-800 text-lg mb-3 flex items-center pt-10"
+          >
+            <span className="w-2 h-8 bg-teal-400 rounded-r-md mr-2"></span>
+            Volunteer
+          </motion.h3>
+          <motion.div
+            variants={fadeUp}
+            initial="initial"
+            whileInView="animate"
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="relative bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-sm p-4 sm:p-6 border border-amber-100 text-center overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 bg-amber-200 rounded-full opacity-50"></div>
+            <div className="absolute bottom-0 left-0 -mb-8 -ml-8 w-36 h-36 bg-amber-200 rounded-full opacity-30"></div>
 
-              <Image
-                src="/images/valounteer.jpg"
-                alt={wakilSekretaris.name}
-                width={720}
-                height={480}
-                className="w-full h-auto max-h-[400px] md:max-h-[500px] object-cover rounded-lg mb-4"
-              />
+            <Image
+              src="/images/valounteer.jpg"
+              alt={wakilSekretaris.name}
+              width={720}
+              height={480}
+              className="w-full h-auto max-h-[400px] md:max-h-[500px] object-cover rounded-lg mb-4"
+            />
 
-              <div className="relative bg-white rounded-lg shadow-sm md:py-6 md:px-4">
-                <p className="font-bold text-amber-600 text-lg tracking-wider">
-                  VOLUNTEER LAZISMU SUMATERA BARAT
-                </p>
-              </div>
-            </motion.div>
-          </div>
+            <div className="relative bg-white rounded-lg shadow-sm md:py-6 md:px-4">
+              <p className="font-bold text-amber-600 text-lg tracking-wider">
+                VOLUNTEER LAZISMU SUMATERA BARAT
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
