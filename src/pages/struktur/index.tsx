@@ -44,14 +44,15 @@ const fadeRight = {
 const Struktur: React.FC = () => {
   const dewanPengawas: MemberItem[] = [
     {
-      name: "Prof. Dr. Sobhan Lubis, M.A",
-      role: "Ketua",
-      image: "/images/sobhan.jpg",
-    },
-    {
       name: "Dr. Mursal, M.Ag",
       role: "Anggota",
       image: "/images/mursal.jpg",
+    },
+    {
+
+      name: "Prof. Dr. Sobhan Lubis, M.A",
+      role: "Ketua",
+      image: "/images/sobhan.jpg",
     },
     {
       name: "Dr. Desi Asmaret, M.Ag",
@@ -180,7 +181,7 @@ const Struktur: React.FC = () => {
               viewport={{ once: true, amount: 0.3 }}
               className="bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-sm p-5 border border-amber-100"
             >
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {dewanPengawas.map((member, index) => (
                   <motion.li
                     key={member.name}
@@ -228,7 +229,7 @@ const Struktur: React.FC = () => {
                   className="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-5 border border-orange-100 h-full flex items-center"
                 >
                   <div className="bg-white p-4 rounded-lg shadow-sm w-full flex items-center space-x-4">
-                    <div className="w-32 h-32 rounded-full overflow-hidden shadow-sm">
+                    <div className="w-32 h-32 md:w-32 md:h-32 rounded-full overflow-hidden shadow-sm mb-4 flex-shrink-0">
                       <Image src={leader.image} alt={leader.name} width={128} height={128} className="object-cover" />
                     </div>
                     <p className="font-bold text-gray-800 text-lg">{leader.name}</p>
@@ -256,9 +257,9 @@ const Struktur: React.FC = () => {
               whileInView="animate"
               transition={{ duration: 0.8 }}
               viewport={{ once: true, amount: 0.3 }}
-              className="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-8 border border-orange-100 flex flex-col items-center"
+              className="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-8 border border-orange-100 flex md:flex-col items-center"
             >
-              <div className="w-32 h-32 rounded-full overflow-hidden shadow-sm mb-4">
+              <div className="w-32 h-32 md:w-32 md:h-32 rounded-full overflow-hidden shadow-sm mb-4 flex-shrink-0">
                 <Image
                   src={wakilSekretaris.image}
                   alt={wakilSekretaris.name}
@@ -284,7 +285,7 @@ const Struktur: React.FC = () => {
               <span className="w-2 h-8 bg-blue-400 rounded-r-md mr-2"></span>
               Wakil Ketua Bidang
             </motion.h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               {wakilKetuaBidang.map((field, index) => (
                 <motion.div
                   key={index}
@@ -293,19 +294,19 @@ const Struktur: React.FC = () => {
                   whileInView="animate"
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  className={`bg-gradient-to-br from-${index % 2 === 0 ? "blue" : "amber"}-50 to-white rounded-xl shadow-sm p-5 border border-${index % 2 === 0 ? "blue" : "amber"}-100`}
+                  className={`bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-5 border border-blue-100`}
                 >
                   <div className="flex items-center mb-3">
                     <div className="w-32 h-32 rounded-full overflow-hidden shadow-sm mr-3 flex-shrink-0">
                       <Image src={field.image} alt={field.name} width={128} height={128} className="object-cover" />
                     </div>
-                    <h4 className={`font-bold text-${index % 2 === 0 ? "blue" : "amber"}-700 text-sm uppercase`}>
+                    <h4 className={`font-bold text-black text-sm uppercase`}>
                       {field.title}
                     </h4>
                   </div>
                   <div className="p-4 bg-white rounded-lg shadow-sm">
                     <p className="font-semibold text-gray-800">{field.name}</p>
-                    <p className="text-xs font-medium text-blue-600 uppercase tracking-wider mb-3">Ketua</p>
+                    <p className="text-xs font-medium text-orange-600 uppercase tracking-wider mb-3">Ketua</p>
                   </div>
                 </motion.div>
               ))}
@@ -319,14 +320,14 @@ const Struktur: React.FC = () => {
             whileInView="animate"
             transition={{ duration: 0.8 }}
             viewport={{ once: true, amount: 0.3 }}
-            className="bg-gradient-to-br from-teal-50 to-white rounded-xl shadow-sm p-5 border border-teal-100 mb-5 mt-10"
+            className="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-5 border border-orange-100 mb-5 mt-10"
           >
             <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm space-y-4">
               <div className="w-32 h-32 rounded-full overflow-hidden shadow-sm flex-shrink-0">
                 <Image src={managerArea.image} alt={managerArea.name} width={128} height={128} className="object-cover" />
               </div>
               <div className="text-center">
-                <h4 className="text-xs font-semibold text-teal-600 uppercase tracking-wider mb-1">Manager Area</h4>
+                <h4 className="text-xs font-semibold text-orange-600 uppercase tracking-wider mb-1">Manager Area</h4>
                 <p className="font-bold text-gray-800 text-lg">{managerArea.name}</p>
               </div>
             </div>
@@ -363,7 +364,8 @@ const Struktur: React.FC = () => {
             ))}
           </div>
           {/* Volunteer Section */}
-          <div className="transform transition duration-300 hover:scale-[1.01]">
+        </div>
+          <div className="">
             <motion.h3
               variants={fadeUp}
               initial="initial"
@@ -381,18 +383,19 @@ const Struktur: React.FC = () => {
               whileInView="animate"
               transition={{ duration: 0.8 }}
               viewport={{ once: true, amount: 0.3 }}
-              className="relative bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-sm p-6 border border-amber-100 text-center overflow-hidden"
+              className="relative bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-sm p-4 sm:p-6 border border-amber-100 text-center overflow-hidden"
             >
               <div className="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 bg-amber-200 rounded-full opacity-50"></div>
               <div className="absolute bottom-0 left-0 -mb-8 -ml-8 w-36 h-36 bg-amber-200 rounded-full opacity-30"></div>
 
-             <Image
+              <Image
                 src="/images/valounteer.jpg"
-                  alt={wakilSekretaris.name}
-                  width={720}
-                  height={480}
-                  className="w-full md:h-[500px] object-cover rounded-lg mb-4"
-                />
+                alt={wakilSekretaris.name}
+                width={720}
+                height={480}
+                className="w-full h-auto max-h-[400px] md:max-h-[500px] object-cover rounded-lg mb-4"
+              />
+
               <div className="relative bg-white rounded-lg shadow-sm md:py-6 md:px-4">
                 <p className="font-bold text-amber-600 text-lg tracking-wider">
                   VOLUNTEER LAZISMU SUMATERA BARAT
@@ -400,7 +403,6 @@ const Struktur: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </div>
       </div>
     </div>
   );
