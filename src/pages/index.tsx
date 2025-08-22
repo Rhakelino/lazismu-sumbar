@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import BeritaGrid from "@/components/BeritaGrid";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
+import CountUp from 'react-countup';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -27,17 +28,44 @@ const fadeRight = {
 };
 
 interface InfoBoxItem {
-  title: string;
+  title: React.ReactNode; // Bisa berupa string atau komponen JSX
   description: string;
 }
 
-
 const Home: React.FC = () => {
-  const infoBoxes: InfoBoxItem[] = [
-    { title: "6", description: "Pilar Lazismu" },
-    { title: "Rp 2.010.889.249", description: "Total Himpunannan" },
-    { title: "Rp 2.188.080.000", description: "Target Himpunan" },
+  const totalHimpunanNumber = 2010889249;
+  const pilarLazismu = 6;
+  const targetHimpunanNumber = 2188080000;
+
+const infoBoxes: InfoBoxItem[] = [
+    {
+      title: <CountUp end={pilarLazismu} duration={5} />,
+      description: "Pilar Lazismu"
+    },
+    {
+      title: (
+        <CountUp 
+          end={totalHimpunanNumber} 
+          duration={10}
+          separator="."
+          prefix="Rp "
+        />
+      ),
+      description: "Total Himpunannan"
+    },
+    {
+      title: (
+        <CountUp 
+          end={targetHimpunanNumber} 
+          duration={10}
+          separator="."
+          prefix="Rp "
+        />
+      ),
+      description: "Target Himpunan"
+    },
   ];
+
   const programs = [
     {
       category: "Pendidikan",
@@ -67,7 +95,6 @@ const Home: React.FC = () => {
       totalRaised: "Rp 90.000.000",
     },
   ];
-
 
   const heroImages = [
     {
@@ -155,41 +182,38 @@ const Home: React.FC = () => {
                     quality={100}
                   />
                   <div className="absolute inset-0 bg-black opacity-50" />
-               
+                
                 {/* Overlay Content */}
                 <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-                  {/* Existing content */}
-                     <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-                    <div className="max-w-2xl">
-                      <motion.h1
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
-                        className="text-4xl md:text-6xl font-bold mb-4"
+                  <div className="max-w-2xl">
+                    <motion.h1
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.2 }}
+                      className="text-4xl md:text-6xl font-bold mb-4"
+                    >
+                      {image.title}
+                    </motion.h1>
+                    <motion.p
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.4 }}
+                      className="text-xl md:text-2xl mb-8"
+                    >
+                      {image.subtitle}
+                    </motion.p>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.6 }}
+                    >
+                      <Link
+                        href="/program"
+                        className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
                       >
-                        {image.title}
-                      </motion.h1>
-                      <motion.p
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.4 }}
-                        className="text-xl md:text-2xl mb-8"
-                      >
-                        {image.subtitle}
-                      </motion.p>
-                      <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.6 }}
-                      >
-                        <Link
-                          href="/program"
-                          className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
-                        >
-                          Program Kami
-                        </Link>
-                      </motion.div>
-                    </div>
+                        Program Kami
+                      </Link>
+                    </motion.div>
                   </div>
                 </div>
                 </div>
@@ -199,7 +223,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* Info Box */}
-      <motion.div
+    <motion.div
         variants={fadeUp}
         initial="initial"
         whileInView="animate"
@@ -306,7 +330,7 @@ const Home: React.FC = () => {
                         : program.category === "Kesehatan"
                           ? "red"
                           : "green"
-                      }-600 transition-colors`}
+                        }-600 transition-colors`}
                   >
                     Donasi Sekarang
                   </Link>
