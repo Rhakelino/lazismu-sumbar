@@ -26,7 +26,7 @@ const programs: Program[] = [
   {
     gambar: "/images/qurban.jpg",
     judul: "Qurban Berkah Nusantara",
-    terkumpul: "Rp 80.000.000",
+    terkumpul: "Rp 95.500.000",
     target: "Rp 150.000.000",
     deskripsi:
       "Program kompleks untuk mendistribusikan hewan qurban ke daerah-daerah terpencil di Indonesia. Kami berkomitmen untuk membawa berkah Idul Adha kepada masyarakat paling membutuhkan, dengan fokus pada wilayah sulit dijangkau. Setiap hewan qurban akan didistribusikan secara merata, memastikan ribuan keluarga miskin dapat merasakan kegembiraan dan nutrisi dari daging kurban, sekaligus memperkuat solidaritas sosial di antara sesama muslim.",
@@ -36,8 +36,8 @@ const programs: Program[] = [
   },
   {
     gambar: "/images/palestina.jpg",
-    judul: "Program Kemanusiaan Peduli Palestina",
-    terkumpul: "Rp 120.000.000",
+    judul: "Program Peduli Palestina",
+    terkumpul: "Rp 100.000.000",
     target: "Rp 200.000.000",
     deskripsi:
       "Inisiatif komprehensif untuk memberikan bantuan kemanusiaan bagi warga Palestina yang menghadapi krisis berkepanjangan. Program ini mencakup penyediaan bantuan pangan darurat, layanan kesehatan medis, dukungan pendidikan untuk anak-anak pengungsi, dan rehabilitasi infrastruktur yang rusak akibat konflik. Kami berkomitmen untuk membawa harapan, pertolongan, dan pemulihan bagi mereka yang terdampak kekerasan dan ketidakadilan.",
@@ -146,8 +146,8 @@ const programs: Program[] = [
   },
   {
     gambar: "/images/zakat.jpg",
-    judul: "Zakat Penghasilan",
-    terkumpul: "Rp 85.000.000",
+    judul: "Zakat",
+    terkumpul: "Rp 134.214.367",
     target: "Rp 150.000.000",
     deskripsi:
       "Program penghimpunan dan pendistribusian zakat penghasilan yang transparan dan amanah. Kami membantu muzaki menunaikan zakat dengan mudah dan tepat sasaran, serta memastikan mustahik menerima manfaat maksimal. Fokus kami adalah pemberdayaan ekonomi, pendidikan, dan kesejahteraan sosial bagi mereka yang berhak menerima zakat.",
@@ -156,20 +156,9 @@ const programs: Program[] = [
     sisa_hari: 24,
   },
   {
-    gambar: "/images/zakat.jpg",
-    judul: "Zakat Maal",
-    terkumpul: "Rp 85.000.000",
-    target: "Rp 150.000.000",
-    deskripsi:
-      "Program strategis untuk pengelolaan zakat maal (zakat harta) secara profesional dan produktif. Kami tidak sekadar mendistribusikan, tetapi juga memberdayakan penerima zakat melalui investasi modal usaha, pelatihan keterampilan, dan pendampingan berkelanjutan untuk mencapai kemandirian ekonomi.",
-    kategori: "Zakat",
-    slug: "zakat-maal",
-    sisa_hari: 24,
-  },
-  {
     gambar: "/images/infaq.jpg",
-    judul: "Infaq Umum",
-    terkumpul: "Rp 85.000.000",
+    judul: "Infaq Sedekah Terikat",
+    terkumpul: "Rp 81.074.200",
     target: "Rp 150.000.000",
     deskripsi:
       "Wadah infaq fleksibel yang memungkinkan donatur berkontribusi untuk berbagai program kemanusiaan. Dana infaq akan dialokasikan secara dinamis sesuai kebutuhan mendesak, termasuk bantuan bencana, layanan sosial, pendidikan, kesehatan, dan pemberdayaan masyarakat. Transpransi dan akuntabilitas adalah komitmen utama kami.",
@@ -209,7 +198,7 @@ const ProgramDetail: React.FC = () => {
   const persentaseDonasi = Math.round(
     (parseInt(program.terkumpul.replace(/[^0-9]/g, "")) /
       parseInt(program.target.replace(/[^0-9]/g, ""))) *
-      100
+    100
   );
 
   return (
@@ -297,22 +286,20 @@ const ProgramDetail: React.FC = () => {
           <nav className="flex space-x-4 md:space-x-8 px-4 md:px-6 pt-4 whitespace-nowrap">
             <button
               onClick={() => setActiveTab("deskripsi")}
-              className={`py-2 text-base md:text-lg font-medium ${
-                activeTab === "deskripsi"
-                  ? "text-green-600 border-b-2 border-green-600"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
+              className={`py-2 text-base md:text-lg font-medium ${activeTab === "deskripsi"
+                ? "text-green-600 border-b-2 border-green-600"
+                : "text-gray-500 hover:text-gray-700"
+                }`}
             >
               Deskripsi
             </button>
             {program.dokumentasi && (
               <button
                 onClick={() => setActiveTab("dokumentasi")}
-                className={`py-2 text-base md:text-lg font-medium ${
-                  activeTab === "dokumentasi"
-                    ? "text-green-600 border-b-2 border-green-600"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
+                className={`py-2 text-base md:text-lg font-medium ${activeTab === "dokumentasi"
+                  ? "text-green-600 border-b-2 border-green-600"
+                  : "text-gray-500 hover:text-gray-700"
+                  }`}
               >
                 Dokumentasi
               </button>

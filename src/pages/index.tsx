@@ -33,7 +33,7 @@ interface InfoBoxItem {
 }
 
 const Home: React.FC = () => {
-  const totalHimpunanNumber = 2010889249;
+  const totalHimpunanNumber = 2198686189;
   const pilarLazismu = 6;
   const targetHimpunanNumber = 2188080000;
 
