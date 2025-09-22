@@ -31,7 +31,7 @@ export default function SignIn() {
     });
 
     if (error) {
-      setError("lah lu siapa bjir");
+      setError("Password atau email salah");
     } else {
       setSuccess(true);
       console.log('Login berhasil:', data);
@@ -78,7 +78,7 @@ export default function SignIn() {
         </div>
         {error && <div className="text-red-500 text-sm">{error}</div>}
         {success && <div className='flex gap-2'>
-          <div className="text-green-500 text-sm">Halo Ganteng!</div>
+          <div className="text-green-500 text-sm">Login Berhasil!</div>
           <div className="animate-spin rounded-full border-t-2 border-b-2 border-orange-500 h-4 w-4"></div>
         </div>}
         <div>

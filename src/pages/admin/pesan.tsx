@@ -73,66 +73,61 @@ const AdminPesan: React.FC = () => {
     };
 
     return (
-        <div className="flex h-screen"> {/* Ensure the container takes the full height of the screen */}
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <div
-                className={`flex-1 h-full p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'} bg-black text-white`}
-            >
-                <h1 className="text-2xl font-semibold mb-8">Pesan Masuk</h1>
+        <div className="min-h-screen bg-black text-white">
+    {/* Mobile Header */}
+   <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-                {/* Display notification if exists */}
-                {notification && (
-                    <div className="bg-green-500 text-white p-3 rounded mb-4">
-                        {notification}
-                    </div>
-                )}
-
-                {/* Display loading state */}
-                {loading ? (
-                    <div className="flex justify-center items-center h-64">
-                        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-transparent border-primary"></div>
-                    </div>
-                ) : messages.length > 0 ? (
-                    <div className="bg-black text-white rounded-lg shadow-md border border-neutral-700">
-                        <table className="min-w-full divide-y divide-neutral-700">
-                            <thead className="bg-black">
-                                <tr>
-                                    <th className="px-4 py-2 text-left">Nama Lengkap</th>
-                                    <th className="px-4 py-2 text-left">Email</th>
-                                    <th className="px-4 py-2 text-left">Subjek</th>
-                                    <th className="px-4 py-2 text-left">Pesan</th>
-                                    <th className="px-4 py-2 text-left">Tanggal Dikirim</th>
-                                    <th className="px-4 py-2 text-left">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-neutral-700">
-                                {messages.map((message) => (
-                                    <tr key={message.id}>
-                                        <td className="px-4 py-2">{message.nama_lengkap}</td>
-                                        <td className="px-4 py-2">{message.email}</td>
-                                        <td className="px-4 py-2">{message.subjek}</td>
-                                        <td className="px-4 py-2">{message.pesan}</td>
-                                        <td className="px-4 py-2">
-                                            {new Date(message.created_at).toLocaleString()}
-                                        </td>
-                                        <td className="px-4 py-2">
-                                            <button
-                                                className="text-red-600 hover:text-red-800"
-                                                onClick={() => deleteMessage(message.id)}
-                                            >
-                                                <Trash size={20} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                ) : (
-                    <p>No messages found.</p>
-                )}
+    {/* Main Content */}
+    <div className="pt-20 px-4 pb-4">
+        {/* Display notification if exists */}
+        {notification && (
+            <div className="bg-green-500 text-white p-3 rounded mb-4">
+                {notification}
             </div>
-        </div>
+        )}
+
+        {/* Display loading state */}
+        {loading ? (
+            <div className="flex justify-center items-center h-64">
+                <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-transparent border-primary"></div>
+            </div>
+        ) : messages.length > 0 ? (
+            <div className="space-y-4">
+                {messages.map((message) => (
+                    <div 
+                        key={message.id} 
+                        className="bg-neutral-900 border border-neutral-700 rounded-lg p-4 space-y-2"
+                    >
+                        <div className="flex justify-between items-center">
+                            <h3 className="font-semibold text-white">{message.nama_lengkap}</h3>
+                            <button
+                                className="text-red-600 hover:text-red-800"
+                                onClick={() => deleteMessage(message.id)}
+                            >
+                                <Trash size={20} />
+                            </button>
+                        </div>
+                        
+                        <div className="text-neutral-400">
+                            <p className="text-sm">Email: {message.email}</p>
+                            <p className="text-sm">Subjek: {message.subjek}</p>
+                        </div>
+
+                        <p className="text-neutral-300 bg-neutral-800 p-2 rounded">
+                            {message.pesan}
+                        </p>
+
+                        <div className="text-neutral-500 text-xs">
+                            {new Date(message.created_at).toLocaleString()}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        ) : (
+            <p className="text-center text-neutral-500">Tidak ada pesan.</p>
+        )}
+    </div>
+</div>
     );
 };
 

@@ -11,6 +11,7 @@ import CountUp from 'react-countup';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
+import AdminDashboardStats from "@/components/DashboardStats";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -28,7 +29,7 @@ const fadeRight = {
 };
 
 interface InfoBoxItem {
-  title: React.ReactNode; // Bisa berupa string atau komponen JSX
+  title: React.ReactNode;
   description: string;
 }
 
@@ -37,15 +38,15 @@ const Home: React.FC = () => {
   const pilarLazismu = 6;
   const targetHimpunanNumber = 2188080000;
 
-const infoBoxes: InfoBoxItem[] = [
+  const infoBoxes: InfoBoxItem[] = [
     {
       title: <CountUp end={pilarLazismu} duration={5} />,
       description: "Pilar Lazismu"
     },
     {
       title: (
-        <CountUp 
-          end={totalHimpunanNumber} 
+        <CountUp
+          end={totalHimpunanNumber}
           duration={10}
           separator="."
           prefix="Rp "
@@ -55,8 +56,8 @@ const infoBoxes: InfoBoxItem[] = [
     },
     {
       title: (
-        <CountUp 
-          end={targetHimpunanNumber} 
+        <CountUp
+          end={targetHimpunanNumber}
           duration={10}
           separator="."
           prefix="Rp "
@@ -182,48 +183,50 @@ const infoBoxes: InfoBoxItem[] = [
                     quality={100}
                   />
                   <div className="absolute inset-0 bg-black opacity-50" />
-                
-                {/* Overlay Content */}
-                <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-                  <div className="max-w-2xl">
-                    <motion.h1
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, delay: 0.2 }}
-                      className="text-4xl md:text-6xl font-bold mb-4"
-                    >
-                      {image.title}
-                    </motion.h1>
-                    <motion.p
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, delay: 0.4 }}
-                      className="text-xl md:text-2xl mb-8"
-                    >
-                      {image.subtitle}
-                    </motion.p>
-                    <motion.div
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, delay: 0.6 }}
-                    >
-                      <Link
-                        href="/program"
-                        className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
+
+                  {/* Overlay Content */}
+                  <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+                    <div className="max-w-2xl">
+                      <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.2 }}
+                        className="text-4xl md:text-6xl font-bold mb-4"
                       >
-                        Program Kami
-                      </Link>
-                    </motion.div>
+                        {image.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.4 }}
+                        className="text-xl md:text-2xl mb-8"
+                      >
+                        {image.subtitle}
+                      </motion.p>
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.6 }}
+                      >
+                        <Link
+                          href="/program"
+                          className="bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-500 transition-colors"
+                        >
+                          Program Kami
+                        </Link>
+                      </motion.div>
+                    </div>
                   </div>
-                </div>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </section>
+
       {/* Info Box */}
-    <motion.div
+      <AdminDashboardStats/>
+      {/* <motion.div
         variants={fadeUp}
         initial="initial"
         whileInView="animate"
@@ -244,7 +247,7 @@ const infoBoxes: InfoBoxItem[] = [
             </p>
           </div>
         ))}
-      </motion.div>
+      </motion.div> */}
 
       {/* Program Section */}
       <section className="py-16">
@@ -330,7 +333,7 @@ const infoBoxes: InfoBoxItem[] = [
                         : program.category === "Kesehatan"
                           ? "red"
                           : "green"
-                        }-600 transition-colors`}
+                      }-600 transition-colors`}
                   >
                     Donasi Sekarang
                   </Link>
@@ -370,7 +373,6 @@ const infoBoxes: InfoBoxItem[] = [
           </motion.div>
         </motion.div>
       </section>
-
       {/* Testimonials Section */}
       <section className="py-16">
         <motion.div
@@ -465,6 +467,7 @@ const infoBoxes: InfoBoxItem[] = [
           Donasi Sekarang
         </Link>
       </motion.section>
+
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Berita</h2>
         <div className="w-24 h-1 bg-orange-500 mx-auto mb-4 rounded"></div>

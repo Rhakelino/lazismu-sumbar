@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Edit, Trash, PlusCircle } from 'lucide-react';
+import { Edit, Trash, PlusCircle, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Sidebar from '@/components/SideBar';
 import supabase from '@/lib/db';
 import { useRouter } from 'next/router';
-
 
 
 interface NewsItem {
@@ -364,21 +363,24 @@ const AdminBerita: React.FC = () => {
     };
 
     return (
-        <div className="flex">
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
-            <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'} bg-black text-white`}>
-                <h1 className="text-2xl font-semibold mb-4">Admin Berita</h1>
+        <div className="min-h-screen bg-black text-white">
+            {/* Mobile Header */}
+                <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+            {/* Main Content */}
+            <div className="pt-20 px-4 pb-4">
                 {notification && (
                     <div className="bg-green-500 text-white p-2 rounded text-center mb-4">
                         {notification}
                     </div>
                 )}
+
+                {/* Tambah Berita Form */}
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleAddNews();
                     }}
-                    className="bg-neutral-900 border border-neutral-700 p-6 rounded-lg shadow-md space-y-4"
+                    className="bg-neutral-900 border border-neutral-700 p-4 rounded-lg shadow-md space-y-4"
                 >
                     <h2 className="text-xl font-semibold mb-4">Tambah Berita</h2>
 
@@ -394,78 +396,85 @@ const AdminBerita: React.FC = () => {
                         name="description"
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         placeholder="Deskripsi Berita"
-                        className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
+                        className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white h-32"
                         required
                     />
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) return;
-                            const url = await handleImageUpload(file);
-                            if (url) {
-                                setFormData((prev) => ({ ...prev, image: url }));
-                                setNotification('Gambar berhasil diupload!');
-                                setTimeout(() => setNotification(null), 3000);
-                            }
-                        }}
-                        className="p-2 w-full rounded-lg bg-neutral-800 border border-neutral-700 text-white"
-                    />
+                    <div className="bg-neutral-800 border border-neutral-700 rounded-lg p-2">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                const url = await handleImageUpload(file);
+                                if (url) {
+                                    setFormData((prev) => ({ ...prev, image: url }));
+                                    setNotification('Gambar berhasil diupload!');
+                                    setTimeout(() => setNotification(null), 3000);
+                                }
+                            }}
+                            className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-neutral-700 file:text-white hover:file:bg-neutral-600"
+                        />
+                    </div>
 
                     <button
                         type="submit"
-                        className="px-4 py-2 font-medium rounded-lg flex items-center gap-2 bg-white text-black hover:bg-neutral-200"
+                        className="w-full px-4 py-3 font-medium rounded-lg flex items-center justify-center gap-2 bg-white text-black hover:bg-neutral-200"
                     >
                         <PlusCircle size={20} />
                         Tambah Berita
                     </button>
                 </form>
 
-                {/* List Berita */}
-                <h2 className="text-xl font-semibold mt-8">Daftar Berita</h2>
-                <div className="bg-neutral-900 border border-neutral-700 mt-4 rounded-lg p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {news.map((item) => (
-                            <div key={item.id} className="border border-neutral-700 rounded-lg p-4 bg-neutral-800">
-                                <h3 className="font-semibold text-white">{item.title}</h3>
-                                <p className="text-neutral-400">{item.description.length > 50
+                {/* Daftar Berita */}
+                <h2 className="text-xl font-semibold mt-8 mb-4">Daftar Berita</h2>
+                <div className="space-y-4">
+                    {news.map((item) => (
+                        <div
+                            key={item.id}
+                            className="bg-neutral-900 border border-neutral-700 rounded-lg p-4"
+                        >
+                            <h3 className="font-semibold text-white mb-2">{item.title}</h3>
+                            <p className="text-neutral-400 mb-2">
+                                {item.description.length > 100
                                     ? item.description.slice(0, 100) + '...'
-                                    : item.description}</p>
-                                <Image
-                                    src={item.image}
-                                    alt="News"
-                                    width={720}
-                                    height={240}
-                                    className="mt-2 rounded"
-                                />
-                                <p className="text-sm text-neutral-500 mt-1">{formatTanggal(item.created_at)}</p>
-                                <div className="flex space-x-2 justify-end mt-4">
-                                    <button
-                                        onClick={() => handleEdit(item)}
-                                        className="bg-neutral-700 hover:bg-neutral-600 text-neutral-400 border border-neutral-600 px-2 py-1 rounded"
-                                    >
-                                        <Edit size={24} />
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(item.id)}
-                                        className="bg-neutral-700 hover:bg-red-600 text-neutral-400 border border-neutral-600 px-2 py-1 rounded"
-                                    >
-                                        <Trash size={24} />
-                                    </button>
-                                </div>
+                                    : item.description}
+                            </p>
+                            <Image
+                                src={item.image}
+                                alt="News"
+                                width={720}
+                                height={240}
+                                className="w-full rounded-lg mb-2"
+                            />
+                            <p className="text-sm text-neutral-500 mb-2">
+                                {formatTanggal(item.created_at)}
+                            </p>
+                            <div className="flex space-x-2 justify-end">
+                                <button
+                                    onClick={() => handleEdit(item)}
+                                    className="bg-neutral-700 hover:bg-neutral-600 text-neutral-400 p-2 rounded-lg"
+                                >
+                                    <Edit size={20} />
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(item.id)}
+                                    className="bg-neutral-700 hover:bg-red-600 text-neutral-400 p-2 rounded-lg"
+                                >
+                                    <Trash size={20} />
+                                </button>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
-
-                <Modal
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    onSubmit={handleUpdate}
-                    initialData={formData}
-                />
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleUpdate}
+                initialData={formData}
+            />
         </div>
     );
 };
