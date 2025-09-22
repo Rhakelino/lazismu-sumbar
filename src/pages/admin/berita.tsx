@@ -363,7 +363,7 @@ const AdminBerita: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="min-h-screen bg-black text-white md:ml-20">
             {/* Mobile Header */}
                 <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
             {/* Main Content */}
